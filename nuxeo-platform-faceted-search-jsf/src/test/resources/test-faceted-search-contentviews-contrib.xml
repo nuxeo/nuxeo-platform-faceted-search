@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<component
+  name="org.nuxeo.ecm.platform.faceted.search.contentviews.testContrib">
+
+  <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
+    point="contentViews">
+
+    <contentView name="faceted_search_default">
+      <title>label.faceted.search.default</title>
+      <translateTitle>true</translateTitle>
+
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <whereClause docType="FacetedSearchDefault">
+          <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+            <field schema="faceted_search_default" name="ecm_fulltext" />
+          </predicate>
+        </whereClause>
+        <sort column="dc:title" ascending="true" />
+        <pageSize>20</pageSize>
+      </coreQueryPageProvider>
+
+      <searchLayout name="faceted_search_default" />
+
+      <useGlobalPageSize>true</useGlobalPageSize>
+      <refresh>
+        <event>documentChanged</event>
+        <event>documentChildrenChanged</event>
+      </refresh>
+      <cacheKey>only_one_cache</cacheKey>
+      <cacheSize>1</cacheSize>
+
+      <resultLayouts>
+        <layout name="document_virtual_navigation_listing_ajax"
+          title="document_listing" translateTitle="true"
+          iconPath="/icons/document_listing_icon.png" />
+      </resultLayouts>
+
+      <selectionList>CURRENT_SELECTION</selectionList>
+      <actions category="CURRENT_SELECTION_LIST" />
+    </contentView>
+
+    <contentView name="faceted_search_other">
+      <title>label.faceted.search.other</title>
+      <translateTitle>true</translateTitle>
+
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <whereClause docType="FacetedSearchDefault">
+          <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+            <field schema="faceted_search_default" name="ecm_fulltext" />
+          </predicate>
+        </whereClause>
+        <sort column="dc:title" ascending="true" />
+        <pageSize>20</pageSize>
+      </coreQueryPageProvider>
+
+      <searchLayout name="faceted_search_default" />
+
+      <useGlobalPageSize>true</useGlobalPageSize>
+      <refresh>
+        <event>documentChanged</event>
+        <event>documentChildrenChanged</event>
+      </refresh>
+      <cacheKey>only_one_cache</cacheKey>
+      <cacheSize>1</cacheSize>
+
+      <resultLayouts>
+        <layout name="document_virtual_navigation_listing_ajax"
+          title="document_listing" translateTitle="true"
+          iconPath="/icons/document_listing_icon.png" />
+      </resultLayouts>
+
+      <selectionList>CURRENT_SELECTION</selectionList>
+      <actions category="CURRENT_SELECTION_LIST" />
+
+    </contentView>
+
+    <contentView name="not_a_faceted_search">
+      <title>label.not.a.faceted.search</title>
+      <translateTitle>true</translateTitle>
+
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <whereClause docType="FacetedSearchDefault">
+          <predicate parameter="ecm:fulltext" operator="FULLTEXT">
+            <field schema="faceted_search_default" name="ecm_fulltext" />
+          </predicate>
+        </whereClause>
+        <sort column="dc:title" ascending="true" />
+        <pageSize>20</pageSize>
+      </coreQueryPageProvider>
+
+      <searchLayout name="faceted_search_default" />
+
+      <useGlobalPageSize>true</useGlobalPageSize>
+      <refresh>
+        <event>documentChanged</event>
+        <event>documentChildrenChanged</event>
+      </refresh>
+      <cacheKey>only_one_cache</cacheKey>
+      <cacheSize>1</cacheSize>
+
+      <resultLayouts>
+        <layout name="document_virtual_navigation_listing_ajax"
+          title="document_listing" translateTitle="true"
+          iconPath="/icons/document_listing_icon.png" />
+      </resultLayouts>
+
+      <selectionList>CURRENT_SELECTION</selectionList>
+      <actions category="CURRENT_SELECTION_LIST" />
+    </contentView>
+
+  </extension>
+
+</component>
