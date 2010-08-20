@@ -25,3 +25,9 @@ derby.log
 nuxeo-*/META-INF
 nuxeo-*/OSGI-INF
 *.bak
+nuxeo-platform-faceted-search-ftest/selenium/result-*.html
+nuxeo-platform-faceted-search-ftest/selenium/run.conf
+nuxeo-platform-faceted-search-ftest/selenium/user-extensions.js
+nuxeo-platform-faceted-search-ftest/selenium/ffprofile/prefs.js
+nuxeo-platform-faceted-search-ftest/selenium/selenium-server.jar
+

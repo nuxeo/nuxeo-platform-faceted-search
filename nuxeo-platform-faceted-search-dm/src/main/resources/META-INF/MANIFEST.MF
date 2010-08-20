@@ -8,4 +8,5 @@ Nuxeo-Component: OSGI-INF/faceted-search-navtree-contrib.xml,
  OSGI-INF/faceted-search-core-types-contrib.xml,
  OSGI-INF/faceted-search-contentviews-contrib.xml
 Nuxeo-Require: org.nuxeo.ecm.platform.lang
-Nuxeo-RequiredBy: org.nuxeo.ecm.war
+Nuxeo-RequiredBy: org.nuxeo.ecm.war,
+ org.nuxeo.ecm.platform.tag.web
