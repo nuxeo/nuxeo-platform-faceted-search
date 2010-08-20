@@ -1,0 +1,33 @@
+<div xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:nxu="http://nuxeo.org/nxweb/util"
+     xmlns:c="http://java.sun.com/jstl/core"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:nxl="http://nuxeo.org/nxforms/layout">
+
+  <ui:include src="/facetedsearch/faceted_searches_selector.xhtml" />
+
+  <h:form id="facetedSearchForm">
+
+    <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
+      <ui:param name="contentViewName"
+                value="#{facetedSearchCurrentContentViewName}"/>
+    </ui:include>
+
+    <nxu:set var="contentView"
+             value="#{contentViewActions.getContentViewWithProvider(facetedSearchCurrentContentViewName, null)}"
+             cache="true">
+      <c:if test="#{contentView != null}">
+        <nxl:layout name="#{contentView.searchLayout.name}" mode="edit"
+                    value="#{contentView.searchDocumentModel}"/>
+      </c:if>
+    </nxu:set>
+
+    <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
+      <ui:param name="contentViewName"
+                value="#{facetedSearchCurrentContentViewName}"/>
+    </ui:include>
+
+  </h:form>
+
+</div>

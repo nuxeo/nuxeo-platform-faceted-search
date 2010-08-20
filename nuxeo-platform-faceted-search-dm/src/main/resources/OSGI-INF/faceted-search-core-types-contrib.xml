@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.core.types">
+
+  <require>org.nuxeo.ecm.core.schema.TypeService</require>
+  <require>org.nuxeo.ecm.core.CoreExtensions</require>
+
+  <extension target="org.nuxeo.ecm.core.schema.TypeService" point="schema">
+    <schema name="faceted_search_default" src="schemas/faceted_search_default.xsd" prefix="fsd"/>
+  </extension>
+
+  <extension target="org.nuxeo.ecm.core.schema.TypeService" point="doctype">
+
+    <doctype name="FacetedSearchDefault" extends="Document">
+      <schema name="faceted_search_default"/>
+    </doctype>
+
+  </extension>
+
+</component>

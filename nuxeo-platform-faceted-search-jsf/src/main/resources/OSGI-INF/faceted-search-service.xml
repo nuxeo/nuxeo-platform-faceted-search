@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<component name="org.nuxeo.ecm.platform.faceted.search.FacetedSearchService">
+
+  <documentation>
+    @author Thomas Roger (troger@nuxeo.com)
+  </documentation>
+
+  <implementation
+    class="org.nuxeo.ecm.platform.faceted.search.jsf.FacetedSearchServiceImpl" />
+
+  <service>
+    <provide
+      interface="org.nuxeo.ecm.platform.faceted.search.jsf.FacetedSearchService" />
+  </service>
+
+</component>
