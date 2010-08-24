@@ -16,6 +16,14 @@
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
             <field schema="faceted_search_default" name="ecm_fulltext" />
           </predicate>
+          <predicate parameter="dc:created" operator="BETWEEN">
+            <field schema="faceted_search_default" name="dc_created_min" />
+            <field schema="faceted_search_default" name="dc_created_max" />
+          </predicate>
+          <predicate parameter="dc:modified" operator="BETWEEN">
+            <field schema="faceted_search_default" name="dc_modified_min" />
+            <field schema="faceted_search_default" name="dc_modified_max" />
+          </predicate>
         </whereClause>
         <sort column="dc:title" ascending="true" />
         <pageSize>20</pageSize>
@@ -60,6 +68,34 @@
       </properties>
     </widget>
 
+    <widget name="dc_created" type="dateRange">
+      <labels>
+        <label mode="any">label.dublincore.creationDate</label>
+      </labels>
+      <translated>true</translated>
+      <fields>
+        <field>fsd:dc_created_min</field>
+        <field>fsd:dc_created_max</field>
+      </fields>
+      <properties widgetMode="edit">
+        <property name="styleClass">dataInputTextDate</property>
+      </properties>
+    </widget>
+
+    <widget name="dc_modified" type="dateRange">
+      <labels>
+        <label mode="any">label.dublincore.modificationDate</label>
+      </labels>
+      <translated>true</translated>
+      <fields>
+        <field>fsd:dc_modified_min</field>
+        <field>fsd:dc_modified_max</field>
+      </fields>
+      <properties widgetMode="edit">
+        <property name="styleClass">dataInputTextDate</property>
+      </properties>
+    </widget>
+
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
@@ -72,6 +108,12 @@
       <rows>
         <row>
           <widget>ecm_fulltext</widget>
+        </row>
+        <row>
+          <widget>dc_created</widget>
+        </row>
+        <row>
+          <widget>dc_modified</widget>
         </row>
       </rows>
     </layout>
