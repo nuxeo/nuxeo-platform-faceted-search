@@ -3,7 +3,7 @@
 HERE=$(cd $(dirname $0); pwd -P)
 
 # Retrieve Nuxeo Distribution, nuxeo-platform-faceted-search jars and selenium-server.jar
-(cd .. && mvn -o clean dependency:copy) || exit 1
+(cd .. && mvn clean dependency:copy) || exit 1
 
 # Start JBoss
 cd ../target
