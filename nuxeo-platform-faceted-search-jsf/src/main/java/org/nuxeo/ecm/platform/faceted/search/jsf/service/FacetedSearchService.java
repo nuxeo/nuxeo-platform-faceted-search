@@ -1,6 +1,7 @@
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
@@ -19,7 +20,7 @@ public interface FacetedSearchService {
      * Returns the list of Content view names associated to a Faceted Search.
      * @throws ClientException in case of any error
      */
-    List<String> getContentViewNames() throws ClientException;
+    Set<String> getContentViewNames() throws ClientException;
 
     /**
      * Save the current Faceted search in the user workspace with the given title.

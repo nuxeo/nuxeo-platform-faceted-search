@@ -1,7 +1,7 @@
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.nuxeo.common.utils.IdUtils;
 import org.nuxeo.common.utils.Path;
@@ -24,7 +24,7 @@ import org.nuxeo.runtime.model.DefaultComponent;
 public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {
 
-    public static final String FACETED_SEARCH_PREFIX = "faceted_search";
+    public static final String FACETED_SEARCH_FLAG = "FACETED_SEARCH";
 
     public static final String CONFIGURATION_EP = "configuration";
 
@@ -34,16 +34,9 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     protected UserWorkspaceService userWorkspaceService;
 
-    public List<String> getContentViewNames()
-            throws ClientException {
+    public Set<String> getContentViewNames() throws ClientException {
         ContentViewService contentViewService = getContentViewService();
-        List<String> contentViewNames = new ArrayList<String>();
-        for (String contentViewName : contentViewService.getContentViewNames()) {
-            if (contentViewName.startsWith(FACETED_SEARCH_PREFIX)) {
-                contentViewNames.add(contentViewName);
-            }
-        }
-        return contentViewNames;
+        return contentViewService.getContentViewNames(FACETED_SEARCH_FLAG);
     }
 
     protected ContentViewService getContentViewService() throws ClientException {

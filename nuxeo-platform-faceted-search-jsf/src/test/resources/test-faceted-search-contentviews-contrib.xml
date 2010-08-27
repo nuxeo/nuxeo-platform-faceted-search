@@ -38,6 +38,10 @@
 
       <selectionList>CURRENT_SELECTION</selectionList>
       <actions category="CURRENT_SELECTION_LIST" />
+
+      <flags>
+        <flag>FACETED_SEARCH</flag>
+      </flags>
     </contentView>
 
     <contentView name="faceted_search_other">
@@ -74,6 +78,9 @@
       <selectionList>CURRENT_SELECTION</selectionList>
       <actions category="CURRENT_SELECTION_LIST" />
 
+      <flags>
+        <flag>FACETED_SEARCH</flag>
+      </flags>
     </contentView>
 
     <contentView name="not_a_faceted_search">

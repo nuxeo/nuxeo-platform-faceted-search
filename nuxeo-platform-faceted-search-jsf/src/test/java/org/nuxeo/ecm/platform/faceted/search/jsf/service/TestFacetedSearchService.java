@@ -1,6 +1,7 @@
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.el.ELException;
 import javax.faces.context.FacesContext;
@@ -43,7 +44,7 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(FeaturesRunner.class)
 @Features(CoreFeature.class)
-@RepositoryConfig(type = BackendType.H2, init= DefaultRepositoryInit.class, user = "Administrator", cleanup = Granularity.METHOD)
+@RepositoryConfig(type = BackendType.H2, init = DefaultRepositoryInit.class, user = "Administrator", cleanup = Granularity.METHOD)
 @Deploy( { "org.nuxeo.ecm.platform.content.template",
         "org.nuxeo.ecm.platform.userworkspace.api",
         "org.nuxeo.ecm.platform.userworkspace.types",
@@ -105,7 +106,7 @@ public class TestFacetedSearchService {
     @Test
     public void retrieveFacetedSearchRelatedContentViews()
             throws ClientException {
-        List<String> contentViewNames = facetedSearchService.getContentViewNames();
+        Set<String> contentViewNames = facetedSearchService.getContentViewNames();
         assertNotNull(contentViewNames);
         assertEquals(2, contentViewNames.size());
 
@@ -139,14 +140,14 @@ public class TestFacetedSearchService {
         assertTrue(savedSearchPath.startsWith(rootSavedSearchesPath));
     }
 
-    protected DocumentModel createSavedSearch(String title) throws ClientException {
-       ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
+    protected DocumentModel createSavedSearch(String title)
+            throws ClientException {
+        ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
         searchDocumentModel.setPropertyValue("fsd:ecm_fulltext", "fulltext");
         contentView.setSearchDocumentModel(searchDocumentModel);
 
-        return facetedSearchService.saveSearch(
-                session, contentView, title);
+        return facetedSearchService.saveSearch(session, contentView, title);
     }
 
     @Test

@@ -21,6 +21,7 @@ import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
 import org.nuxeo.ecm.webapp.contentbrowser.ContentViewActions;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
+import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.ScopeType.EVENT;
@@ -55,6 +56,9 @@ public class FacetedSearchActions implements Serializable {
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
 
+    @In(create = true)
+    protected ResourcesAccessor resourcesAccessor;
+
     protected List<String> contentViewNames;
 
     protected String currentContentViewName;
@@ -81,7 +85,8 @@ public class FacetedSearchActions implements Serializable {
 
     public List<String> getContentViewNames() throws ClientException {
         if (contentViewNames == null) {
-            contentViewNames = facetedSearchService.getContentViewNames();
+            contentViewNames = new ArrayList<String>(
+                    facetedSearchService.getContentViewNames());
         }
         return contentViewNames;
     }
@@ -103,11 +108,11 @@ public class FacetedSearchActions implements Serializable {
     public List<SelectItem> getSavedSearchesSelectItems()
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
-        items.add(new SelectItem(NONE_VALUE, NONE_LABEL, "",
+        items.add(new SelectItem(NONE_VALUE, resourcesAccessor.getMessages().get(NONE_LABEL), "",
                 currentSelectedSavedSearchId == null));
 
         SelectItemGroup userGroup = new SelectItemGroup(
-                USER_SAVED_SEARCHES_LABEL);
+                resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
         List<DocumentModel> userSavedSearches = getCurrentUserSavedSearches();
         List<SelectItem> userSavedSearchesItems = convertToSelectItems(userSavedSearches);
         userGroup.setSelectItems(userSavedSearchesItems.toArray(new SelectItem[userSavedSearchesItems.size()]));
@@ -116,7 +121,7 @@ public class FacetedSearchActions implements Serializable {
         List<DocumentModel> allSavedFacetedSearches = getAllSavedSearches();
         allSavedFacetedSearches.removeAll(userSavedSearches);
         List<SelectItem> allSavedSearchesItems = convertToSelectItems(allSavedFacetedSearches);
-        SelectItemGroup allGroup = new SelectItemGroup(ALL_SAVED_SEARCHES_LABEL);
+        SelectItemGroup allGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
         allGroup.setSelectItems(allSavedSearchesItems.toArray(new SelectItem[allSavedSearchesItems.size()]));
         items.add(allGroup);
 
@@ -188,8 +193,8 @@ public class FacetedSearchActions implements Serializable {
     public void saveSearch() throws ClientException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         if (contentView != null) {
-            DocumentModel savedSearch = facetedSearchService.saveSearch(documentManager, contentView,
-                    savedSearchTitle);
+            DocumentModel savedSearch = facetedSearchService.saveSearch(
+                    documentManager, contentView, savedSearchTitle);
             savedSearchTitle = null;
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
