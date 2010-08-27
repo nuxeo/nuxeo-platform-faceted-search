@@ -9,12 +9,13 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.Unwrap;
 import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
 import org.nuxeo.runtime.api.Framework;
 
 import static org.jboss.seam.ScopeType.SESSION;
 
 /**
- * Business delegate exposing the {@link FacetedSearchService} as a seam
+ * Business delegate exposing the {@link org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService} as a seam
  * component.
  *
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
@@ -30,7 +31,7 @@ public class FacetedSearchBusinessDelegate implements Serializable {
     protected FacetedSearchService facetedSearchService;
 
     /**
-     * Acquires a new {@link FacetedSearchService} reference. The related
+     * Acquires a new {@link org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService} reference. The related
      * service may be deployed on a local or remote AppServer.
      *
      * @throws ClientException

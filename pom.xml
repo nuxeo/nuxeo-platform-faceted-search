@@ -48,6 +48,13 @@
         <version>1.0.3</version>
         <classifier>standalone</classifier>
       </dependency>
+
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-platform-ui-web-test</artifactId>
+        <version>${nuxeo.jsf.version}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

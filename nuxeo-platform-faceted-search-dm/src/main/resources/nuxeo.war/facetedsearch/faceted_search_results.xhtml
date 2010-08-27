@@ -19,7 +19,9 @@
       <nxu:set var="contentViewName" value="faceted_search_default">
 
         <ui:decorate template="/incl/content_view.xhtml">
-          <ui:define name="content_view_header_after_selector" />
+          <ui:define name="content_view_header_after_selector">
+            <ui:include src="/facetedsearch/save_search_form.xhtml"/>
+          </ui:define>
           <ui:define name="syndication_buttons">
             <c:if test="false">syndication currently broken with content views</c:if>
             <ui:include src="/incl/syndication_buttons.xhtml">

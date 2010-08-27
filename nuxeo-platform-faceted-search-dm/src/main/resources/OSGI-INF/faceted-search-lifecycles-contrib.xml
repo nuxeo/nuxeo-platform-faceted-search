@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.dm.lifecycles">
+
+  <require>org.nuxeo.ecm.core.lifecycle.LifeCycleService</require>
+
+  <extension target="org.nuxeo.ecm.core.lifecycle.LifeCycleService"
+             point="types">
+    <types>
+      <type name="FacetedSearchDefault">default</type>
+    </types>
+  </extension>
+
+</component>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.ecm.platform.faceted.search.contentviews">
+<component name="org.nuxeo.ecm.platform.faceted.search.dm.contentviews">
 
   <require>org.nuxeo.ecm.platform.ui.web.ContentViewService</require>
 
@@ -13,6 +13,9 @@
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
         <whereClause docType="FacetedSearchDefault">
+          <fixedPart>
+            ecm:mixinType != 'HiddenInNavigation' AND ecm:mixinType != 'HiddenInFacetedSearch'
+          </fixedPart>
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
             <field schema="faceted_search_default" name="ecm_fulltext" />
           </predicate>
@@ -63,9 +66,6 @@
       <fields>
         <field>fsd:ecm_fulltext</field>
       </fields>
-      <properties widgetMode="edit">
-        <property name="styleClass">dataInputText</property>
-      </properties>
     </widget>
 
     <widget name="dc_created" type="dateRange">

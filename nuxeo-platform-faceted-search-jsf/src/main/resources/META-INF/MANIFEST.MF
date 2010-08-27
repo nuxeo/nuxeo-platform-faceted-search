@@ -5,4 +5,7 @@ Bundle-SymbolicName: org.nuxeo.ecm.platform.faceted.search.jsf;singleton:=true
 Bundle-Vendor: Nuxeo
 Bundle-Version: 1.0.0
 Nuxeo-Component: OSGI-INF/faceted-search-service.xml,
- OSGI-INF/faceted-search-layouts-contrib.xml
+ OSGI-INF/faceted-search-core-types-contrib.xml,
+ OSGI-INF/faceted-search-contrib.xml,
+ OSGI-INF/faceted-search-layouts-contrib.xml,
+ OSGI-INF/faceted-search-contentviews-contrib.xml

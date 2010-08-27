@@ -3,21 +3,25 @@
         xmlns:c="http://java.sun.com/jstl/core"
         xmlns:f="http://java.sun.com/jsf/core"
         id="facetedSearchSelectorForm">
-    <h:selectOneMenu value="#{facetedSearchActions.facetedSearchCurrentContentViewName}"
-            id="facetedSearchSelector"
-            styleClass="langSelect"
-            onchange="Element.next(this).firstChild.click();">
-      <c:forEach var="contentViewName"
-        items="#{facetedSearchActions.facetedSearchContentViewNames}"
-        varStatus="contentViewListStatus">
-        <nxu:set var="contentView" value="#{contentViewActions.getContentView(contentViewName)}">
-          <f:selectItem itemValue="#{contentViewName}"
-                        itemLabel="#{nxu:test(contentView.translateTitle, messages[contentView.title], contentView.title)}" />
-        </nxu:set>
-      </c:forEach>
-    </h:selectOneMenu>
 
-    <div style="display: none;">
-      <h:commandButton value="submit"/>
-    </div>
-  </h:form>
+  <p><h:outputText value="#{messages['label.faceted.searches']}" /></p>
+  <h:selectOneMenu
+          value="#{facetedSearchActions.currentContentViewName}"
+          id="facetedSearchSelector"
+          styleClass="langSelect"
+          onchange="Element.next(this).firstChild.click();">
+    <c:forEach var="contentViewName"
+               items="#{facetedSearchActions.contentViewNames}"
+               varStatus="contentViewListStatus">
+      <nxu:set var="contentView"
+               value="#{contentViewActions.getContentView(contentViewName)}">
+        <f:selectItem itemValue="#{contentViewName}"
+                      itemLabel="#{nxu:test(contentView.translateTitle, messages[contentView.title], contentView.title)}"/>
+      </nxu:set>
+    </c:forEach>
+  </h:selectOneMenu>
+
+  <div style="display: none;">
+    <h:commandButton value="submit"/>
+  </div>
+</h:form>

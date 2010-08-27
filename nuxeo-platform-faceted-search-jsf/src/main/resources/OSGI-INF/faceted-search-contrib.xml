@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.contrib">
+
+  <require>org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService</require>
+
+  <extension target="org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService"
+    point="configuration">
+
+    <configuration>
+      <rootSavedSearchesTitle>Saved Searches</rootSavedSearchesTitle>
+    </configuration>
+
+  </extension>
+
+</component>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.dm.ecm.types">
+
+  <require>org.nuxeo.ecm.platform.types.TypeService</require>
+
+  <extension target="org.nuxeo.ecm.platform.types.TypeService" point="types">
+
+    <type id="FacetedSearchDefault">
+      <label>FacetedSearchDefault</label>
+      <icon>/icons/file.gif</icon>
+      <bigIcon>/icons/file_100.png</bigIcon>
+      <description>FacetedSearchDefault.description</description>
+      <default-view>view_documents</default-view>
+      <layouts mode="any">
+        <layout>heading</layout>
+      </layouts>
+      <!-- all content already on summary page -->
+      <layouts mode="view">
+        <layout>faceted_search_default</layout>
+      </layouts>
+    </type>
+
+  </extension>
+
+</component>

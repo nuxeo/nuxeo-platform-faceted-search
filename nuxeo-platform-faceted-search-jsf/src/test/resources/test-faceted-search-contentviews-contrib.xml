@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <component
-  name="org.nuxeo.ecm.platform.faceted.search.contentviews.testContrib">
+  name="org.nuxeo.ecm.platform.faceted.search.jsf.contentviews.testContrib">
 
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
     point="contentViews">

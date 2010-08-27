@@ -1,13 +1,13 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
      xmlns:nxu="http://nuxeo.org/nxweb/util">
 
-  <h:commandButton type="submit" value="#{messages['command.search']}"
+  <h:commandLink action="#{contentViewActions.reset(contentViewName)}">
+    <h:outputText value="#{messages['command.faceted.search.clear']}" />
+  </h:commandLink>
+  <h:commandButton type="submit" value="#{messages['command.faceted.search.go']}"
                    action="faceted_search_results" class="button">
     <nxu:actionListenerMethod
             value="#{contentViewActions.refresh(contentViewName)}"/>
   </h:commandButton>
-  <h:commandButton value="#{messages['command.clearSearch']}"
-                   action="#{contentViewActions.reset(contentViewName)}"
-                   styleClass="button"/>
 
 </div>
