@@ -1,7 +1,7 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
      xmlns:nxu="http://nuxeo.org/nxweb/util">
 
-  <h:commandLink action="#{contentViewActions.reset(contentViewName)}">
+  <h:commandLink action="#{facetedSearchActions.clearSearch()}">
     <h:outputText value="#{messages['command.faceted.search.clear']}" />
   </h:commandLink>
   <h:commandButton type="submit" value="#{messages['command.faceted.search.go']}"

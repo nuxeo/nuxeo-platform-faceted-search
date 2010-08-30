@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -14,6 +15,7 @@ import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
+import org.jboss.seam.faces.FacesMessages;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -49,6 +51,8 @@ public class FacetedSearchActions implements Serializable {
 
     public static final String ALL_SAVED_SEARCHES_LABEL = "label.all.saved.searches";
 
+    public static final String  SEARCH_SAVED_LABEL = "label.search.saved";
+
     public static final String FACETED_SEARCH_RESULTS_VIEW = "faceted_search_results";
 
     @In(create = true)
@@ -59,6 +63,9 @@ public class FacetedSearchActions implements Serializable {
 
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
+
+    @In(create = true, required = false)
+    protected transient FacesMessages facesMessages;
 
     @In(create = true)
     protected ResourcesAccessor resourcesAccessor;
@@ -95,6 +102,11 @@ public class FacetedSearchActions implements Serializable {
         return contentViewNames;
     }
 
+    public void clearSearch() {
+        contentViewActions.reset(currentContentViewName);
+        this.currentSelectedSavedSearchId = null;
+    }
+
     /*
      * ----- Retrieving user and all saved searches -----
      */
@@ -112,8 +124,7 @@ public class FacetedSearchActions implements Serializable {
     public List<SelectItem> getSavedSearchesSelectItems()
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
-        items.add(new SelectItem(NONE_VALUE, resourcesAccessor.getMessages().get(NONE_LABEL), "",
-                currentSelectedSavedSearchId == null));
+        items.add(new SelectItem(NONE_VALUE, resourcesAccessor.getMessages().get(NONE_LABEL)));
 
         SelectItemGroup userGroup = new SelectItemGroup(
                 resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
@@ -202,6 +213,8 @@ public class FacetedSearchActions implements Serializable {
             savedSearchTitle = null;
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
+            facesMessages.add(FacesMessage.SEVERITY_INFO,
+                    resourcesAccessor.getMessages().get(SEARCH_SAVED_LABEL));
         }
     }
 

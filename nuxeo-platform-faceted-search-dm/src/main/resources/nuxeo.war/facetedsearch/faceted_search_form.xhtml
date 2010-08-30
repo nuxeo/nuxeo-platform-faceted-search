@@ -20,6 +20,7 @@
              value="#{contentViewActions.getContentViewWithProvider(facetedSearchCurrentContentViewName, null)}"
              cache="true">
       <c:if test="#{contentView != null}">
+
         <nxl:layout name="#{contentView.searchLayout.name}" mode="edit"
                     value="#{contentView.searchDocumentModel}"/>
       </c:if>
