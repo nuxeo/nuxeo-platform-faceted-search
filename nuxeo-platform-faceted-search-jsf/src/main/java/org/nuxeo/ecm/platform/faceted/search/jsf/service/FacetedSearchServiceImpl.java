@@ -20,6 +20,7 @@ import org.nuxeo.runtime.model.DefaultComponent;
 
 /**
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
+ * @since 5.4
  */
 public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {

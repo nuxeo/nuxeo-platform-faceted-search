@@ -7,6 +7,7 @@ import org.nuxeo.common.xmap.annotation.XObject;
  * Configuration object for the {@link FacetedSearchService}.
  *
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
+ * @since 5.4
  */
 @XObject("configuration")
 public class Configuration {

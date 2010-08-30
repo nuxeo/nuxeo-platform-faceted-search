@@ -10,6 +10,7 @@ import javax.faces.model.SelectItemGroup;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
+import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
@@ -25,14 +26,17 @@ import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.ScopeType.EVENT;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
 
 /**
  * Handles faceted search related web actions.
  *
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
+ * @since 5.4
  */
 @Name("facetedSearchActions")
 @Scope(CONVERSATION)
+@Install(precedence = FRAMEWORK)
 public class FacetedSearchActions implements Serializable {
 
     private static final long serialVersionUID = 1L;

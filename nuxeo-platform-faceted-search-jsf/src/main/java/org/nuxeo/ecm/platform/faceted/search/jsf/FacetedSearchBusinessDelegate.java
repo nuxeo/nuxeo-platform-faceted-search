@@ -19,6 +19,7 @@ import static org.jboss.seam.ScopeType.SESSION;
  * component.
  *
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
+ * @since 5.4
  */
 @Name("facetedSearchService")
 @Scope(SESSION)
