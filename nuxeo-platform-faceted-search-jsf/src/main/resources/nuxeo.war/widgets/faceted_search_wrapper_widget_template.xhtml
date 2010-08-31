@@ -1,0 +1,97 @@
+<f:subview xmlns:f="http://java.sun.com/jsf/core"
+           xmlns:h="http://java.sun.com/jsf/html"
+           xmlns:c="http://java.sun.com/jstl/core"
+           xmlns:nxl="http://nuxeo.org/nxforms/layout" id="#{widget.id}">
+
+  <div class="#{widget.properties.styleClass}">
+
+    <h5 class="widgetTitle">
+      <h:outputText value="#{messages[widget.label]}"/>
+    </h5>
+
+    <div class="widgetContent">
+
+      <table class="dataInput">
+        <tbody>
+        <nxl:subWidget>
+          <c:set var="mode"
+                 value="#{nxu:test(!empty widget.properties.mode, widget.properties.mode, 'simple')}"/>
+          <tr>
+            <c:if test="#{mode == 'simple'}">
+              <c:choose>
+                <c:when test="#{widget.translated}">
+                  <td class="iconColumn" style="vertical-align:top;">
+                    <c:if test="#{!empty widget.helpLabel}">
+                      <h:graphicImage value="/icons/lightbulb.png"
+                                      onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);"
+                                      onmouseout="tooltip.hide();"/>
+                    </c:if>
+                  </td>
+                  <td class="labelColumn">
+                    <h:outputText value="#{messages[widget.label]}"/>
+                  </td>
+                </c:when>
+                <c:otherwise>
+                  <td class="iconColumn" style="vertical-align:top;">
+                    <c:if test="#{!empty widget.helpLabel}">
+                      <h:graphicImage value="/icons/lightbulb.png"
+                                      onmouseover="tooltip.show('#{widget.helpLabel}', 500);"
+                                      onmouseout="tooltip.hide();"/>
+                    </c:if>
+                  </td>
+                  <td class="labelColumn">
+                    <h:outputText value="#{widget.label}"/>
+                  </td>
+                </c:otherwise>
+              </c:choose>
+              <td>
+                <nxl:widget widget="#{widget}" value="#{value}"/>
+              </td>
+            </c:if>
+            <c:if test="#{mode == 'subTitle'}">
+              <td colspan="2">
+                <c:choose>
+                  <c:when test="#{widget.translated}">
+                    <div>
+                <span class="iconColumn" style="vertical-align:top;">
+                  <c:if test="#{!empty widget.helpLabel}">
+                    <h:graphicImage value="/icons/lightbulb.png"
+                                    onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);"
+                                    onmouseout="tooltip.hide();"/>
+                  </c:if>
+                </span>
+                <span class="labelColumn">
+                  <h:outputText value="#{messages[widget.label]}"/>
+                </span>
+                    </div>
+                  </c:when>
+                  <c:otherwise>
+                    <div>
+                <span class="iconColumn" style="vertical-align:top;">
+                  <c:if test="#{!empty widget.helpLabel}">
+                    <h:graphicImage value="/icons/lightbulb.png"
+                                    onmouseover="tooltip.show('#{widget.helpLabel}', 500);"
+                                    onmouseout="tooltip.hide();"/>
+                  </c:if>
+                </span>
+                <span class="labelColumn">
+                  <h:outputText value="#{widget.label}"/>
+                </span>
+                    </div>
+                  </c:otherwise>
+                </c:choose>
+
+                <div>
+                  <nxl:widget widget="#{widget}" value="#{value}"/>
+                </div>
+              </td>
+            </c:if>
+          </tr>
+        </nxl:subWidget>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</f:subview>
