@@ -4,12 +4,21 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
-      <widgetType name="dateRange">
-        <handler-class>
-          org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
-        </handler-class>
-        <property name="template">/widgets/date_range_widget_template.xhtml</property>
-      </widgetType>
+    <widgetType name="dateRange">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/date_range_widget_template.xhtml
+      </property>
+    </widgetType>
+
+    <widgetType name="usersSuggestion">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/user_suggestion_faceted_widget_template.xhtml
+      </property>
+    </widgetType>
 
   </extension>
 

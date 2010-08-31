@@ -6,6 +6,7 @@
   <xs:include schemaLocation="base.xsd" />
 
   <xs:element name="ecm_fulltext" type="xs:string" />
+  <xs:element name="dc_creator" type="nxs:stringList" />
   <xs:element name="dc_created_min" type="xs:date" />
   <xs:element name="dc_created_max" type="xs:date" />
   <xs:element name="dc_modified_min" type="xs:date" />
