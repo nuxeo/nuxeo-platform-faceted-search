@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="" />
+<link rel="selenium.base" href="http://localhost:8080/nuxeo/" />
 <title>authorSearch</title>
 </head>
 <body>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>typeKeys</td>
-	<td>facetedSearchForm:nxl_faceted_search_default:nxw_dc_creator_suggest</td>
+	<td>facetedSearchForm:nxl_faceted_search_default:nxw_people_search:nxw_dc_creator_1_suggest</td>
 	<td>Adm</td>
 </tr>
 <tr>
@@ -88,12 +88,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>xpath=id('facetedSearchForm:nxl_faceted_search_default:nxw_dc_creator_suggestionBox:suggest')/x:tbody[1]/x:tr[1]/x:td[2]</td>
+	<td>xpath=id('facetedSearchForm:nxl_faceted_search_default:nxw_people_search:nxw_dc_creator_1_suggestionBox:suggest')/x:tbody[1]/x:tr[1]/x:td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=id('facetedSearchForm')/x:div[2]/x:input[1]</td>
+	<td>//input[@value='Go!']</td>
 	<td></td>
 </tr>
 <tr>
