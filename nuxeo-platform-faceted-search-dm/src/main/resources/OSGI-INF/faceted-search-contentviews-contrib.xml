@@ -103,7 +103,7 @@
       </properties>
     </widget>
 
-    <widget name="dc_creator" type="usersSuggestion">
+    <widget name="dc_creator" type="facetedSearchUsersSuggestion">
       <labels>
         <label mode="any">label.dublincore.creator</label>
       </labels>
@@ -112,6 +112,8 @@
       </fields>
       <properties widgetMode="any">
         <property name="userSuggestionSearchType">USER_TYPE</property>
+        <property name="displayHorizontally">false</property>
+        <property name="hideSearchTypeText">true</property>
       </properties>
     </widget>
 
