@@ -203,13 +203,14 @@ public class FacetedSearchActions implements Serializable {
     }
 
     public String loadSavedSearch(String contentViewName,
-            DocumentModel searchDocument) throws ClientException {
-        if (contentViewName != null) {
-            ContentView contentView = contentViewActions.getContentView(
-                    contentViewName, searchDocument);
-            if (contentView != null) {
-                this.currentContentViewName = contentViewName;
-            }
+        DocumentModel searchDocument) throws ClientException {
+
+        // Do not reuse the existing document as it can be modified ans re-saved
+        DocumentModel newSearchDocument = createDocumentModelFrom(searchDocument);
+        ContentView contentView = contentViewActions.getContentView(
+                contentViewName, newSearchDocument);
+        if (contentView != null) {
+            this.currentContentViewName = contentViewName;
         }
         return FACETED_SEARCH_RESULTS_VIEW;
     }
@@ -227,12 +228,24 @@ public class FacetedSearchActions implements Serializable {
         if (contentView != null) {
             DocumentModel savedSearch = facetedSearchService.saveSearch(
                     documentManager, contentView, savedSearchTitle);
+            currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
+
+            // Do not reuse the just saved document as it can be modified ans re-saved
+            DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
+            contentView.setSearchDocumentModel(searchDocument);
+
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
             facesMessages.add(FacesMessage.SEVERITY_INFO,
                     resourcesAccessor.getMessages().get(SEARCH_SAVED_LABEL));
         }
+    }
+
+    protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc) throws ClientException {
+        DocumentModel blankDoc = documentManager.createDocumentModel(sourceDoc.getType());
+        blankDoc.copyContent(sourceDoc);
+        return blankDoc;
     }
 
 }
