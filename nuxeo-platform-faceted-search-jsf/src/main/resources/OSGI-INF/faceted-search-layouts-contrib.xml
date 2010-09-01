@@ -20,6 +20,13 @@
       </property>
     </widgetType>
 
+    <widgetType name="facetedSearchWrapper">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/faceted_search_wrapper_widget_template.xhtml</property>
+    </widgetType>
+
   </extension>
 
 </component>

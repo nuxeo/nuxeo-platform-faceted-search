@@ -4,27 +4,28 @@
   <require>org.nuxeo.ecm.platform.ui.web.ContentViewService</require>
 
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
-    point="contentViews">
+             point="contentViews">
 
-  <contentView name="USER_SAVED_SEARCHES">
-    <coreQueryPageProvider>
-      <property name="coreSession">#{documentManager}</property>
-      <pattern>
-        SELECT * FROM FacetedSearch WHERE ecm:path STARTSWITH ?
-        AND ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
-      </pattern>
-    </coreQueryPageProvider>
-  </contentView>
+    <contentView name="USER_SAVED_SEARCHES">
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <pattern>
+          SELECT * FROM FacetedSearch WHERE ecm:path STARTSWITH ?
+          AND ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType !=
+          'HiddenInNavigation'
+        </pattern>
+      </coreQueryPageProvider>
+    </contentView>
 
-  <contentView name="ALL_SAVED_SEARCHES">
-    <coreQueryPageProvider>
-      <property name="coreSession">#{documentManager}</property>
-      <pattern>
-        SELECT * FROM FacetedSearch WHERE ecm:currentLifeCycleState != 'deleted'
-        AND ecm:mixinType != 'HiddenInNavigation'
-      </pattern>
-    </coreQueryPageProvider>
-  </contentView>
+    <contentView name="ALL_SAVED_SEARCHES">
+      <coreQueryPageProvider>
+        <property name="coreSession">#{documentManager}</property>
+        <pattern>
+          SELECT * FROM FacetedSearch WHERE ecm:currentLifeCycleState !=
+          'deleted' AND ecm:mixinType != 'HiddenInNavigation'
+        </pattern>
+      </coreQueryPageProvider>
+    </contentView>
 
   </extension>
 
