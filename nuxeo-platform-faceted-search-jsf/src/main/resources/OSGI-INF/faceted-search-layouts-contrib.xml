@@ -12,11 +12,11 @@
       </property>
     </widgetType>
 
-    <widgetType name="usersSuggestion">
+    <widgetType name="facetedSearchUsersSuggestion">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
-      <property name="template">/widgets/user_suggestion_faceted_widget_template.xhtml
+      <property name="template">/widgets/user_suggestion_widget_template.xhtml
       </property>
     </widgetType>
 
