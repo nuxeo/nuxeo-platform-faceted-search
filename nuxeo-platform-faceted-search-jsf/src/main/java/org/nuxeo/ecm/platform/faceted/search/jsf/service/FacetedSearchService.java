@@ -1,3 +1,20 @@
+/*
+ * (C) Copyright 2010 Nuxeo SAS (http://nuxeo.com/) and contributors.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Lesser General Public License
+ * (LGPL) version 2.1 which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/lgpl.html
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * Contributors:
+ *     Nuxeo - initial API and implementation
+ */
+
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
 import java.util.List;
@@ -30,7 +47,7 @@ public interface FacetedSearchService {
      * @return the saved Faceted Search DocumentModel
      * @throws ClientException in case of any error during the save
      */
-    public DocumentModel saveSearch(CoreSession session,
+    DocumentModel saveSearch(CoreSession session,
             ContentView facetedSearchContentView, String title)
             throws ClientException;
 
@@ -39,13 +56,13 @@ public interface FacetedSearchService {
      * @param session the {@code CoreSession} to use
      * @throws ClientException in case of any error
      */
-    public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session) throws ClientException;
+    List<DocumentModel> getCurrentUserSavedSearches(CoreSession session) throws ClientException;
 
     /**
      * Returns all the accessible saved Faceted Searches
      * @param session the {@code CoreSession} to use
      * @throws ClientException in case of any error
      */
-    public List<DocumentModel> getAllSavedSearches(CoreSession session) throws ClientException;
+    List<DocumentModel> getAllSavedSearches(CoreSession session) throws ClientException;
 
 }
