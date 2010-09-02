@@ -165,7 +165,7 @@ public class FacetedSearchActions implements Serializable {
         List<SelectItem> items = new ArrayList<SelectItem>();
         for (DocumentModel doc : docs) {
             items.add(new SelectItem(doc.getId(), doc.getTitle(), "",
-                    doc.equals(currentSelectedSavedSearchId)));
+                    doc.getId().equals(currentSelectedSavedSearchId)));
         }
         return items;
     }

@@ -19,6 +19,10 @@
       <nxu:set var="contentViewName" value="faceted_search_default">
 
         <ui:decorate template="/incl/content_view.xhtml">
+          <ui:define name="empty_folder_label">
+            <h:outputText value="#{messages['label.content.empty.search']}"
+              rendered="#{documents.rowCount == 0 and not provider.hasError()}" />
+          </ui:define>
           <ui:define name="content_view_header_after_selector">
             <ui:include src="/facetedsearch/save_search_form.xhtml"/>
           </ui:define>
