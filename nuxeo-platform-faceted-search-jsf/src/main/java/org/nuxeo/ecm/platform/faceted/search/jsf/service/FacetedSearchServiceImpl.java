@@ -126,7 +126,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         DocumentModel uws = getCurrentUserPersonalWorkspace(session);
         List<DocumentModel> userSavedSearches = getDocuments(
                 Constants.CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME,
-                uws.getPathAsString());
+                session.getPrincipal().getName());
         return userSavedSearches;
     }
 
@@ -145,9 +145,11 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         return ((PageProvider<DocumentModel>) contentView.getPageProviderWithParams(parameters)).getCurrentPage();
     }
 
-    public List<DocumentModel> getAllSavedSearches(CoreSession session)
+    public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
             throws ClientException {
-        List<DocumentModel> allSavedSearches = getDocuments(Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME);
+        List<DocumentModel> allSavedSearches = getDocuments(
+                Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME,
+                session.getPrincipal().getName());
         return allSavedSearches;
     }
 

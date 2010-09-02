@@ -59,10 +59,11 @@ public interface FacetedSearchService {
     List<DocumentModel> getCurrentUserSavedSearches(CoreSession session) throws ClientException;
 
     /**
-     * Returns all the accessible saved Faceted Searches
+     * Returns all the accessible saved Faceted Searches except the ones for the
+     * current user.
      * @param session the {@code CoreSession} to use
      * @throws ClientException in case of any error
      */
-    List<DocumentModel> getAllSavedSearches(CoreSession session) throws ClientException;
+    List<DocumentModel> getOtherUsersSavedSearches(CoreSession session) throws ClientException;
 
 }

@@ -10,9 +10,8 @@
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
         <pattern>
-          SELECT * FROM FacetedSearch WHERE ecm:path STARTSWITH ?
-          AND ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType !=
-          'HiddenInNavigation'
+          SELECT * FROM FacetedSearch WHERE dc:creator = ? AND
+          ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
@@ -22,8 +21,8 @@
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
         <pattern>
-          SELECT * FROM FacetedSearch WHERE ecm:currentLifeCycleState !=
-          'deleted' AND ecm:mixinType != 'HiddenInNavigation'
+          SELECT * FROM FacetedSearch WHERE dc:creator != ? AND
+          ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>

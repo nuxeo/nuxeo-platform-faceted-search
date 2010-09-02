@@ -133,8 +133,8 @@ public class FacetedSearchActions implements Serializable {
         return facetedSearchService.getCurrentUserSavedSearches(documentManager);
     }
 
-    public List<DocumentModel> getAllSavedSearches() throws ClientException {
-        return facetedSearchService.getAllSavedSearches(documentManager);
+    public List<DocumentModel> getOtherUsersSavedSearches() throws ClientException {
+        return facetedSearchService.getOtherUsersSavedSearches(documentManager);
     }
 
     @Factory(value = "savedSearchesSelectItems", scope = ScopeType.EVENT)
@@ -150,11 +150,10 @@ public class FacetedSearchActions implements Serializable {
         userGroup.setSelectItems(userSavedSearchesItems.toArray(new SelectItem[userSavedSearchesItems.size()]));
         items.add(userGroup);
 
-        List<DocumentModel> allSavedFacetedSearches = getAllSavedSearches();
-        allSavedFacetedSearches.removeAll(userSavedSearches);
-        List<SelectItem> allSavedSearchesItems = convertToSelectItems(allSavedFacetedSearches);
+        List<DocumentModel> otherUsersSavedFacetedSearches = getOtherUsersSavedSearches();
+        List<SelectItem> otherUsersSavedSearchesItems = convertToSelectItems(otherUsersSavedFacetedSearches);
         SelectItemGroup allGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
-        allGroup.setSelectItems(allSavedSearchesItems.toArray(new SelectItem[allSavedSearchesItems.size()]));
+        allGroup.setSelectItems(otherUsersSavedSearchesItems.toArray(new SelectItem[otherUsersSavedSearchesItems.size()]));
         items.add(allGroup);
 
         return items;

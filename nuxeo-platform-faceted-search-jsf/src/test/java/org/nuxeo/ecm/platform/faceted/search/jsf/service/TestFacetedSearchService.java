@@ -186,13 +186,13 @@ public class TestFacetedSearchService {
         DocumentModel thirdSavedSearch = createSavedSearch("Third saved search");
 
         // user1 should see its saved search
-        List<DocumentModel> allSavedSearches = facetedSearchService.getAllSavedSearches(session);
+        List<DocumentModel> allSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
         assertEquals(1, allSavedSearches.size());
         assertTrue(allSavedSearches.contains(thirdSavedSearch));
 
         // Administrator should see 3 saved searches
         changeUser("Administrator");
-        allSavedSearches = facetedSearchService.getAllSavedSearches(session);
+        allSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
         assertEquals(3, allSavedSearches.size());
         assertTrue(allSavedSearches.contains(firstSavedSearch));
         assertTrue(allSavedSearches.contains(secondSavedSearch));
