@@ -6,6 +6,7 @@ Bundle-Vendor: Nuxeo
 Bundle-Version: 1.0.0
 Nuxeo-Component: OSGI-INF/faceted-search-navtree-contrib.xml,
  OSGI-INF/faceted-search-core-types-contrib.xml,
+ OSGI-INF/faceted-search-layouts-contrib.xml,
  OSGI-INF/faceted-search-contentviews-contrib.xml,
  OSGI-INF/faceted-search-ecm-types-contrib.xml,
  OSGI-INF/faceted-search-lifecycles-contrib.xml

@@ -13,10 +13,10 @@
       <default-view>view_documents</default-view>
       <layouts mode="any">
         <layout>heading</layout>
-      </layouts>
-      <!-- all content already on summary page -->
-      <layouts mode="view">
         <layout>faceted_search_default</layout>
+      </layouts>
+      <layouts mode="summary">
+        <layout>faceted_search_summary_layout</layout>
       </layouts>
     </type>
 
