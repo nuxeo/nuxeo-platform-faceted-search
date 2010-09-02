@@ -20,6 +20,12 @@
       </layouts>
     </type>
 
+    <type id="Folder">
+      <subtypes>
+        <type hidden="create">FacetedSearchDefault</type>
+      </subtypes>
+    </type>
+
   </extension>
 
 </component>
