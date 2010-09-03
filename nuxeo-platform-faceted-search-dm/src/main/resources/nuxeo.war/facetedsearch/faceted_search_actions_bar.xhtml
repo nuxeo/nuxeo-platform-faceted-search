@@ -1,5 +1,6 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:nxu="http://nuxeo.org/nxweb/util">
+     xmlns:nxu="http://nuxeo.org/nxweb/util"
+     class="facetedSearchActionBar">
 
   <h:commandLink action="#{facetedSearchActions.clearSearch()}">
     <h:outputText value="#{messages['command.faceted.search.clear']}" />
@@ -9,5 +10,6 @@
     <nxu:actionListenerMethod
             value="#{contentViewActions.refresh(contentViewName)}"/>
   </h:commandButton>
+  <div style="clear:both;"></div>
 
 </div>
