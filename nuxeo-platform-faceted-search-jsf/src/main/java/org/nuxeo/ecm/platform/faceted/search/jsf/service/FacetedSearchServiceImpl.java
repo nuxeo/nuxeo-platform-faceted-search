@@ -123,7 +123,6 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session)
             throws ClientException {
-        DocumentModel uws = getCurrentUserPersonalWorkspace(session);
         List<DocumentModel> userSavedSearches = getDocuments(
                 Constants.CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME,
                 session.getPrincipal().getName());

@@ -66,6 +66,7 @@ import static org.junit.Assert.assertTrue;
         "org.nuxeo.ecm.platform.userworkspace.api",
         "org.nuxeo.ecm.platform.userworkspace.types",
         "org.nuxeo.ecm.platform.userworkspace.core",
+        "org.nuxeo.ecm.platform.dublincore",
         "org.nuxeo.ecm.platform.faceted.search.jsf",
         "org.nuxeo.ecm.platform.ui:OSGI-INF/contentview-framework.xml" })
 @LocalDeploy( {
