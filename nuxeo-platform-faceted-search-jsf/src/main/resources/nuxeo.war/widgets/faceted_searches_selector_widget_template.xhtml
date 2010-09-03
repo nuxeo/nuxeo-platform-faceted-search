@@ -5,7 +5,7 @@
         id="facetedSearchSelectorDiv">
 
   <nxu:set var="displaySelector" value="#{facetedSearchActions.contentViewNames.size > 1}">
-  <c:if test="${hasSpecificFields}">
+  <c:if test="${displaySelector}">
 
   <p><h:outputText value="#{messages['label.faceted.searches']}" /></p>
   <h:selectOneMenu
