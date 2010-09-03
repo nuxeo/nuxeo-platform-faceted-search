@@ -16,7 +16,7 @@
     <div id="content">
 
       <nxu:set var="contentViewListIndex" value="0">
-      <nxu:set var="contentViewName" value="faceted_search_default">
+      <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
 
         <ui:decorate template="/incl/content_view.xhtml">
           <ui:define name="empty_folder_label">

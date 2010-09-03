@@ -1,6 +1,6 @@
-<h:form xmlns:h="http://java.sun.com/jsf/html"
+<div xmlns:h="http://java.sun.com/jsf/html"
         xmlns:f="http://java.sun.com/jsf/core"
-        id="savedFacetedSearchSelectorForm">
+        id="savedFacetedSearchSelectorDiv">
 
   <p><h:outputText value="#{messages['label.saved.searches']}" /></p>
   <h:selectOneMenu
@@ -15,4 +15,4 @@
     <h:commandButton value="submit"
                      action="#{facetedSearchActions.loadSavedSearch}"/>
   </div>
-</h:form>
+</div>

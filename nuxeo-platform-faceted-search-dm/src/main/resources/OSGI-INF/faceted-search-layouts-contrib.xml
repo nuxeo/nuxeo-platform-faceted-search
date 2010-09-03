@@ -96,6 +96,12 @@
       </templates>
       <rows>
         <row>
+          <widget>facetedSearchesSelector</widget>
+        </row>
+        <row>
+          <widget>savedFacetedSearchesSelector</widget>
+        </row>
+        <row>
           <widget>text_search</widget>
         </row>
         <row>

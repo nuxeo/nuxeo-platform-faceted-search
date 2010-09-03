@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.layouts">
 
+  <require>org.nuxeo.ecm.platform.forms.layout.WebLayoutManager</require>
+
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
@@ -26,6 +28,31 @@
       </handler-class>
       <property name="template">/widgets/faceted_search_wrapper_widget_template.xhtml</property>
     </widgetType>
+
+    <widgetType name="facetedSearchesSelector">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/faceted_searches_selector_widget_template.xhtml</property>
+    </widgetType>
+
+    <widgetType name="savedFacetedSearchesSelector">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/saved_faceted_searches_selector_widget_template.xhtml</property>
+    </widgetType>
+
+  </extension>
+
+  <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
+    point="widgets">
+
+    <widget name="facetedSearchesSelector"
+      type="facetedSearchesSelector" />
+
+    <widget name="savedFacetedSearchesSelector"
+      type="savedFacetedSearchesSelector" />
 
   </extension>
 

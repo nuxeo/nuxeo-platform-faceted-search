@@ -106,7 +106,7 @@ public class FacetedSearchActions implements Serializable {
         return currentContentViewName;
     }
 
-    public void setFacetedSearchCurrentContentViewName(
+    public void setCurrentContentViewName(
             String facetedSearchCurrentContentViewName) {
         this.currentContentViewName = facetedSearchCurrentContentViewName;
     }
@@ -163,8 +163,7 @@ public class FacetedSearchActions implements Serializable {
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
         for (DocumentModel doc : docs) {
-            items.add(new SelectItem(doc.getId(), doc.getTitle(), "",
-                    doc.getId().equals(currentSelectedSavedSearchId)));
+            items.add(new SelectItem(doc.getId(), doc.getTitle(), ""));
         }
         return items;
     }

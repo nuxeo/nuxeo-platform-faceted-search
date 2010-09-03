@@ -5,19 +5,17 @@
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:nxl="http://nuxeo.org/nxforms/layout">
 
-  <ui:include src="/facetedsearch/faceted_searches_selector.xhtml" />
-
-  <ui:include src="/facetedsearch/saved_faceted_searches_selector.xhtml" />
-
   <h:form id="facetedSearchForm">
 
+    <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
     <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
       <ui:param name="contentViewName"
-                value="#{facetedSearchCurrentContentViewName}"/>
+                value="#{contentViewName}"/>
     </ui:include>
 
+
     <nxu:set var="contentView"
-             value="#{contentViewActions.getContentViewWithProvider(facetedSearchCurrentContentViewName, null)}"
+             value="#{contentViewActions.getContentViewWithProvider(contentViewName, null)}"
              cache="true">
       <c:if test="#{contentView != null}">
 
@@ -28,9 +26,9 @@
 
     <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
       <ui:param name="contentViewName"
-                value="#{facetedSearchCurrentContentViewName}"/>
+                value="#{contentViewName}"/>
     </ui:include>
-
+    </nxu:set>
   </h:form>
 
 </div>
