@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.codecs">
+
+  <extension
+    target="org.nuxeo.ecm.platform.url.service.DocumentViewCodecService"
+    point="codecs">
+
+    <documentViewCodec name="facetedSearch" enabled="true" prefix="nxsrch"
+      class="org.nuxeo.ecm.platform.faceted.search.dm.codec.FacetedSearchViewCodec" />
+
+  </extension>
+
+
+  <extension target="org.nuxeo.ecm.platform.ui.web.rest.URLService"
+    point="urlpatterns">
+
+    <urlPattern name="facetedSearch" enabled="true">
+      <defaultURLPolicy>false</defaultURLPolicy>
+      <needBaseURL>true</needBaseURL>
+      <needRedirectFilter>true</needRedirectFilter>
+      <needFilterPreprocessing>true</needFilterPreprocessing>
+      <codecName>facetedSearch</codecName>
+      <actionBinding>#{restHelper.initContextFromRestRequest}
+      </actionBinding>
+      <documentViewBinding>#{restHelper.documentView}
+      </documentViewBinding>
+      <newDocumentViewBinding>#{restHelper.newDocumentView}
+      </newDocumentViewBinding>
+      <bindings>
+        <binding name="view">#{facetedSearchActions.currentContentViewName}</binding>
+        <binding name="values">#{facetedSearchActions.filterValues}</binding>
+      </bindings>
+    </urlPattern>
+
+  </extension>
+
+
+  <extension
+    target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
+    point="startURL">
+
+    <startURLPattern>
+      <patterns>
+        <pattern>nxsrch/</pattern>
+      </patterns>
+    </startURLPattern>
+
+  </extension>
+
+</component>

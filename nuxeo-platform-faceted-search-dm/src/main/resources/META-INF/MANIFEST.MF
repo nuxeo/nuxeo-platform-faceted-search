@@ -9,8 +9,10 @@ Nuxeo-Component: OSGI-INF/faceted-search-navtree-contrib.xml,
  OSGI-INF/faceted-search-layouts-contrib.xml,
  OSGI-INF/faceted-search-contentviews-contrib.xml,
  OSGI-INF/faceted-search-ecm-types-contrib.xml,
- OSGI-INF/faceted-search-lifecycles-contrib.xml
+ OSGI-INF/faceted-search-lifecycles-contrib.xml,
+ OSGI-INF/faceted-search-codecs-contrib.xml
 Nuxeo-Require: org.nuxeo.ecm.platform.lang,
- org.nuxeo.platform.virtualnavigation.web
+ org.nuxeo.platform.virtualnavigation.web,
+ org.nuxeo.ecm.platform.web.common
 Nuxeo-RequiredBy: org.nuxeo.ecm.war,
  org.nuxeo.ecm.platform.tag.web

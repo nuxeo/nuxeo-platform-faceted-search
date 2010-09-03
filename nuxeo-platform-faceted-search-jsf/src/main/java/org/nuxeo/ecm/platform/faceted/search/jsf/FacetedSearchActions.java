@@ -17,7 +17,13 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf;
 
+import static org.jboss.seam.ScopeType.CONVERSATION;
+import static org.jboss.seam.ScopeType.EVENT;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
+
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,19 +39,21 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
+import org.json.JSONException;
+import org.nuxeo.common.utils.Base64;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
+import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataExporter;
+import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataHelper;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
+import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
+import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
 import org.nuxeo.ecm.webapp.contentbrowser.ContentViewActions;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
-
-import static org.jboss.seam.ScopeType.CONVERSATION;
-import static org.jboss.seam.ScopeType.EVENT;
-import static org.jboss.seam.annotations.Install.FRAMEWORK;
 
 /**
  * Handles faceted search related web actions.
@@ -70,8 +78,6 @@ public class FacetedSearchActions implements Serializable {
 
     public static final String  SEARCH_SAVED_LABEL = "label.search.saved";
 
-    public static final String FACETED_SEARCH_RESULTS_VIEW = "faceted_search_results";
-
     @In(create = true)
     protected FacetedSearchService facetedSearchService;
 
@@ -86,6 +92,9 @@ public class FacetedSearchActions implements Serializable {
 
     @In(create = true)
     protected ResourcesAccessor resourcesAccessor;
+
+    @In(create = true)
+    protected MultiNavTreeManager multiNavTreeManager;
 
     protected List<String> contentViewNames;
 
@@ -109,6 +118,7 @@ public class FacetedSearchActions implements Serializable {
     public void setCurrentContentViewName(
             String facetedSearchCurrentContentViewName) {
         this.currentContentViewName = facetedSearchCurrentContentViewName;
+        multiNavTreeManager.setSelectedNavigationTree(Constants.FACETED_SEARCH_NAV_TREE_ID);
     }
 
     public List<String> getContentViewNames() throws ClientException {
@@ -190,7 +200,7 @@ public class FacetedSearchActions implements Serializable {
         } else {
             loadSavedSearch(currentSelectedSavedSearchId);
         }
-        return FACETED_SEARCH_RESULTS_VIEW;
+        return Constants.FACETED_SEARCH_RESULTS_VIEW;
     }
 
     public String loadSavedSearch(String savedSearchId) throws ClientException {
@@ -210,7 +220,7 @@ public class FacetedSearchActions implements Serializable {
         if (contentView != null) {
             this.currentContentViewName = contentViewName;
         }
-        return FACETED_SEARCH_RESULTS_VIEW;
+        return Constants.FACETED_SEARCH_RESULTS_VIEW;
     }
 
     public String getSavedSearchTitle() {
@@ -246,4 +256,25 @@ public class FacetedSearchActions implements Serializable {
         return blankDoc;
     }
 
+    public void setFilterValues(String filterValues) throws ClientException, JSONException {
+        String decodedValues = new String(Base64.decode(filterValues));
+        ContentView contentView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel doc = contentView.getSearchDocumentModel();
+        doc = JSONMetadataHelper.setPropertiesFromJson(doc, decodedValues);
+        contentView.setSearchDocumentModel(doc);
+    }
+
+    public String getSearchPermlinkUrl() throws ClientException, UnsupportedEncodingException {
+        ContentView contentView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel doc = contentView.getSearchDocumentModel();
+        String url = BaseURL.getBaseURL();
+        // TODO : replace "nxsrch" by viewcodec prefix constant after move in -dm
+        url += "nxsrch" + "/" + documentManager.getRepositoryName() + "/?view=" + currentContentViewName + "&values=";
+        JSONMetadataExporter jSonMetadataExporter = new JSONMetadataExporter();
+        String jsonString = jSonMetadataExporter.run(doc).toString();
+        jsonString = Base64.encodeBytes(jsonString.getBytes(), Base64.GZIP | Base64.DONT_BREAK_LINES);
+        jsonString = URLEncoder.encode(jsonString, "UTF-8");
+        url += jsonString;
+        return url;
+    }
 }

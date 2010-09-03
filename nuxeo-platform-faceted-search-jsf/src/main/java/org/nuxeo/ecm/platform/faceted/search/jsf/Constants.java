@@ -41,4 +41,10 @@ public final class Constants {
 
     public static final String CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME = "USER_SAVED_SEARCHES";
 
+    // TODO : Move in -dm
+    public static final String FACETED_SEARCH_RESULTS_VIEW = "faceted_search_results";
+
+    // TODO : Move in -dm
+    public static final String FACETED_SEARCH_NAV_TREE_ID = "facetedSearch";
+
 }

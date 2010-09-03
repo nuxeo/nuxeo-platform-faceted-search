@@ -15,6 +15,13 @@
 
     <div id="content">
 
+      <h:outputLink value="#{facetedSearchActions.searchPermlinkUrl}">
+        <nxu:graphicImage value="/icons/permalink.png"
+          style="vertical-align:middle"
+          alt="#{messages['label.search.permalink']}"
+          title="#{messages['label.search.permalink']}"/>
+      </h:outputLink>
+
       <nxu:set var="contentViewListIndex" value="0">
       <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
 
