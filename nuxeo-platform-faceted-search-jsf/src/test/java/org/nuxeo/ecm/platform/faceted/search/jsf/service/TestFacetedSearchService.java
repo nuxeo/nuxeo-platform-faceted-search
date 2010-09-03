@@ -180,24 +180,23 @@ public class TestFacetedSearchService {
     }
 
     @Test
-    public void getAllSavedSearches() throws ClientException {
+    public void getOtherUsersSavedSearches() throws ClientException {
         DocumentModel firstSavedSearch = createSavedSearch("First saved search");
         DocumentModel secondSavedSearch = createSavedSearch("Second saved search");
         changeUser("user1");
         DocumentModel thirdSavedSearch = createSavedSearch("Third saved search");
 
-        // user1 should see its saved search
-        List<DocumentModel> allSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
-        assertEquals(1, allSavedSearches.size());
-        assertTrue(allSavedSearches.contains(thirdSavedSearch));
+        // user1 should see no other saved searches
+        List<DocumentModel> otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
+        assertTrue(otherUsersSavedSearches.isEmpty());
 
-        // Administrator should see 3 saved searches
+        // Administrator should see the user1 saved search
         changeUser("Administrator");
-        allSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
-        assertEquals(3, allSavedSearches.size());
-        assertTrue(allSavedSearches.contains(firstSavedSearch));
-        assertTrue(allSavedSearches.contains(secondSavedSearch));
-        assertTrue(allSavedSearches.contains(thirdSavedSearch));
+        otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
+        assertEquals(1, otherUsersSavedSearches.size());
+        assertFalse(otherUsersSavedSearches.contains(firstSavedSearch));
+        assertFalse(otherUsersSavedSearches.contains(secondSavedSearch));
+        assertTrue(otherUsersSavedSearches.contains(thirdSavedSearch));
     }
 
     protected void changeUser(String username) {
