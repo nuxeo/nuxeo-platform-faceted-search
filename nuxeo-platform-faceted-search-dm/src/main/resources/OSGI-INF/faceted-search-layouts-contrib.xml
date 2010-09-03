@@ -4,7 +4,7 @@
   <require>org.nuxeo.ecm.platform.forms.layout.WebLayoutManager</require>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
-    point="widgets">
+             point="widgets">
 
     <widget name="text_search" type="facetedSearchWrapper">
       <labels>
@@ -84,10 +84,28 @@
       </subWidgets>
     </widget>
 
+    <widget name="facetedSearchesSelector"
+            type="facetedSearchesSelector">
+      <widgetModes>
+        <!-- not shown in edit and view modes -->
+        <mode value="view">hidden</mode>
+        <mode value="edit">hidden</mode>
+      </widgetModes>
+    </widget>
+
+    <widget name="savedFacetedSearchesSelector"
+            type="savedFacetedSearchesSelector">
+      <widgetModes>
+        <!-- not shown in edit and view modes -->
+        <mode value="view">hidden</mode>
+        <mode value="edit">hidden</mode>
+      </widgetModes>
+    </widget>
+
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
-    point="layouts">
+             point="layouts">
 
     <layout name="faceted_search_default">
       <templates>

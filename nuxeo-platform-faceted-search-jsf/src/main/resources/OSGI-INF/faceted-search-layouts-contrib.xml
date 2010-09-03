@@ -45,15 +45,4 @@
 
   </extension>
 
-  <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
-    point="widgets">
-
-    <widget name="facetedSearchesSelector"
-      type="facetedSearchesSelector" />
-
-    <widget name="savedFacetedSearchesSelector"
-      type="savedFacetedSearchesSelector" />
-
-  </extension>
-
 </component>
