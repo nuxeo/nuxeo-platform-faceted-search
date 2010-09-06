@@ -6,7 +6,7 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
-    <widgetType name="dateRange">
+    <widgetType name="date_range">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
@@ -14,7 +14,7 @@
       </property>
     </widgetType>
 
-    <widgetType name="facetedSearchUsersSuggestion">
+    <widgetType name="faceted_search_users_suggestion">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
@@ -22,21 +22,21 @@
       </property>
     </widgetType>
 
-    <widgetType name="facetedSearchWrapper">
+    <widgetType name="faceted_search_wrapper">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
       <property name="template">/widgets/faceted_search_wrapper_widget_template.xhtml</property>
     </widgetType>
 
-    <widgetType name="facetedSearchesSelector">
+    <widgetType name="faceted_searches_selector">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
       <property name="template">/widgets/faceted_searches_selector_widget_template.xhtml</property>
     </widgetType>
 
-    <widgetType name="savedFacetedSearchesSelector">
+    <widgetType name="saved_faceted_searches_selector">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
