@@ -22,6 +22,9 @@
           </fields>
         </widget>
       </subWidgets>
+      <widgetModes>
+        <mode value="faceted_search">edit</mode>
+      </widgetModes>
     </widget>
 
     <widget name="date_search" type="faceted_search_wrapper">
@@ -60,6 +63,9 @@
           </properties>
         </widget>
       </subWidgets>
+      <widgetModes>
+        <mode value="faceted_search">edit</mode>
+      </widgetModes>
     </widget>
 
     <widget name="people_search" type="faceted_search_wrapper">
@@ -82,6 +88,9 @@
           </properties>
         </widget>
       </subWidgets>
+      <widgetModes>
+        <mode value="faceted_search">edit</mode>
+      </widgetModes>
     </widget>
 
     <widget name="faceted_searches_selector"
@@ -90,6 +99,7 @@
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
         <mode value="edit">hidden</mode>
+        <mode value="faceted_search">edit</mode>
       </widgetModes>
     </widget>
 
@@ -99,6 +109,7 @@
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
         <mode value="edit">hidden</mode>
+        <mode value="faceted_search">edit</mode>
       </widgetModes>
     </widget>
 
