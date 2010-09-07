@@ -6,17 +6,14 @@
 
   <c:if test="#{widget.mode != 'create' and widget.mode != 'edit'}">
     <div>
-      <span class="wideLabel">
+      <span class="tinyLabel">
         <h:outputText value="#{messages['label.search.between']} " />
       </span>
   
       <h:outputText value="#{field_0}">
         <f:convertDateTime type="date" pattern="#{nxu:basicDateFormater()}" />
       </h:outputText>
-    </div>
-
-    <div>
-      <span class="wideLabel">
+      <span class="tinyLabel">
         <h:outputText value="#{messages['label.search.and']} " />
       </span>
   
@@ -28,17 +25,15 @@
 
   <c:if test="#{widget.mode == 'create' or widget.mode == 'edit'}">
     <div>
-      <span class="wideLabel">
+      <span class="tinyLabel">
         <h:outputText value="#{messages['label.search.between']} " />
       </span>
 
       <nxu:inputDateTime value="#{field_0}" id="#{widget.id}_from" styleClass="#{widget.properties['styleClass']}"
         required="#{widget.properties['required']}" showsTime="true" format="#{nxu:basicDateFormater()}" />
       <h:message styleClass="errorMessage" for="#{widget.id}_from" id="#{widget.id}_message_from" />
-    </div>
 
-    <div>
-      <span class="wideLabel">
+      <span class="tinyLabel">
         <h:outputText value="#{messages['label.search.and']} " />
       </span>
   
