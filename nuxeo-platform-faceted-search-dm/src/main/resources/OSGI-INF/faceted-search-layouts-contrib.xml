@@ -85,6 +85,7 @@
             <property name="userSuggestionSearchType">USER_TYPE</property>
             <property name="displayHorizontally">false</property>
             <property name="hideSearchTypeText">true</property>
+            <property name="displayHelpLabel">false</property>
           </properties>
         </widget>
       </subWidgets>
