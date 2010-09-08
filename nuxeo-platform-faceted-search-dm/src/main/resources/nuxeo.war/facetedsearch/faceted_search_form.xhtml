@@ -8,11 +8,6 @@
   <h:form id="facetedSearchForm">
 
     <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
-    <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
-      <ui:param name="contentViewName"
-                value="#{contentViewName}"/>
-    </ui:include>
-
 
     <nxu:set var="contentView"
              value="#{contentViewActions.getContentViewWithProvider(contentViewName, null)}"
@@ -24,10 +19,6 @@
       </c:if>
     </nxu:set>
 
-    <ui:include src="/facetedsearch/faceted_search_actions_bar.xhtml">
-      <ui:param name="contentViewName"
-                value="#{contentViewName}"/>
-    </ui:include>
     </nxu:set>
   </h:form>
 

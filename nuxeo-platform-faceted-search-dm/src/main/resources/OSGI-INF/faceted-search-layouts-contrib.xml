@@ -114,6 +114,17 @@
       </widgetModes>
     </widget>
 
+    <widget name="actions_bar" type="template">
+      <properties widgetMode="any">
+        <property name="template">
+          /widgets/faceted_search_actions_widget_template.xhtml
+        </property>
+      </properties>
+      <widgetModes>
+        <mode value="faceted_search">edit</mode>
+      </widgetModes>
+    </widget>
+
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
@@ -132,6 +143,9 @@
           <widget>saved_faceted_searches_selector</widget>
         </row>
         <row>
+          <widget>actions_bar</widget>
+        </row>
+        <row>
           <widget>text_search</widget>
         </row>
         <row>
@@ -139,6 +153,9 @@
         </row>
         <row>
           <widget>people_search</widget>
+        </row>
+        <row>
+          <widget>actions_bar</widget>
         </row>
       </rows>
     </layout>
