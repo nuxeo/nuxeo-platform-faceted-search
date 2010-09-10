@@ -27,7 +27,9 @@
 
     <div id="#{widget.id}_tree" class="facetedSearchPopUp">
       <div class="closePopUpHeader">
-        <span onclick="jQuery('##{widget.id}_tree').hide();">Close</span>
+        <span class="popUpTitle"><h:outputText value="#{messages['label.search.popup.title']}" /></span>
+        <span class="closePopUp" onclick="jQuery('##{widget.id}_tree').hide();">Close</span>
+        <div style="clear:both;"></div>
       </div>
       <div class="popUpContent">
         <rich:tree id="#{widget.id}_treeId"
