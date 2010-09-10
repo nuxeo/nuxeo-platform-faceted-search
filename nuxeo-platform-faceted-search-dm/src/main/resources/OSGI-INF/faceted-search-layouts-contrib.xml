@@ -155,9 +155,45 @@
           <widget>people_search</widget>
         </row>
         <row>
+          <widget>dc_coverage</widget>
+        </row>
+        <row>
+          <widget>dc_subjects</widget>
+        </row>
+        <row>
           <widget>actions_bar</widget>
         </row>
       </rows>
+      <widget name="dc_coverage" type="faceted_search_tree">
+        <labels>
+          <label mode="any">label.faceted.search.coverage</label>
+        </labels>
+        <translated>true</translated>
+        <fields>
+          <field>fsd:dc_coverage</field>
+        </fields>
+        <properties widgetMode="any">
+          <property name="directoryTreeName">byCoverageNavigation</property>
+        </properties>
+        <widgetModes>
+          <mode value="faceted_search">edit</mode>
+        </widgetModes>
+      </widget>
+      <widget name="dc_subjects" type="faceted_search_tree">
+        <labels>
+          <label mode="any">label.faceted.search.subjects</label>
+        </labels>
+        <translated>true</translated>
+        <fields>
+          <field>fsd:dc_subjects</field>
+        </fields>
+        <properties widgetMode="any">
+          <property name="directoryTreeName">bySubjectsNavigation</property>
+        </properties>
+        <widgetModes>
+          <mode value="faceted_search">edit</mode>
+        </widgetModes>
+      </widget>
     </layout>
 
     <layout name="faceted_search_summary_layout">

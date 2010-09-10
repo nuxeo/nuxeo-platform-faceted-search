@@ -17,15 +17,13 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf;
 
-import static org.jboss.seam.ScopeType.CONVERSATION;
-import static org.jboss.seam.ScopeType.EVENT;
-import static org.jboss.seam.annotations.Install.FRAMEWORK;
-
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
@@ -48,12 +46,19 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataHelper;
+import org.nuxeo.ecm.platform.forms.layout.api.FieldDefinition;
+import org.nuxeo.ecm.platform.forms.layout.api.Widget;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
 import org.nuxeo.ecm.webapp.contentbrowser.ContentViewActions;
+import org.nuxeo.ecm.webapp.directory.DirectoryTreeNode;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
+
+import static org.jboss.seam.ScopeType.CONVERSATION;
+import static org.jboss.seam.ScopeType.EVENT;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
 
 /**
  * Handles faceted search related web actions.
@@ -103,6 +108,8 @@ public class FacetedSearchActions implements Serializable {
     protected String currentSelectedSavedSearchId;
 
     protected String savedSearchTitle;
+
+    protected Map<String, List<String>> directoriesValues = new HashMap<String, List<String>>();
 
     @Factory(value = "facetedSearchCurrentContentViewName", scope = EVENT)
     public String getCurrentContentViewName() throws ClientException {
@@ -277,4 +284,28 @@ public class FacetedSearchActions implements Serializable {
         url += jsonString;
         return url;
     }
+
+    public void addValue(Widget widget, DirectoryTreeNode node) throws ClientException {
+        List<String> values = directoriesValues.get(widget.getName());
+        if (values == null) {
+            values = new ArrayList<String>();
+            directoriesValues.put(widget.getName(), values);
+        }
+        values.add(node.getPath());
+
+        ContentView cView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel searchDocument = cView.getSearchDocumentModel();
+        FieldDefinition field = widget.getFieldDefinitions()[0];
+        searchDocument.setPropertyValue(field.getPropertyName(), (Serializable) values);
+    }
+
+    public void removeValue(String widgetName, String value) {
+        directoriesValues.get(widgetName).remove(value);
+    }
+
+
+    public List<String> getValuesFor(String widgetName) {
+        return directoriesValues.get(widgetName);
+    }
+
 }

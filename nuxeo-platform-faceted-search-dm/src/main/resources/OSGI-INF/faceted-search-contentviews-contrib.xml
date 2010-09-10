@@ -31,6 +31,12 @@
           <predicate parameter="dc:creator" operator="IN">
             <field schema="faceted_search_default" name="dc_creator" />
           </predicate>
+          <predicate parameter="dc:coverage" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="dc_coverage" />
+          </predicate>
+          <predicate parameter="dc:subjects" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="dc_subjects" />
+          </predicate>
         </whereClause>
         <sort column="dc:title" ascending="true" />
         <pageSize>20</pageSize>
