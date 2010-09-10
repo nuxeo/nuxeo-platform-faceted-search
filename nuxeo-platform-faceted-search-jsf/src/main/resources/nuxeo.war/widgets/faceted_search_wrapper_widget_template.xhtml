@@ -14,10 +14,10 @@
       <table class="dataInput">
         <tbody>
         <nxl:subWidget>
-          <c:set var="mode"
-                 value="#{nxu:test(!empty widget.properties.mode, widget.properties.mode, 'simple')}"/>
+          <c:set var="wrapperMode"
+                 value="#{nxu:test(!empty widget.properties.wrapperMode, widget.properties.wrapperMode, 'column')}"/>
           <tr>
-            <c:if test="#{mode == 'simple'}">
+            <c:if test="#{wrapperMode == 'column'}">
               <c:choose>
                 <c:when test="#{widget.translated}">
                   <td class="labelColumn">
@@ -52,7 +52,7 @@
                 <nxl:widget widget="#{widget}" value="#{value}"/>
               </td>
             </c:if>
-            <c:if test="#{mode == 'subTitle'}">
+            <c:if test="#{wrapperMode == 'row'}">
               <td colspan="2">
                 <c:choose>
                   <c:when test="#{widget.translated}">
@@ -88,6 +88,13 @@
                     </div>
                   </c:otherwise>
                 </c:choose>
+                <div>
+                  <nxl:widget widget="#{widget}" value="#{value}"/>
+                </div>
+              </td>
+            </c:if>
+            <c:if test="#{wrapperMode == 'noLabel'}">
+              <td colspan="2">
                 <div>
                   <nxl:widget widget="#{widget}" value="#{value}"/>
                 </div>

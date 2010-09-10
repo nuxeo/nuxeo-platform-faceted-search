@@ -23,6 +23,14 @@
     </widgetType>
 
     <widgetType name="faceted_search_wrapper">
+      <documentation>
+        Template widget dedicated to wrap other sub widgets. It displays the widget label,
+        and list the sub widgets below according to the wrapperMode.
+        The sub widgets can use 3 wrapperMode (to be defined in the sub widget properties):
+        - row: the sub widget label is displayed on one row, and the sub widget content on another row.
+        - column: the sub widget label and content are displayed on the same row
+        - noLabel: the sub widget label is not displayed at all.
+      </documentation>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
