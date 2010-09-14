@@ -21,9 +21,7 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
@@ -81,7 +79,7 @@ public class FacetedSearchActions implements Serializable {
 
     public static final String ALL_SAVED_SEARCHES_LABEL = "label.all.saved.searches";
 
-    public static final String  SEARCH_SAVED_LABEL = "label.search.saved";
+    public static final String SEARCH_SAVED_LABEL = "label.search.saved";
 
     @In(create = true)
     protected FacetedSearchService facetedSearchService;
@@ -108,8 +106,6 @@ public class FacetedSearchActions implements Serializable {
     protected String currentSelectedSavedSearchId;
 
     protected String savedSearchTitle;
-
-    protected Map<String, List<String>> directoriesValues = new HashMap<String, List<String>>();
 
     @Factory(value = "facetedSearchCurrentContentViewName", scope = EVENT)
     public String getCurrentContentViewName() throws ClientException {
@@ -150,7 +146,8 @@ public class FacetedSearchActions implements Serializable {
         return facetedSearchService.getCurrentUserSavedSearches(documentManager);
     }
 
-    public List<DocumentModel> getOtherUsersSavedSearches() throws ClientException {
+    public List<DocumentModel> getOtherUsersSavedSearches()
+            throws ClientException {
         return facetedSearchService.getOtherUsersSavedSearches(documentManager);
     }
 
@@ -158,7 +155,8 @@ public class FacetedSearchActions implements Serializable {
     public List<SelectItem> getSavedSearchesSelectItems()
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
-        items.add(new SelectItem(NONE_VALUE, resourcesAccessor.getMessages().get(NONE_LABEL)));
+        items.add(new SelectItem(NONE_VALUE,
+                resourcesAccessor.getMessages().get(NONE_LABEL)));
 
         SelectItemGroup userGroup = new SelectItemGroup(
                 resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
@@ -169,7 +167,8 @@ public class FacetedSearchActions implements Serializable {
 
         List<DocumentModel> otherUsersSavedFacetedSearches = getOtherUsersSavedSearches();
         List<SelectItem> otherUsersSavedSearchesItems = convertToSelectItems(otherUsersSavedFacetedSearches);
-        SelectItemGroup allGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
+        SelectItemGroup allGroup = new SelectItemGroup(
+                resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
         allGroup.setSelectItems(otherUsersSavedSearchesItems.toArray(new SelectItem[otherUsersSavedSearchesItems.size()]));
         items.add(allGroup);
 
@@ -218,9 +217,9 @@ public class FacetedSearchActions implements Serializable {
     }
 
     public String loadSavedSearch(String contentViewName,
-        DocumentModel searchDocument) throws ClientException {
-
-        // Do not reuse the existing document as it can be modified ans re-saved
+            DocumentModel searchDocument) throws ClientException {
+        // Do not reuse the existing document as it can be modified and saved
+        // again
         DocumentModel newSearchDocument = createDocumentModelFrom(searchDocument);
         ContentView contentView = contentViewActions.getContentView(
                 contentViewName, newSearchDocument);
@@ -246,7 +245,8 @@ public class FacetedSearchActions implements Serializable {
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
 
-            // Do not reuse the just saved document as it can be modified ans re-saved
+            // Do not reuse the just saved document as it can be modified ans
+            // re-saved
             DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
             contentView.setSearchDocumentModel(searchDocument);
 
@@ -257,13 +257,15 @@ public class FacetedSearchActions implements Serializable {
         }
     }
 
-    protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc) throws ClientException {
+    protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
+            throws ClientException {
         DocumentModel blankDoc = documentManager.createDocumentModel(sourceDoc.getType());
         blankDoc.copyContent(sourceDoc);
         return blankDoc;
     }
 
-    public void setFilterValues(String filterValues) throws ClientException, JSONException {
+    public void setFilterValues(String filterValues) throws ClientException,
+            JSONException {
         String decodedValues = new String(Base64.decode(filterValues));
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel doc = contentView.getSearchDocumentModel();
@@ -271,41 +273,58 @@ public class FacetedSearchActions implements Serializable {
         contentView.setSearchDocumentModel(doc);
     }
 
-    public String getSearchPermlinkUrl() throws ClientException, UnsupportedEncodingException {
+    public String getSearchPermlinkUrl() throws ClientException,
+            UnsupportedEncodingException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel doc = contentView.getSearchDocumentModel();
         String url = BaseURL.getBaseURL();
-        // TODO : replace "nxsrch" by viewcodec prefix constant after move in -dm
-        url += "nxsrch" + "/" + documentManager.getRepositoryName() + "/?view=" + currentContentViewName + "&values=";
+        // TODO : replace "nxsrch" by viewcodec prefix constant after move in
+        // -dm
+        url += "nxsrch" + "/" + documentManager.getRepositoryName() + "/?view="
+                + currentContentViewName + "&values=";
         JSONMetadataExporter jSonMetadataExporter = new JSONMetadataExporter();
         String jsonString = jSonMetadataExporter.run(doc).toString();
-        jsonString = Base64.encodeBytes(jsonString.getBytes(), Base64.GZIP | Base64.DONT_BREAK_LINES);
+        jsonString = Base64.encodeBytes(jsonString.getBytes(), Base64.GZIP
+                | Base64.DONT_BREAK_LINES);
         jsonString = URLEncoder.encode(jsonString, "UTF-8");
         url += jsonString;
         return url;
     }
 
-    public void addValue(Widget widget, DirectoryTreeNode node) throws ClientException {
-        List<String> values = directoriesValues.get(widget.getName());
-        if (values == null) {
-            values = new ArrayList<String>();
-            directoriesValues.put(widget.getName(), values);
-        }
-        values.add(node.getPath());
-
+    @SuppressWarnings("unchecked")
+    public void addValue(Widget widget, DirectoryTreeNode node)
+            throws ClientException {
         ContentView cView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel searchDocument = cView.getSearchDocumentModel();
         FieldDefinition field = widget.getFieldDefinitions()[0];
-        searchDocument.setPropertyValue(field.getPropertyName(), (Serializable) values);
+        List<String> values = (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
+        if (values == null) {
+            values = new ArrayList<String>();
+        }
+        if (!values.contains(node.getPath())) {
+            values.add(node.getPath());
+            searchDocument.setPropertyValue(field.getPropertyName(),
+                    (Serializable) values);
+        }
     }
 
-    public void removeValue(String widgetName, String value) {
-        directoriesValues.get(widgetName).remove(value);
+    @SuppressWarnings("unchecked")
+    public void removeValue(Widget widget, String value) throws ClientException {
+        ContentView cView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel searchDocument = cView.getSearchDocumentModel();
+        FieldDefinition field = widget.getFieldDefinitions()[0];
+        List<String> values = (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
+        if (values != null) {
+            values.remove(value);
+        }
     }
 
-
-    public List<String> getValuesFor(String widgetName) {
-        return directoriesValues.get(widgetName);
+    @SuppressWarnings("unchecked")
+    public List<String> getValuesFor(Widget widget) throws ClientException {
+        ContentView cView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel searchDocument = cView.getSearchDocumentModel();
+        FieldDefinition field = widget.getFieldDefinitions()[0];
+        return (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
     }
 
 }

@@ -5,30 +5,96 @@
         xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
         id="#{widget.id}">
 
-  <div>
+  <c:if test="#{widget.mode != 'create' and widget.mode != 'edit'}">
+
     <h6>
-      <span class="subLabel">
-        <c:choose>
-          <c:when test="#{widget.translated}">
-            <span class="subLabel">
-              <h:outputText value="#{messages[widget.label]}"/>
-            </span>
-          </c:when>
-          <c:otherwise>
-            <span class="subLabel">
-              <h:outputText value="#{widget.label}"/>
-            </span>
-           </c:otherwise>
-         </c:choose>
-      </span>
-      <span class="labelTool" onclick="jQuery('##{widget.id}_tree').show();"><img src="/nuxeo/icons/blue_arrow_tool.png" alt="Pop up" /></span>
-      <div style="clear:both;"></div>
+      <c:choose>
+        <c:when test="#{widget.translated}">
+          <span class="subLabel">
+            <h:outputText value="#{messages[widget.label]}"/>
+          </span>
+        </c:when>
+        <c:otherwise>
+          <span class="subLabel">
+            <h:outputText value="#{widget.label}"/>
+          </span>
+        </c:otherwise>
+      </c:choose>
     </h6>
+
+    <h:dataTable value="#{field_0}"
+      var="directoryValue" rendered="#{not empty field_0}">
+      <h:column>
+        <h:outputText value="#{directoryTreeManager.getLabelFor(widget.properties.directoryTreeName, directoryValue)}" />
+      </h:column>
+    </h:dataTable>
+
+  </c:if>
+
+  <c:if test="#{widget.mode == 'create' or widget.mode == 'edit'}">
+
+    <script type="text/javascript">
+      function showTree(treeId) {
+        // hide all trees
+        hideAllTrees();
+
+        var tree = jQuery(treeId);
+        tree.css('top', 100 + getScrollTop());
+        tree.show();
+      }
+
+      function hideAllTrees() {
+        jQuery('.facetedSearchPopUp').each(function () {
+          jQuery(this).hide();
+        });
+      }
+
+      function hideTree(treeId) {
+        jQuery(treeId).hide();
+      }
+
+      function getScrollTop() {
+        var scrollTop  = document.body.scrollTop  || document.documentElement.scrollTop;
+        return scrollTop;
+      }
+
+      jQuery(document).keydown(function(event) {
+        // escape
+        if (event.keyCode == '27') {
+          hideAllTrees();
+          event.preventDefault();
+        }
+      });
+
+      jQuery(document).click(function(event) {
+        var element = jQuery(event.target);
+        if (!(element.is('.facetedSearchPopUp') || element.parents().is('.facetedSearchPopUp')) &amp;&amp; !(element.is('.labelTool') || element.parents().is('.labelTool'))) {
+          hideAllTrees();
+        }
+      });
+    </script>
+
+    <h6>
+      <c:choose>
+        <c:when test="#{widget.translated}">
+          <span class="subLabel">
+            <h:outputText value="#{messages[widget.label]}"/>
+          </span>
+        </c:when>
+        <c:otherwise>
+          <span class="subLabel">
+            <h:outputText value="#{widget.label}"/>
+          </span>
+         </c:otherwise>
+       </c:choose>
+      <span class="labelTool" onclick="showTree('##{widget.id}_tree');"><img src="/nuxeo/icons/blue_arrow_tool.png" alt="Pop up" /></span>
+    </h6>
+    <div style="clear:both;"></div>
 
     <div id="#{widget.id}_tree" class="facetedSearchPopUp">
       <div class="closePopUpHeader">
         <span class="popUpTitle"><h:outputText value="#{messages['label.search.popup.title']}" /></span>
-        <span class="closePopUp" onclick="jQuery('##{widget.id}_tree').hide();">Close</span>
+        <span class="closePopUp" onclick="hideTree('##{widget.id}_tree');">Close</span>
         <div style="clear:both;"></div>
       </div>
       <div class="popUpContent">
@@ -59,17 +125,18 @@
         </rich:tree>
       </div>
     </div>
-  
+
     <a4j:outputPanel id="#{widget.id}_list" ajaxRendered="true">
       <table class="dataInput thin">
-        <nxu:dataList var="directoryValue" value="#{facetedSearchActions.getValuesFor(widget.name)}">
+        <nxu:dataList var="directoryValue" value="#{facetedSearchActions.getValuesFor(widget)}">
           <tr>
-            <td><p><h:outputText value="#{directoryValue}" /></p></td>
-            <td><a4j:commandLink action="#{facetedSearchActions.removeValue(widget.name, directoryValue)}" reRender="#{widget.id}_list"><img src="/nuxeo/icons/action_delete_mini.gif" alt="Delete" /></a4j:commandLink></td>
+            <td><p><h:outputText value="#{directoryTreeManager.getLabelFor(widget.properties.directoryTreeName, directoryValue)}" /></p></td>
+            <td><a4j:commandLink action="#{facetedSearchActions.removeValue(widget, directoryValue)}" reRender="#{widget.id}_list"><img src="/nuxeo/icons/action_delete_mini.gif" alt="Delete" /></a4j:commandLink></td>
           </tr>
         </nxu:dataList>
       </table>
     </a4j:outputPanel>
-  </div>
+
+  </c:if>
 
 </div>
