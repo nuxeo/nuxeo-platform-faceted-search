@@ -1,6 +1,7 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
         xmlns:nxu="http://nuxeo.org/nxweb/util"
         xmlns:rich="http://richfaces.org/rich"
+        xmlns:f="http://java.sun.com/jsf/core"
         xmlns:c="http://java.sun.com/jstl/core"
         xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
         id="#{widget.id}">
@@ -114,9 +115,11 @@
               highlightedClass="treeNodeHighlightedClass"
               selectedClass="treeNodeSelectedClass">
               <div class="#{nxu:test(node.selected, 'selected', '')}" id="#{node.path}">
-                <a4j:commandLink immediate="true" id="#{widget.id}linkId"
-                  action="#{facetedSearchActions.addValue(widget, node)}" styleClass="treeLink"
-                  reRender="#{widget.id}_list">
+                <a4j:commandLink immediate="true" id="#{widget.id}_linkId"
+                  actionListener="#{treeWidgetActions.addSelectionToList}" styleClass="treeLink"
+                  reRender="#{widget.id}_listRegion">
+                  <f:param name="selectionListId" value="#{widget.id}_list" />
+                  <f:param name="selectedPath" value="#{node.getPath()}" />
                   <h:outputText value="#{messages[node.description]}" />
                 </a4j:commandLink>
               </div>
@@ -126,14 +129,25 @@
       </div>
     </div>
 
-    <a4j:outputPanel id="#{widget.id}_list" ajaxRendered="true">
+    <a4j:outputPanel id="#{widget.id}_listRegion" ajaxRendered="true">
       <table class="dataInput thin">
-        <nxu:dataList var="directoryValue" value="#{facetedSearchActions.getValuesFor(widget)}">
+        <nxu:inputList id="#{widget.id}_list" value="#{field_0}" model="model">
           <tr>
-            <td><p><h:outputText value="#{directoryTreeManager.getLabelFor(widget.properties.directoryTreeName, directoryValue)}" /></p></td>
-            <td><a4j:commandLink action="#{facetedSearchActions.removeValue(widget, directoryValue)}" reRender="#{widget.id}_list"><img src="/nuxeo/icons/action_delete_mini.gif" alt="Delete" /></a4j:commandLink></td>
+            <td>
+              <p><h:outputText value="#{directoryTreeManager.getLabelFor(widget.properties.directoryTreeName, model.rowData)}" /></p></td>
+            <td>
+              <a4j:commandLink immediate="true"
+                actionListener="#{editableListBean.performAction}"
+                id="#{widget.id}_delete" reRender="#{widget.id}_listRegion"
+                bypassUpdates="true">
+                <img src="/nuxeo/icons/action_delete_mini.gif" alt="Delete" />
+                <f:param name="for" value="#{widget.id}_list" />
+                <f:param name="index" value="#{model.rowIndex}" />
+                <f:param name="type" value="remove" />
+              </a4j:commandLink>
+            </td>
           </tr>
-        </nxu:dataList>
+        </nxu:inputList>
       </table>
     </a4j:outputPanel>
 

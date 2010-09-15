@@ -44,13 +44,10 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataHelper;
-import org.nuxeo.ecm.platform.forms.layout.api.FieldDefinition;
-import org.nuxeo.ecm.platform.forms.layout.api.Widget;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
 import org.nuxeo.ecm.webapp.contentbrowser.ContentViewActions;
-import org.nuxeo.ecm.webapp.directory.DirectoryTreeNode;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
 
@@ -289,42 +286,6 @@ public class FacetedSearchActions implements Serializable {
         jsonString = URLEncoder.encode(jsonString, "UTF-8");
         url += jsonString;
         return url;
-    }
-
-    @SuppressWarnings("unchecked")
-    public void addValue(Widget widget, DirectoryTreeNode node)
-            throws ClientException {
-        ContentView cView = contentViewActions.getContentView(currentContentViewName);
-        DocumentModel searchDocument = cView.getSearchDocumentModel();
-        FieldDefinition field = widget.getFieldDefinitions()[0];
-        List<String> values = (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
-        if (values == null) {
-            values = new ArrayList<String>();
-        }
-        if (!values.contains(node.getPath())) {
-            values.add(node.getPath());
-            searchDocument.setPropertyValue(field.getPropertyName(),
-                    (Serializable) values);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void removeValue(Widget widget, String value) throws ClientException {
-        ContentView cView = contentViewActions.getContentView(currentContentViewName);
-        DocumentModel searchDocument = cView.getSearchDocumentModel();
-        FieldDefinition field = widget.getFieldDefinitions()[0];
-        List<String> values = (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
-        if (values != null) {
-            values.remove(value);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<String> getValuesFor(Widget widget) throws ClientException {
-        ContentView cView = contentViewActions.getContentView(currentContentViewName);
-        DocumentModel searchDocument = cView.getSearchDocumentModel();
-        FieldDefinition field = widget.getFieldDefinitions()[0];
-        return (List<String>) searchDocument.getPropertyValue(field.getPropertyName());
     }
 
 }
