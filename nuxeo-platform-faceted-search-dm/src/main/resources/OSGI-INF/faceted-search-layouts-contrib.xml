@@ -22,9 +22,6 @@
           </fields>
         </widget>
       </subWidgets>
-      <widgetModes>
-        <mode value="faceted_search">edit</mode>
-      </widgetModes>
     </widget>
 
     <widget name="date_search" type="faceted_search_wrapper">
@@ -63,9 +60,6 @@
           </properties>
         </widget>
       </subWidgets>
-      <widgetModes>
-        <mode value="faceted_search">edit</mode>
-      </widgetModes>
     </widget>
 
     <widget name="people_search" type="faceted_search_wrapper">
@@ -89,9 +83,6 @@
           </properties>
         </widget>
       </subWidgets>
-      <widgetModes>
-        <mode value="faceted_search">edit</mode>
-      </widgetModes>
     </widget>
 
     <widget name="categorization_search" type="faceted_search_wrapper">
@@ -112,9 +103,6 @@
             <property name="directoryTreeName">byCoverageNavigation</property>
             <property name="wrapperMode">noLabel</property>
           </properties>
-          <widgetModes>
-            <mode value="faceted_search">edit</mode>
-          </widgetModes>
         </widget>
         <widget name="dc_subjects" type="faceted_search_tree">
           <labels>
@@ -128,14 +116,8 @@
             <property name="directoryTreeName">bySubjectsNavigation</property>
             <property name="wrapperMode">noLabel</property>
           </properties>
-          <widgetModes>
-            <mode value="faceted_search">edit</mode>
-          </widgetModes>
         </widget>
       </subWidgets>
-      <widgetModes>
-        <mode value="faceted_search">edit</mode>
-      </widgetModes>
     </widget>
 
     <widget name="faceted_searches_selector"
@@ -144,7 +126,6 @@
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
         <mode value="edit">hidden</mode>
-        <mode value="faceted_search">edit</mode>
       </widgetModes>
     </widget>
 
@@ -154,7 +135,6 @@
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
         <mode value="edit">hidden</mode>
-        <mode value="faceted_search">edit</mode>
       </widgetModes>
     </widget>
 
@@ -165,7 +145,9 @@
         </property>
       </properties>
       <widgetModes>
-        <mode value="faceted_search">edit</mode>
+        <!-- not shown in edit and view modes -->
+        <mode value="view">hidden</mode>
+        <mode value="edit">hidden</mode>
       </widgetModes>
     </widget>
 
@@ -204,7 +186,7 @@
         <row>
           <widget>actions_bar</widget>
         </row>
-      </rows>
+      </rows>f
     </layout>
 
     <layout name="faceted_search_summary_layout">
