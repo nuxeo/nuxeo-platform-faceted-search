@@ -32,40 +32,23 @@ import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
 import org.nuxeo.ecm.platform.faceted.search.jsf.Constants;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
-import org.nuxeo.ecm.platform.url.codec.api.DocumentViewCodec;
+import org.nuxeo.ecm.platform.url.service.AbstractDocumentViewCodec;
 
-public class FacetedSearchViewCodec implements DocumentViewCodec {
+public class FacetedSearchViewCodec extends AbstractDocumentViewCodec {
 
     public static final String PREFIX = "nxsrch";
 
-    // search/server/?requestParams
+    // nxsrch/server/?requestParams
     public static final String URL_PATTERN = "/([\\w\\.]+)(/)?(\\?(.*)?)?";
 
     protected String prefix;
 
+    @Override
     public String getPrefix() {
         if (prefix != null) {
             return prefix;
         }
         return PREFIX;
-    }
-
-    @Override
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
-    @Override
-    public boolean handleDocumentView(DocumentView docView) {
-        DocumentLocation docLoc = docView.getDocumentLocation();
-        return docLoc != null;
-    }
-
-    @Override
-    public boolean handleUrl(String url) {
-        final Pattern pattern = Pattern.compile(getPrefix() + URL_PATTERN);
-        Matcher m = pattern.matcher(url);
-        return m.matches();
     }
 
     @Override
@@ -84,7 +67,8 @@ public class FacetedSearchViewCodec implements DocumentViewCodec {
 
             final DocumentLocation docLoc = new DocumentLocationImpl(server,
                     docRef);
-            return new DocumentViewImpl(docLoc, Constants.FACETED_SEARCH_RESULTS_VIEW, params);
+            return new DocumentViewImpl(docLoc,
+                    Constants.FACETED_SEARCH_RESULTS_VIEW, params);
         }
 
         return null;
