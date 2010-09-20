@@ -37,6 +37,12 @@
             <!-- won't need that when nuxeo-platform-faceted-search will be integrated into Nuxeo DM -->
             <artifactItem>
               <groupId>org.nuxeo.ecm.platform</groupId>
+              <artifactId>nuxeo-platform-faceted-search-api</artifactId>
+              <overWrite>true</overWrite>
+              <outputDirectory>target</outputDirectory>
+            </artifactItem>
+            <artifactItem>
+              <groupId>org.nuxeo.ecm.platform</groupId>
               <artifactId>nuxeo-platform-faceted-search-jsf</artifactId>
               <overWrite>true</overWrite>
               <outputDirectory>target</outputDirectory>
