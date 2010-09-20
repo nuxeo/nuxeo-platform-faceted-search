@@ -19,6 +19,7 @@ package org.nuxeo.ecm.platform.faceted.search.jsf;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +42,20 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
-import org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService;
-import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataExporter;
-import org.nuxeo.ecm.platform.faceted.search.jsf.util.JSONMetadataHelper;
+import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
+import org.nuxeo.ecm.platform.faceted.search.api.Constants;
+import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
+import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
+import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
-import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
+import org.nuxeo.ecm.platform.url.DocumentViewImpl;
+import org.nuxeo.ecm.platform.url.api.DocumentView;
+import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
 import org.nuxeo.ecm.webapp.contentbrowser.ContentViewActions;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
+import org.nuxeo.runtime.api.Framework;
 
 import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.ScopeType.EVENT;
@@ -78,6 +84,14 @@ public class FacetedSearchActions implements Serializable {
 
     public static final String SEARCH_SAVED_LABEL = "label.search.saved";
 
+    public static final String FACETED_SEARCH_CODEC = "facetedSearch";
+
+    public static final String CONTENT_VIEW_NAME_PARAMETER = "contentViewName";
+
+    public static final String FILTER_VALUES_PARAMETER = "values";
+
+    public static final String ENCODED_VALUES_ENCODING = "UTF-8";
+
     @In(create = true)
     protected FacetedSearchService facetedSearchService;
 
@@ -92,9 +106,6 @@ public class FacetedSearchActions implements Serializable {
 
     @In(create = true)
     protected ResourcesAccessor resourcesAccessor;
-
-    @In(create = true)
-    protected MultiNavTreeManager multiNavTreeManager;
 
     protected List<String> contentViewNames;
 
@@ -118,7 +129,6 @@ public class FacetedSearchActions implements Serializable {
     public void setCurrentContentViewName(
             String facetedSearchCurrentContentViewName) {
         this.currentContentViewName = facetedSearchCurrentContentViewName;
-        multiNavTreeManager.setSelectedNavigationTree(Constants.FACETED_SEARCH_NAV_TREE_ID);
     }
 
     public List<String> getContentViewNames() throws ClientException {
@@ -195,7 +205,13 @@ public class FacetedSearchActions implements Serializable {
         return currentSelectedSavedSearchId;
     }
 
-    public String loadSavedSearch() throws ClientException {
+    public String loadSelectedSavedSearch(String jsfView)
+            throws ClientException {
+        loadSelectedSavedSearch();
+        return jsfView;
+    }
+
+    public void loadSelectedSavedSearch() throws ClientException {
         if (currentSelectedSavedSearchId == null
                 || currentSelectedSavedSearchId.isEmpty()
                 || NONE_VALUE.equals(currentSelectedSavedSearchId)) {
@@ -203,17 +219,16 @@ public class FacetedSearchActions implements Serializable {
         } else {
             loadSavedSearch(currentSelectedSavedSearchId);
         }
-        return Constants.FACETED_SEARCH_RESULTS_VIEW;
     }
 
-    public String loadSavedSearch(String savedSearchId) throws ClientException {
+    public void loadSavedSearch(String savedSearchId) throws ClientException {
         DocumentModel savedSearch = documentManager.getDocument(new IdRef(
                 savedSearchId));
         String contentViewName = (String) savedSearch.getPropertyValue(Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY);
-        return loadSavedSearch(contentViewName, savedSearch);
+        loadSavedSearch(contentViewName, savedSearch);
     }
 
-    public String loadSavedSearch(String contentViewName,
+    public void loadSavedSearch(String contentViewName,
             DocumentModel searchDocument) throws ClientException {
         // Do not reuse the existing document as it can be modified and saved
         // again
@@ -223,7 +238,6 @@ public class FacetedSearchActions implements Serializable {
         if (contentView != null) {
             this.currentContentViewName = contentViewName;
         }
-        return Constants.FACETED_SEARCH_RESULTS_VIEW;
     }
 
     public String getSavedSearchTitle() {
@@ -261,31 +275,77 @@ public class FacetedSearchActions implements Serializable {
         return blankDoc;
     }
 
-    public void setFilterValues(String filterValues) throws ClientException,
-            JSONException {
-        String decodedValues = new String(Base64.decode(filterValues));
-        ContentView contentView = contentViewActions.getContentView(currentContentViewName);
-        DocumentModel doc = contentView.getSearchDocumentModel();
-        doc = JSONMetadataHelper.setPropertiesFromJson(doc, decodedValues);
-        contentView.setSearchDocumentModel(doc);
+    /*
+     * ----- Permanent link generation and loading -----
+     */
+
+    protected String encodeValues(String values)
+            throws UnsupportedEncodingException {
+        String encodedValues = Base64.encodeBytes(values.getBytes(),
+                Base64.GZIP | Base64.DONT_BREAK_LINES);
+        encodedValues = URLEncoder.encode(encodedValues,
+                ENCODED_VALUES_ENCODING);
+        return encodedValues;
     }
 
-    public String getSearchPermlinkUrl() throws ClientException,
+    protected String decodeValues(String values)
+            throws UnsupportedEncodingException {
+        String decodedValues = URLDecoder.decode(values,
+                ENCODED_VALUES_ENCODING);
+        decodedValues = new String(Base64.decode(decodedValues));
+        return decodedValues;
+    }
+
+    /**
+     * Set the metadata of the SearchDocumentModel from an encoded JSON string.
+     */
+    public void setFilterValues(String filterValues) throws ClientException,
+            JSONException, UnsupportedEncodingException {
+        ContentView contentView = contentViewActions.getContentView(currentContentViewName);
+        DocumentModel searchDocumentModel = contentView.getSearchDocumentModel();
+        String decodedValues = decodeValues(filterValues);
+        searchDocumentModel = JSONMetadataHelper.setPropertiesFromJson(
+                searchDocumentModel, decodedValues);
+        contentView.setSearchDocumentModel(searchDocumentModel);
+    }
+
+    /**
+     * Compute a permanent link for the current search.
+     */
+    public String getPermanentLinkUrl() throws ClientException,
             UnsupportedEncodingException {
+        DocumentView docView = new DocumentViewImpl(new DocumentLocationImpl(
+                documentManager.getRepositoryName(), null));
+        docView.addParameter(CONTENT_VIEW_NAME_PARAMETER,
+                currentContentViewName);
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel doc = contentView.getSearchDocumentModel();
-        String url = BaseURL.getBaseURL();
-        // TODO : replace "nxsrch" by viewcodec prefix constant after move in
-        // -dm
-        url += "nxsrch" + "/" + documentManager.getRepositoryName() + "/?view="
-                + currentContentViewName + "&values=";
-        JSONMetadataExporter jSonMetadataExporter = new JSONMetadataExporter();
-        String jsonString = jSonMetadataExporter.run(doc).toString();
-        jsonString = Base64.encodeBytes(jsonString.getBytes(), Base64.GZIP
-                | Base64.DONT_BREAK_LINES);
-        jsonString = URLEncoder.encode(jsonString, "UTF-8");
-        url += jsonString;
-        return url;
+        String values = getEncodedValuesFrom(doc);
+        docView.addParameter(FILTER_VALUES_PARAMETER, values);
+        DocumentViewCodecManager documentViewCodecManager = getDocumentViewCodecService();
+        return documentViewCodecManager.getUrlFromDocumentView(
+                FACETED_SEARCH_CODEC, docView, true, BaseURL.getBaseURL());
+    }
+
+    protected DocumentViewCodecManager getDocumentViewCodecService()
+            throws ClientException {
+        try {
+            return Framework.getService(DocumentViewCodecManager.class);
+        } catch (Exception e) {
+            final String errMsg = "Could not retrieve the document view service. "
+                    + e.getMessage();
+            throw new ClientException(errMsg, e);
+        }
+    }
+
+    /**
+     * Returns an encoded JSON string computed from the {@code doc} metadata.
+     */
+    protected String getEncodedValuesFrom(DocumentModel doc)
+            throws ClientException, UnsupportedEncodingException {
+        JSONMetadataExporter exporter = new JSONMetadataExporter();
+        String values = exporter.run(doc).toString();
+        return encodeValues(values);
     }
 
 }

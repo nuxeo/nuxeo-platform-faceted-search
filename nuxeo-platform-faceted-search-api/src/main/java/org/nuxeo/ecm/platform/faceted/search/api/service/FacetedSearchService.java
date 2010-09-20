@@ -15,7 +15,7 @@
  *     Nuxeo - initial API and implementation
  */
 
-package org.nuxeo.ecm.platform.faceted.search.jsf.service;
+package org.nuxeo.ecm.platform.faceted.search.api.service;
 
 import java.util.List;
 import java.util.Set;

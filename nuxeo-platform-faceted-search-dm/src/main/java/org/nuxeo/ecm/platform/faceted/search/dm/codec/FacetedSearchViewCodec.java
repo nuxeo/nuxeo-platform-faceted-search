@@ -32,13 +32,18 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentLocation;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.api.DocumentRef;
-import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
-import org.nuxeo.ecm.platform.faceted.search.jsf.Constants;
+import org.nuxeo.ecm.platform.faceted.search.dm.Constants;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.service.AbstractDocumentViewCodec;
 
+/**
+ * Codec handling a permanent link for a faceted search.
+ *
+ * @author <a href="mailto:qlamerand@nuxeo.com">Quentin Lamerand</a>
+ * @since 5.4
+ */
 public class FacetedSearchViewCodec extends AbstractDocumentViewCodec {
 
     private static final Log log = LogFactory.getLog(FacetedSearchViewCodec.class);

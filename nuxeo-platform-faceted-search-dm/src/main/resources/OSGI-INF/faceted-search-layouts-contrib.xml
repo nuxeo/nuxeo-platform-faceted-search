@@ -136,6 +136,9 @@
         <mode value="view">hidden</mode>
         <mode value="edit">hidden</mode>
       </widgetModes>
+      <properties widgetMode="any">
+        <property name="outcome">faceted_search_results</property>
+      </properties>
     </widget>
 
     <widget name="actions_bar" type="template">

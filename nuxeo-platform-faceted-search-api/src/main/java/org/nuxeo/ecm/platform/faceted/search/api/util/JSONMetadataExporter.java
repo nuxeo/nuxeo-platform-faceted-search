@@ -15,7 +15,7 @@
  *     Nuxeo - initial API and implementation
  */
 
-package org.nuxeo.ecm.platform.faceted.search.jsf.util;
+package org.nuxeo.ecm.platform.faceted.search.api.util;
 
 import java.io.Serializable;
 import java.text.DateFormat;

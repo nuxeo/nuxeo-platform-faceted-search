@@ -27,7 +27,8 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.PageProvider;
 import org.nuxeo.ecm.core.api.PathRef;
-import org.nuxeo.ecm.platform.faceted.search.jsf.Constants;
+import org.nuxeo.ecm.platform.faceted.search.api.Constants;
+import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
 import org.nuxeo.ecm.platform.ui.web.contentview.ContentViewService;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
@@ -123,10 +124,9 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session)
             throws ClientException {
-        List<DocumentModel> userSavedSearches = getDocuments(
+        return getDocuments(
                 Constants.CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME,
                 session.getPrincipal().getName());
-        return userSavedSearches;
     }
 
     protected DocumentModel getCurrentUserPersonalWorkspace(CoreSession session)
@@ -136,6 +136,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
                 null);
     }
 
+    @SuppressWarnings("unchecked")
     protected List<DocumentModel> getDocuments(String contentViewName,
             Object... parameters) throws ClientException {
         ContentViewService contentViewService = getContentViewService();
@@ -146,10 +147,9 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
             throws ClientException {
-        List<DocumentModel> allSavedSearches = getDocuments(
+        return getDocuments(
                 Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME,
                 session.getPrincipal().getName());
-        return allSavedSearches;
     }
 
     @Override

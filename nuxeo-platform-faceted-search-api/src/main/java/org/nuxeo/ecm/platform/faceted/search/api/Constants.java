@@ -15,7 +15,7 @@
  *     Nuxeo - initial API and implementation
  */
 
-package org.nuxeo.ecm.platform.faceted.search.jsf;
+package org.nuxeo.ecm.platform.faceted.search.api;
 
 /**
  * Constants used by the faceted search module
@@ -29,9 +29,7 @@ public final class Constants {
         // Constants class
     }
 
-    public static final String FACETED_SEARCH_SCHEMA = "faceted_search";
-
-    public static final String FACETED_SEARCH_DOCUMENT_TYPE = "FacetedSearch";
+    /* Properties */
 
     public static final String FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY = "fs:content_view_name";
 
@@ -40,11 +38,5 @@ public final class Constants {
     public static final String ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME = "ALL_SAVED_SEARCHES";
 
     public static final String CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME = "USER_SAVED_SEARCHES";
-
-    // TODO : Move in -dm
-    public static final String FACETED_SEARCH_RESULTS_VIEW = "faceted_search_results";
-
-    // TODO : Move in -dm
-    public static final String FACETED_SEARCH_NAV_TREE_ID = "facetedSearch";
 
 }

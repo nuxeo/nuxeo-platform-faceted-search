@@ -13,7 +13,7 @@
 
   <service>
     <provide
-      interface="org.nuxeo.ecm.platform.faceted.search.jsf.service.FacetedSearchService" />
+      interface="org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService" />
   </service>
 
   <extension-point name="configuration">

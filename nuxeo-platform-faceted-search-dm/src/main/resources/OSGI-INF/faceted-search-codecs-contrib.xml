@@ -20,14 +20,14 @@
       <needRedirectFilter>true</needRedirectFilter>
       <needFilterPreprocessing>true</needFilterPreprocessing>
       <codecName>facetedSearch</codecName>
-      <actionBinding>#{restHelper.initContextFromRestRequest}
+      <actionBinding>#{facetedSearchPermanentLinkActions.loadPermanentLink}
       </actionBinding>
       <documentViewBinding>#{restHelper.documentView}
       </documentViewBinding>
       <newDocumentViewBinding>#{restHelper.newDocumentView}
       </newDocumentViewBinding>
       <bindings>
-        <binding name="view">#{facetedSearchActions.currentContentViewName}</binding>
+        <binding name="contentViewName">#{facetedSearchActions.currentContentViewName}</binding>
         <binding name="values">#{facetedSearchActions.filterValues}</binding>
       </bindings>
     </urlPattern>
