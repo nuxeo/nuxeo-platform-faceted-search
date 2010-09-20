@@ -147,8 +147,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
             throws ClientException {
-        return getDocuments(
-                Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME,
+        return getDocuments(Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME,
                 session.getPrincipal().getName());
     }
 

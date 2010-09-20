@@ -55,7 +55,8 @@ public class FacetedSearchPermanentLinkActions implements Serializable {
     protected MultiNavTreeManager multiNavTreeManager;
 
     @Begin(id = "#{conversationIdGenerator.currentOrNewMainConversationId}", join = true)
-    public String loadPermanentLink(DocumentView docView) throws ClientException {
+    public String loadPermanentLink(DocumentView docView)
+            throws ClientException {
         restHelper.initContextFromRestRequest(docView);
         multiNavTreeManager.setSelectedNavigationTree(Constants.FACETED_SEARCH_NAV_TREE_ID);
         return Constants.FACETED_SEARCH_RESULTS_VIEW;

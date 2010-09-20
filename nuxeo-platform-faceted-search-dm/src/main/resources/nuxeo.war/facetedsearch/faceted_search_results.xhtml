@@ -11,27 +11,23 @@
 
   <ui:define name="body">
 
-    <ui:include src="/incl/message_banner.xhtml"/>
+    <ui:include src="/incl/message_banner.xhtml" />
 
-    <div id="content">
-
-      <nxu:set var="contentViewListIndex" value="0">
-      <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
+    <div id="content"><nxu:set var="contentViewListIndex" value="0">
+      <nxu:set var="contentViewName"
+        value="#{facetedSearchActions.currentContentViewName}">
 
         <ui:decorate template="/incl/content_view.xhtml">
           <ui:define name="content_view_header_before_selector">
             <c:if test="#{!empty title}">
-              <h1>
-                <h:outputText value="#{messages['title.search.results']}"/>
-                <span>
-                  <h:outputLink value="#{facetedSearchActions.permanentLinkUrl}">
-                    <nxu:graphicImage value="/icons/permalink.png"
-                      style="vertical-align:middle"
-                      alt="#{messages['label.search.permalink']}"
-                      title="#{messages['label.search.permalink']}"/>
-                  </h:outputLink>
-                </span>
-              </h1>
+              <h1><h:outputText
+                value="#{messages['title.search.results']}" /> <span> <h:outputLink
+                value="#{facetedSearchActions.permanentLinkUrl}">
+                <nxu:graphicImage value="/icons/permalink.png"
+                  style="vertical-align:middle"
+                  alt="#{messages['label.search.permalink']}"
+                  title="#{messages['label.search.permalink']}" />
+              </h:outputLink> </span></h1>
             </c:if>
           </ui:define>
           <ui:define name="empty_folder_label">
@@ -40,10 +36,9 @@
           </ui:define>
           <ui:define name="content_view_selector">
             <ui:include src="/incl/content_view_result_layout_selector.xhtml" />
-            <div class="action_bar">
-              <ui:include src="/facetedsearch/save_search_form.xhtml"/>
-            </div>
-            <div style="clear:both;" />
+            <div class="action_bar"><ui:include
+              src="/facetedsearch/save_search_form.xhtml" /></div>
+            <div style="clear: both;" />
           </ui:define>
           <ui:define name="syndication_buttons">
             <c:if test="false">syndication currently broken with content views</c:if>
@@ -54,9 +49,7 @@
         </ui:decorate>
 
       </nxu:set>
-      </nxu:set>
-
-    </div>
+    </nxu:set></div>
 
   </ui:define>
 

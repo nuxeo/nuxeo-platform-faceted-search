@@ -1,33 +1,29 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:nxu="http://nuxeo.org/nxweb/util"
-        xmlns:c="http://java.sun.com/jstl/core"
-        xmlns:f="http://java.sun.com/jsf/core"
-        id="facetedSearchSelectorDiv">
+  xmlns:nxu="http://nuxeo.org/nxweb/util"
+  xmlns:c="http://java.sun.com/jstl/core"
+  xmlns:f="http://java.sun.com/jsf/core" id="facetedSearchSelectorDiv">
 
-  <nxu:set var="displaySelector" value="#{facetedSearchActions.contentViewNames.size > 1}">
+<nxu:set var="displaySelector"
+  value="#{facetedSearchActions.contentViewNames.size > 1}">
   <c:if test="${displaySelector}">
 
-  <p><h:outputText value="#{messages['label.faceted.searches']}" /></p>
-  <h:selectOneMenu
-          value="#{facetedSearchActions.currentContentViewName}"
-          id="facetedSearchSelector"
-          styleClass="langSelect"
-          onchange="Element.next(this).firstChild.click();">
-    <c:forEach var="contentViewName"
-               items="#{facetedSearchActions.contentViewNames}"
-               varStatus="contentViewListStatus">
-      <nxu:set var="contentView"
-               value="#{contentViewActions.getContentView(contentViewName)}">
-        <f:selectItem itemValue="#{contentViewName}"
-                      itemLabel="#{nxu:test(contentView.translateTitle, messages[contentView.title], contentView.title)}"/>
-      </nxu:set>
-    </c:forEach>
-  </h:selectOneMenu>
+    <p><h:outputText value="#{messages['label.faceted.searches']}" /></p>
+    <h:selectOneMenu
+      value="#{facetedSearchActions.currentContentViewName}"
+      id="facetedSearchSelector" styleClass="langSelect"
+      onchange="Element.next(this).firstChild.click();">
+      <c:forEach var="contentViewName"
+        items="#{facetedSearchActions.contentViewNames}"
+        varStatus="contentViewListStatus">
+        <nxu:set var="contentView"
+          value="#{contentViewActions.getContentView(contentViewName)}">
+          <f:selectItem itemValue="#{contentViewName}"
+            itemLabel="#{nxu:test(contentView.translateTitle, messages[contentView.title], contentView.title)}" />
+        </nxu:set>
+      </c:forEach>
+    </h:selectOneMenu>
 
-  <div style="display: none;">
-    <h:commandButton value="submit"/>
-  </div>
+    <div style="display: none;"><h:commandButton value="submit" /></div>
 
   </c:if>
-  </nxu:set>
-</div>
+</nxu:set></div>

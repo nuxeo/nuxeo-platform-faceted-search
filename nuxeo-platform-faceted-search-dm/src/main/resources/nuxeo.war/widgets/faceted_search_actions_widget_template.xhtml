@@ -1,18 +1,19 @@
 <div xmlns:h="http://java.sun.com/jsf/html"
-     xmlns:nxu="http://nuxeo.org/nxweb/util"
-     class="facetedSearchActionBar">
+  xmlns:nxu="http://nuxeo.org/nxweb/util" class="facetedSearchActionBar">
 
-  <nxu:set var="contentViewName" value="#{facetedSearchActions.currentContentViewName}">
+<nxu:set var="contentViewName"
+  value="#{facetedSearchActions.currentContentViewName}">
 
-    <h:commandLink action="#{facetedSearchActions.clearSearch()}">
-      <h:outputText value="#{messages['command.faceted.search.clear']}" />
-    </h:commandLink>
-    <h:commandButton type="submit" value="#{messages['command.faceted.search.go']}"
-                     action="faceted_search_results" class="button">
-      <nxu:actionListenerMethod
-              value="#{contentViewActions.refresh(contentViewName)}"/>
-    </h:commandButton>
-  </nxu:set>
-  <div style="clear:both;"></div>
+  <h:commandLink action="#{facetedSearchActions.clearSearch()}">
+    <h:outputText value="#{messages['command.faceted.search.clear']}" />
+  </h:commandLink>
+  <h:commandButton type="submit"
+    value="#{messages['command.faceted.search.go']}"
+    action="faceted_search_results" class="button">
+    <nxu:actionListenerMethod
+      value="#{contentViewActions.refresh(contentViewName)}" />
+  </h:commandButton>
+</nxu:set>
+<div style="clear: both;"></div>
 
 </div>

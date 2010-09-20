@@ -36,7 +36,8 @@ import org.nuxeo.ecm.core.api.model.impl.ScalarProperty;
 
 public class JSONMetadataExporter implements PropertyVisitor {
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ");
+    private DateFormat dateFormat = new SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ssZZ");
 
     private JSONObject result;
 
@@ -56,11 +57,13 @@ public class JSONMetadataExporter implements PropertyVisitor {
         return false;
     }
 
-    public Object visit(DocumentPart property, Object arg) throws PropertyException {
+    public Object visit(DocumentPart property, Object arg)
+            throws PropertyException {
         return arg;
     }
 
-    public Object visit(MapProperty property, Object arg) throws PropertyException {
+    public Object visit(MapProperty property, Object arg)
+            throws PropertyException {
         Object value = null;
         if (property.isContainer()) {
             value = new JSONObject();
@@ -80,7 +83,8 @@ public class JSONMetadataExporter implements PropertyVisitor {
         return value;
     }
 
-    public Object visit(ListProperty property, Object arg) throws PropertyException {
+    public Object visit(ListProperty property, Object arg)
+            throws PropertyException {
         Object value = null;
         if (property.isContainer()) {
             value = new JSONArray();
@@ -100,7 +104,8 @@ public class JSONMetadataExporter implements PropertyVisitor {
         return value;
     }
 
-    public Object visit(ScalarProperty property, Object arg) throws PropertyException {
+    public Object visit(ScalarProperty property, Object arg)
+            throws PropertyException {
         Serializable value = property.getValue();
         if (value instanceof Calendar) {
             value = dateFormat.format(((Calendar) value).getTime());
@@ -110,8 +115,7 @@ public class JSONMetadataExporter implements PropertyVisitor {
         } else {
             try {
                 ((JSONObject) arg).put(
-                        property.getField().getName().getPrefixedName(),
-                        value);
+                        property.getField().getName().getPrefixedName(), value);
             } catch (JSONException e) {
                 throw new PropertyException("Failed to put value", e);
             }

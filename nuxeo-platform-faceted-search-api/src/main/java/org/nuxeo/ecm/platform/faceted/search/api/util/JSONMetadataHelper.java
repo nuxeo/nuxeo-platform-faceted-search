@@ -39,10 +39,11 @@ public class JSONMetadataHelper {
 
     @SuppressWarnings("unchecked")
     public static DocumentModel setPropertiesFromJson(DocumentModel doc,
-            String json) throws JSONException, PropertyException, ClientException {
+            String json) throws JSONException, PropertyException,
+            ClientException {
         JSONObject jsonObject = new JSONObject(new JSONTokener(json));
         Iterator<String> keys = jsonObject.keys();
-        while (keys.hasNext()){
+        while (keys.hasNext()) {
             String key = keys.next();
             doc.setPropertyValue(key, getValue(jsonObject.get(key)));
         }
@@ -58,7 +59,8 @@ public class JSONMetadataHelper {
                 Date date = df.parse((String) o);
                 calendar = Calendar.getInstance();
                 calendar.setTime(date);
-            } catch (ParseException e) {}
+            } catch (ParseException e) {
+            }
 
             if (calendar != null) {
                 return calendar;
@@ -76,7 +78,7 @@ public class JSONMetadataHelper {
             JSONObject jsonObject = (JSONObject) o;
             HashMap<String, Serializable> map = new HashMap<String, Serializable>();
             Iterator<String> keys = jsonObject.keys();
-            while (keys.hasNext()){
+            while (keys.hasNext()) {
                 String key = keys.next();
                 map.put(key, getValue(jsonObject.get(key)));
             }

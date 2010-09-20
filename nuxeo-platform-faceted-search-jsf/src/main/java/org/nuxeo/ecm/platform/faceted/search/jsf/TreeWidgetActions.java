@@ -53,8 +53,8 @@ public class TreeWidgetActions implements Serializable {
             return;
         }
         UIComponent base = ComponentUtils.getBase(component);
-        UIEditableList list = ComponentUtils.getComponent(base, selectionListId,
-                UIEditableList.class);
+        UIEditableList list = ComponentUtils.getComponent(base,
+                selectionListId, UIEditableList.class);
 
         if (list != null) {
             // add selected value to the list

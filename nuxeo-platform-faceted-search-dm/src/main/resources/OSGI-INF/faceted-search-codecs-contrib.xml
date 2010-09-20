@@ -10,7 +10,6 @@
 
   </extension>
 
-
   <extension target="org.nuxeo.ecm.platform.ui.web.rest.URLService"
     point="urlpatterns">
 
@@ -33,7 +32,6 @@
     </urlPattern>
 
   </extension>
-
 
   <extension
     target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"

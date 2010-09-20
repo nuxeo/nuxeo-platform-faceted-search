@@ -1,111 +1,89 @@
 <f:subview xmlns:f="http://java.sun.com/jsf/core"
-           xmlns:h="http://java.sun.com/jsf/html"
-           xmlns:c="http://java.sun.com/jstl/core"
-           xmlns:nxl="http://nuxeo.org/nxforms/layout" id="#{widget.id}">
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:c="http://java.sun.com/jstl/core"
+  xmlns:nxl="http://nuxeo.org/nxforms/layout" id="#{widget.id}">
 
   <div class="#{widget.properties.styleClass}">
 
-    <h5 class="widgetTitle">
-      <h:outputText value="#{messages[widget.label]}"/>
-    </h5>
+  <h5 class="widgetTitle"><h:outputText
+    value="#{messages[widget.label]}" /></h5>
 
-    <div class="widgetContent">
+  <div class="widgetContent">
 
-      <table class="dataInput">
-        <tbody>
-        <nxl:subWidget>
-          <c:set var="wrapperMode"
-                 value="#{nxu:test(!empty widget.properties.wrapperMode, widget.properties.wrapperMode, 'column')}"/>
-          <tr>
-            <c:if test="#{wrapperMode == 'column'}">
-              <c:choose>
-                <c:when test="#{widget.translated}">
-                  <td class="labelColumn">
-                    <c:if test="#{!empty widget.helpLabel}">
-                      <span onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);" onmouseout="tooltip.hide();">
-                        <h:outputText value="#{messages[widget.label]}"/>
-                      </span>
-                    </c:if>
-                    <c:if test="#{empty widget.helpLabel}">
-                      <span>
-                        <h:outputText value="#{messages[widget.label]}"/>
-                      </span>
-                    </c:if>
-                  </td>
-                </c:when>
-                <c:otherwise>
-                  <td class="labelColumn">
-                    <c:if test="#{!empty widget.helpLabel}">
-                      <span onmouseover="tooltip.show('#{widget.helpLabel}', 500);" onmouseout="tooltip.hide();">
-                        <h:outputText value="#{widget.label}"/>
-                      </span>
-                    </c:if>
-                    <c:if test="#{empty widget.helpLabel}">
-                      <span>
-                        <h:outputText value="#{widget.label}"/>
-                      </span>
-                    </c:if>
-                  </td>
-                </c:otherwise>
-              </c:choose>
-              <td>
-                <nxl:widget widget="#{widget}" value="#{value}"/>
-              </td>
-            </c:if>
-            <c:if test="#{wrapperMode == 'row'}">
-              <td colspan="2">
-                <c:choose>
-                  <c:when test="#{widget.translated}">
-                    <div>
-                      <h6>
-                        <c:if test="#{!empty widget.helpLabel}">
-                          <span onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);" onmouseout="tooltip.hide();">
-                            <h:outputText value="#{messages[widget.label]}"/>
-                          </span>
-                        </c:if>
-                        <c:if test="#{empty widget.helpLabel}">
-                          <span>
-                            <h:outputText value="#{messages[widget.label]}"/>
-                          </span>
-                        </c:if>
-                      </h6>
-                    </div>
-                  </c:when>
-                  <c:otherwise>
-                    <div>
-                      <h6>
-                        <c:if test="#{!empty widget.helpLabel}">
-                          <span onmouseover="tooltip.show('#{widget.helpLabel}', 500);" onmouseout="tooltip.hide();">
-                            <h:outputText value="#{widget.label}"/>
-                          </span>
-                        </c:if>
-                        <c:if test="#{empty widget.helpLabel}">
-                          <span>
-                            <h:outputText value="#{widget.label}"/>
-                          </span>
-                        </c:if>
-                      </h6>
-                    </div>
-                  </c:otherwise>
-                </c:choose>
+  <table class="dataInput">
+    <tbody>
+      <nxl:subWidget>
+        <c:set var="wrapperMode"
+          value="#{nxu:test(!empty widget.properties.wrapperMode, widget.properties.wrapperMode, 'column')}" />
+        <tr>
+          <c:if test="#{wrapperMode == 'column'}">
+            <c:choose>
+              <c:when test="#{widget.translated}">
+                <td class="labelColumn"><c:if
+                  test="#{!empty widget.helpLabel}">
+                  <span
+                    onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);"
+                    onmouseout="tooltip.hide();"> <h:outputText
+                    value="#{messages[widget.label]}" /> </span>
+                </c:if> <c:if test="#{empty widget.helpLabel}">
+                  <span> <h:outputText value="#{messages[widget.label]}" />
+                  </span>
+                </c:if></td>
+              </c:when>
+              <c:otherwise>
+                <td class="labelColumn"><c:if
+                  test="#{!empty widget.helpLabel}">
+                  <span onmouseover="tooltip.show('#{widget.helpLabel}', 500);"
+                    onmouseout="tooltip.hide();"> <h:outputText
+                    value="#{widget.label}" /> </span>
+                </c:if> <c:if test="#{empty widget.helpLabel}">
+                  <span> <h:outputText value="#{widget.label}" /> </span>
+                </c:if></td>
+              </c:otherwise>
+            </c:choose>
+            <td><nxl:widget widget="#{widget}" value="#{value}" /></td>
+          </c:if>
+          <c:if test="#{wrapperMode == 'row'}">
+            <td colspan="2"><c:choose>
+              <c:when test="#{widget.translated}">
                 <div>
-                  <nxl:widget widget="#{widget}" value="#{value}"/>
+                <h6><c:if test="#{!empty widget.helpLabel}">
+                  <span
+                    onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);"
+                    onmouseout="tooltip.hide();"> <h:outputText
+                    value="#{messages[widget.label]}" /> </span>
+                </c:if> <c:if test="#{empty widget.helpLabel}">
+                  <span> <h:outputText value="#{messages[widget.label]}" />
+                  </span>
+                </c:if></h6>
                 </div>
-              </td>
-            </c:if>
-            <c:if test="#{wrapperMode == 'noLabel'}">
-              <td colspan="2">
+              </c:when>
+              <c:otherwise>
                 <div>
-                  <nxl:widget widget="#{widget}" value="#{value}"/>
+                <h6><c:if test="#{!empty widget.helpLabel}">
+                  <span onmouseover="tooltip.show('#{widget.helpLabel}', 500);"
+                    onmouseout="tooltip.hide();"> <h:outputText
+                    value="#{widget.label}" /> </span>
+                </c:if> <c:if test="#{empty widget.helpLabel}">
+                  <span> <h:outputText value="#{widget.label}" /> </span>
+                </c:if></h6>
                 </div>
-              </td>
-            </c:if>
-          </tr>
-        </nxl:subWidget>
-        </tbody>
-      </table>
+              </c:otherwise>
+            </c:choose>
+            <div><nxl:widget widget="#{widget}" value="#{value}" /></div>
+            </td>
+          </c:if>
+          <c:if test="#{wrapperMode == 'noLabel'}">
+            <td colspan="2">
+            <div><nxl:widget widget="#{widget}" value="#{value}" /></div>
+            </td>
+          </c:if>
+        </tr>
+      </nxl:subWidget>
+    </tbody>
+  </table>
 
-    </div>
+  </div>
   </div>
 
 </f:subview>
