@@ -35,6 +35,14 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 
+/**
+ * Utility class to set a {@code DocumentModel}'s metadata from a JSON string
+ * 
+ * @see org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter
+ *
+ * @author <a href="mailto:qlamerand@nuxeo.com">Quentin Lamerand</a>
+ * @since 5.4
+ */
 public class JSONMetadataHelper {
 
     @SuppressWarnings("unchecked")

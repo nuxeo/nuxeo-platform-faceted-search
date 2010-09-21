@@ -34,6 +34,12 @@ import org.nuxeo.ecm.core.api.model.impl.ListProperty;
 import org.nuxeo.ecm.core.api.model.impl.MapProperty;
 import org.nuxeo.ecm.core.api.model.impl.ScalarProperty;
 
+/**
+ * Utility class to export a {@code DocumentModel}'s metadata to a JSON object.
+ *
+ * @author <a href="mailto:qlamerand@nuxeo.com">Quentin Lamerand</a>
+ * @since 5.4
+ */
 public class JSONMetadataExporter implements PropertyVisitor {
 
     private DateFormat dateFormat = new SimpleDateFormat(
