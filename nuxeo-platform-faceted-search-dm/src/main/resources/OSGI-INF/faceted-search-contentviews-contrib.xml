@@ -37,6 +37,9 @@
           <predicate parameter="dc:subjects" operator="STARTSWITH">
             <field schema="faceted_search_default" name="dc_subjects" />
           </predicate>
+          <predicate parameter="ecm:path" operator="STARTSWITH">
+            <field schema="faceted_search_default" name="ecm_path" />
+          </predicate>
         </whereClause>
         <sort column="dc:title" ascending="true" />
         <pageSize>20</pageSize>

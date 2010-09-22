@@ -51,11 +51,18 @@
       <property name="template">/widgets/saved_faceted_searches_selector_widget_template.xhtml</property>
     </widgetType>
 
-    <widgetType name="faceted_search_tree">
+    <widgetType name="faceted_search_directory_tree">
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
-      <property name="template">/widgets/faceted_search_tree_widget_template.xhtml</property>
+      <property name="template">/widgets/faceted_search_directory_tree_widget_template.xhtml</property>
+    </widgetType>
+
+    <widgetType name="faceted_search_path_tree">
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">/widgets/faceted_search_path_tree_widget_template.xhtml</property>
     </widgetType>
 
   </extension>

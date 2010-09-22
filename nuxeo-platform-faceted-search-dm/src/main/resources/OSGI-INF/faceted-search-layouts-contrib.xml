@@ -91,7 +91,7 @@
       </labels>
       <translated>true</translated>
       <subWidgets>
-        <widget name="dc_coverage" type="faceted_search_tree">
+        <widget name="dc_coverage" type="faceted_search_directory_tree">
           <labels>
             <label mode="any">label.faceted.search.coverage</label>
           </labels>
@@ -104,7 +104,7 @@
             <property name="wrapperMode">noLabel</property>
           </properties>
         </widget>
-        <widget name="dc_subjects" type="faceted_search_tree">
+        <widget name="dc_subjects" type="faceted_search_directory_tree">
           <labels>
             <label mode="any">label.faceted.search.subjects</label>
           </labels>
@@ -114,6 +114,27 @@
           </fields>
           <properties widgetMode="any">
             <property name="directoryTreeName">bySubjectsNavigation</property>
+            <property name="wrapperMode">noLabel</property>
+          </properties>
+        </widget>
+      </subWidgets>
+    </widget>
+
+    <widget name="path_search" type="faceted_search_wrapper">
+      <labels>
+        <label mode="any">label.faceted.search.pathSearch</label>
+      </labels>
+      <translated>true</translated>
+      <subWidgets>
+        <widget name="ecm_path" type="faceted_search_path_tree">
+          <labels>
+            <label mode="any">label.faceted.search.path</label>
+          </labels>
+          <translated>true</translated>
+          <fields>
+            <field>fsd:ecm_path</field>
+          </fields>
+          <properties widgetMode="any">
             <property name="wrapperMode">noLabel</property>
           </properties>
         </widget>
@@ -185,6 +206,9 @@
         </row>
         <row>
           <widget>categorization_search</widget>
+        </row>
+        <row>
+          <widget>path_search</widget>
         </row>
         <row>
           <widget>actions_bar</widget>

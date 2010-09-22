@@ -22,10 +22,16 @@ import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.event.ActionEvent;
 
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.web.RequestParameter;
+import org.nuxeo.ecm.core.api.ClientException;
+import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.platform.ui.web.component.list.UIEditableList;
 import org.nuxeo.ecm.platform.ui.web.util.ComponentUtils;
 
@@ -41,6 +47,9 @@ import static org.jboss.seam.annotations.Install.FRAMEWORK;
 public class TreeWidgetActions implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @In(create = true, required = false)
+    protected transient CoreSession documentManager;
 
     @RequestParameter
     protected String selectionListId;
@@ -65,6 +74,18 @@ public class TreeWidgetActions implements Serializable {
                 list.addValue(selectedPath);
             }
         }
+    }
+
+    /**
+     * Returns the {@code DocumentModel} referenced by the given path if exists,
+     * {@code null} otherwise.
+     */
+    public DocumentModel getDocumentFromPath(String path)
+            throws ClientException {
+        DocumentRef ref = new PathRef(path);
+        return documentManager.exists(ref) ? documentManager.getDocument(new PathRef(
+                path))
+                : null;
     }
 
 }
