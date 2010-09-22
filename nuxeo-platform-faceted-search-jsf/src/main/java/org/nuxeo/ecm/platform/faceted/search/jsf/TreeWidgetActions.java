@@ -17,6 +17,7 @@
 package org.nuxeo.ecm.platform.faceted.search.jsf;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.event.ActionEvent;
@@ -47,6 +48,7 @@ public class TreeWidgetActions implements Serializable {
     @RequestParameter
     protected String selectedPath;
 
+    @SuppressWarnings("unchecked")
     public void addSelectionToList(ActionEvent event) {
         UIComponent component = event.getComponent();
         if (component == null) {
@@ -57,8 +59,11 @@ public class TreeWidgetActions implements Serializable {
                 selectionListId, UIEditableList.class);
 
         if (list != null) {
+            List<String> values = (List<String>) list.getEditableModel().getWrappedData();
             // add selected value to the list
-            list.addValue(selectedPath);
+            if (!values.contains(selectedPath)) {
+                list.addValue(selectedPath);
+            }
         }
     }
 
