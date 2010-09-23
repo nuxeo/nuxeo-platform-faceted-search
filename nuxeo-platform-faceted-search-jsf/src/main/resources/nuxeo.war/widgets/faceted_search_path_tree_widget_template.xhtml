@@ -92,6 +92,7 @@
   </div>
   <div class="popUpContent">
     <rich:tree
+      id="#{widget.id}_treeId"
       changeExpandListener="#{reducedTreeActions.changeExpandListener}"
       icon="#{nodeState.isExpanded(rowKey)?nxd:iconExpandedPath(node.document):nxd:iconPath(node.document)}"
       iconLeaf="#{nxd:iconPath(node.document)}"
@@ -100,10 +101,12 @@
       rowKeyVar="rowKey"
       stateVar="nodeState">
       <rich:recursiveTreeNodesAdaptor
+        id="#{widget.id}_recursiveTreeNodesAdaptorId"
         roots="#{reducedTreeActions.treeRoots}"
         nodes="#{node.children}"
         var="node">
         <rich:treeNode
+          id="#{widget.id}_treeNodeId"
           highlightedClass="treeNodeHighlightedClass"
           selectedClass="treeNodeSelectedClass">
           <a4j:commandLink immediate="true"
