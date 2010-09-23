@@ -1,11 +1,14 @@
 <h:form xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:nxu="http://nuxeo.org/nxweb/util"
   id="saveFacetedSearchForm">
 
-  <p><h:outputText
-    value="#{messages['label.save.search.description']}" /></p>
+  <p>
+    <h:outputText
+      value="#{messages['label.save.search.description']}" />
+  </p>
   <h:inputText id="savedSearchTitle"
     value="#{facetedSearchActions.savedSearchTitle}" />
-  <h:commandButton type="submit" class="button"
+  <h:commandButton styleClass="button"
     value="#{messages['command.save']}"
     action="#{facetedSearchActions.saveSearch}" />
 
