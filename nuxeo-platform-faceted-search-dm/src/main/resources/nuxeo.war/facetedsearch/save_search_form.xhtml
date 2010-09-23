@@ -1,13 +1,13 @@
 <h:form xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:nxu="http://nuxeo.org/nxweb/util"
   id="saveFacetedSearchForm">
 
-  <p>
-    <h:outputText
-      value="#{messages['label.save.search.description']}" />
-  </p>
+  <p><h:outputText
+    value="#{messages['label.save.search.description']}" /></p>
   <h:inputText id="savedSearchTitle"
-    value="#{facetedSearchActions.savedSearchTitle}" />
+    value="#{facetedSearchActions.savedSearchTitle}"
+    required="true"
+    requiredMessage="#{messages['feedback.faceted.search.emptyTitle']}"/>
+  <h:message styleClass="errorMessage" for="savedSearchTitle" />
   <h:commandButton styleClass="button"
     value="#{messages['command.save']}"
     action="#{facetedSearchActions.saveSearch}" />
