@@ -40,9 +40,13 @@ import org.json.JSONException;
 import org.nuxeo.common.utils.Base64;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DataModel;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
+import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
+import org.nuxeo.ecm.core.schema.SchemaManager;
+import org.nuxeo.ecm.core.schema.TypeService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
@@ -73,6 +77,8 @@ import static org.jboss.seam.annotations.Install.FRAMEWORK;
 public class FacetedSearchActions implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public static final String DUBLINCORE_SCHEMA = "dublincore";
 
     public static final String NONE_VALUE = "none";
 
@@ -256,7 +262,7 @@ public class FacetedSearchActions implements Serializable {
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
 
-            // Do not reuse the just saved document as it can be modified ans
+            // Do not reuse the just saved document as it can be modified and
             // re-saved
             DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
             contentView.setSearchDocumentModel(searchDocument);
@@ -268,11 +274,26 @@ public class FacetedSearchActions implements Serializable {
         }
     }
 
+    /**
+     * Create a new {@code DocumentModel} with the same type as {@code
+     * sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc} to the
+     * newly created document, except the {@code dublincore} schema.
+     */
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
-        DocumentModel blankDoc = documentManager.createDocumentModel(sourceDoc.getType());
-        blankDoc.copyContent(sourceDoc);
-        return blankDoc;
+        DocumentModel doc = documentManager.createDocumentModel(sourceDoc.getType());
+        for (String schema : sourceDoc.getDeclaredSchemas()) {
+            // Copy everything except dublincore schema, required values will be
+            // created again on the next save, if any
+            if (!DUBLINCORE_SCHEMA.equals(schema)) {
+                DataModel dm = sourceDoc.getDataModel(schema);
+                SchemaManager mgr = TypeService.getSchemaManager();
+                DataModel newDM = DocumentModelImpl.cloneDataModel(
+                        mgr.getSchema(dm.getSchema()), dm);
+                doc.getDataModel(schema).setMap(newDM.getMap());
+            }
+        }
+        return doc;
     }
 
     /*
