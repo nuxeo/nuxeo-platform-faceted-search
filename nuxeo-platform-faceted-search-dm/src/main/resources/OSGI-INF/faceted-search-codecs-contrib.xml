@@ -10,6 +10,7 @@
 
   </extension>
 
+
   <extension target="org.nuxeo.ecm.platform.ui.web.rest.URLService"
     point="urlpatterns">
 
@@ -19,19 +20,19 @@
       <needRedirectFilter>true</needRedirectFilter>
       <needFilterPreprocessing>true</needFilterPreprocessing>
       <codecName>facetedSearch</codecName>
-      <actionBinding>#{facetedSearchPermanentLinkActions.loadPermanentLink}
+      <actionBinding>
+        #{facetedSearchPermanentLinkActions.loadPermanentLink}
       </actionBinding>
-      <documentViewBinding>#{restHelper.documentView}
-      </documentViewBinding>
-      <newDocumentViewBinding>#{restHelper.newDocumentView}
-      </newDocumentViewBinding>
       <bindings>
-        <binding name="contentViewName">#{facetedSearchActions.currentContentViewName}</binding>
+        <binding name="contentViewName">
+          #{facetedSearchActions.currentContentViewName}
+        </binding>
         <binding name="values">#{facetedSearchActions.filterValues}</binding>
       </bindings>
     </urlPattern>
 
   </extension>
+
 
   <extension
     target="org.nuxeo.ecm.platform.ui.web.auth.service.PluggableAuthenticationService"
