@@ -11,5 +11,5 @@ The new tab appears on the left, just after the navigation tree.
 How to deploy it
 ----------------
 
-Copy the nuxeo-platform-faceted-search-jsf and nuxeo-platform-faceted-search-dm
+Copy the nuxeo-platform-faceted-search-api, nuxeo-platform-faceted-search-jsf and nuxeo-platform-faceted-search-dm
 jars to your Nuxeo 5.4.

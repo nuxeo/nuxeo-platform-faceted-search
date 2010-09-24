@@ -213,7 +213,7 @@
         <row>
           <widget>actions_bar</widget>
         </row>
-      </rows>f
+      </rows>
     </layout>
 
     <layout name="faceted_search_summary_layout">
