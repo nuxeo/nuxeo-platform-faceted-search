@@ -7,11 +7,11 @@
     <div><span class="tinyLabel"> <h:outputText
       value="#{messages['label.search.between']} " /> </span> <h:outputText
       value="#{field_0}">
-      <f:convertDateTime type="date" pattern="#{nxu:basicDateFormater()}" />
+      <f:convertDateTime type="date" pattern="#{nxu:basicDateAndTimeFormater()}" />
     </h:outputText> <span class="tinyLabel"> <h:outputText
       value="#{messages['label.search.and']} " /> </span> <h:outputText
       value="#{field_1}">
-      <f:convertDateTime type="date" pattern="#{nxu:basicDateFormater()}" />
+      <f:convertDateTime type="date" pattern="#{nxu:basicDateAndTimeFormater()}" />
     </h:outputText></div>
   </c:if>
 
@@ -21,14 +21,14 @@
       value="#{field_0}" id="#{widget.id}_from"
       styleClass="#{widget.properties['styleClass']}"
       required="#{widget.properties['required']}" showsTime="true"
-      format="#{nxu:basicDateFormater()}" /> <h:message
+      format="#{nxu:basicDateAndTimeFormater()}" /> <h:message
       styleClass="errorMessage" for="#{widget.id}_from"
       id="#{widget.id}_message_from" /> <span class="tinyLabel"> <h:outputText
       value="#{messages['label.search.and']} " /> </span> <nxu:inputDateTime
       value="#{field_1}" id="#{widget.id}_to"
       styleClass="#{widget.properties['styleClass']}"
       required="#{widget.properties['required']}" showsTime="true"
-      format="#{nxu:basicDateFormater()}" /> <h:message
+      format="#{nxu:basicDateAndTimeFormater()}" /> <h:message
       styleClass="errorMessage" for="#{widget.id}_to"
       id="#{widget.id}_message_to" /></div>
   </c:if>
