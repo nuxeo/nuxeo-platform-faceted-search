@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.dm.layouts">
 
-  <require>org.nuxeo.ecm.platform.forms.layout.WebLayoutManager</require>
-
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
-             point="widgets">
+    point="widgets">
 
     <widget name="text_search" type="faceted_search_wrapper">
       <labels>
@@ -141,8 +139,7 @@
       </subWidgets>
     </widget>
 
-    <widget name="faceted_searches_selector"
-            type="faceted_searches_selector">
+    <widget name="faceted_searches_selector" type="faceted_searches_selector">
       <widgetModes>
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
@@ -151,7 +148,7 @@
     </widget>
 
     <widget name="saved_faceted_searches_selector"
-            type="saved_faceted_searches_selector">
+      type="saved_faceted_searches_selector">
       <widgetModes>
         <!-- not shown in edit and view modes -->
         <mode value="view">hidden</mode>
@@ -178,11 +175,12 @@
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
-             point="layouts">
+    point="layouts">
 
     <layout name="faceted_search_default">
       <templates>
-        <template mode="any">/layouts/layout_faceted_search_template.xhtml
+        <template mode="any">
+          /layouts/layout_faceted_search_template.xhtml
         </template>
       </templates>
       <rows>

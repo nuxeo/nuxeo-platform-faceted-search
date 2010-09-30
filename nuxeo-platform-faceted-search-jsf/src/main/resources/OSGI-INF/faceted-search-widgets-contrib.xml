@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.widgets">
 
-  <require>org.nuxeo.ecm.platform.forms.layout.WebLayoutManager</require>
-
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
