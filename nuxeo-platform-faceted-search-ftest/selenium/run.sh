@@ -22,6 +22,22 @@ if [ ! -z $HIDE_FF ]; then
 fi
 CMD_END="-firefoxProfileTemplate ffprofile -userExtensions user-extensions.js"
 
+check_ports_and_kill_ghost_process() {
+    hostname=${1:-0.0.0.0}
+    port=${2:-8080}
+    RUNNING_PID=`lsof -n -i TCP@$hostname:$port | grep '(LISTEN)' | awk '{print $2}'`
+    if [ ! -z $RUNNING_PID ]; then
+        echo [WARN] A process is already using port $port: $RUNNING_PID
+        echo [WARN] Storing jstack in $PWD/$RUNNING_PID.jstack then killing process
+        [ -e $JAVA_HOME/bin/jstack ] && $JAVA_HOME/bin/jstack $RUNNING_PID >$PWD/$RUNNING_PID.jstack
+        kill $RUNNING_PID || kill -9 $RUNNING_PID
+        sleep 5
+    fi
+}
+
+# Try to kill ghosts processses
+check_ports_and_kill_ghost_process
+
 # Clean old results
 rm -f $HERE/result-*.html
 
