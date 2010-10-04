@@ -24,7 +24,7 @@ CMD_END="-firefoxProfileTemplate ffprofile -userExtensions user-extensions.js"
 
 check_ports_and_kill_ghost_process() {
     hostname=${1:-0.0.0.0}
-    port=${2:-8080}
+    port=${2:-14440}
     RUNNING_PID=`lsof -n -i TCP@$hostname:$port | grep '(LISTEN)' | awk '{print $2}'`
     if [ ! -z $RUNNING_PID ]; then
         echo [WARN] A process is already using port $port: $RUNNING_PID
