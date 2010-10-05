@@ -18,11 +18,11 @@
     </c:otherwise>
   </c:choose></h6>
 
-  <h:dataTable value="#{field_0}" var="value"
+  <h:dataTable value="#{field_0}" var="path"
     rendered="#{not empty field_0}">
     <h:column>
       <h:outputText
-            value="#{nxd:titleOrId(treeWidgetActions.getDocumentFromPath(model.rowData))}" />
+            value="#{nxd:titleOrId(treeWidgetActions.getDocumentFromPath(path))}" />
     </h:column>
   </h:dataTable>
 
