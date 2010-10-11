@@ -99,7 +99,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         DocumentModel uws = getCurrentUserPersonalWorkspace(session);
 
         String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
-        String rootSavedSearchesName = IdUtils.generateId(rootSavedSearchesTitle);
+        String rootSavedSearchesName = IdUtils.generatePathSegment(rootSavedSearchesTitle);
         Path rootSavedSearchesPath = new Path(uws.getPathAsString()).append(rootSavedSearchesName);
         if (!session.exists(new PathRef(rootSavedSearchesPath.toString()))) {
             DocumentModel rootSavedSearches = session.createDocumentModel(
@@ -116,7 +116,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
                 facetedSearchContentView.getName());
         searchDoc.setPropertyValue("dc:title", title);
         searchDoc.setPathInfo(rootSavedSearchesPath.toString(),
-                IdUtils.generateId(title));
+                IdUtils.generatePathSegment(title));
         searchDoc = session.createDocument(searchDoc);
         session.save();
         return searchDoc;
