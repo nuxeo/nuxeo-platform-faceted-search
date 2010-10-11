@@ -155,7 +155,7 @@ public class TestFacetedSearchService {
         // Check that the search is saved in the configured folder
         FacetedSearchServiceImpl serviceImpl = (FacetedSearchServiceImpl) facetedSearchService;
         String rootSavedSearchesPath = new Path(uws.getPathAsString()).append(
-                IdUtils.generateId(serviceImpl.configuration.getRootSavedSearchesTitle())).toString();
+                IdUtils.generatePathSegment(serviceImpl.configuration.getRootSavedSearchesTitle())).toString();
         assertTrue(savedSearchPath.startsWith(rootSavedSearchesPath));
     }
 
