@@ -9,7 +9,7 @@ HERE=$(cd $(dirname $0); pwd -P)
 cd ../target
 unzip nuxeo-distribution-jboss-*.zip || exit 1
 mv nuxeo-dm-*-jboss jboss || exit 1
-mv nuxeo-platform-faceted-search* jboss/server/default/deploy/nuxeo.ear/system/ || exit 1
+mv nuxeo-platform-faceted-search* jboss/server/default/deploy/nuxeo.ear/bundles/ || exit 1
 chmod +x jboss/bin/nuxeoctl || exit 1
 jboss/bin/nuxeoctl start || exit 1
 
