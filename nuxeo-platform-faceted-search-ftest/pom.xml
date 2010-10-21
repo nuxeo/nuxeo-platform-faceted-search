@@ -31,7 +31,7 @@
               <artifactId>nuxeo-distribution-jboss</artifactId>
               <classifier>nuxeo-dm</classifier>
               <type>zip</type>
-              <overWrite>ftrue</overWrite>
+              <overWrite>true</overWrite>
               <outputDirectory>target</outputDirectory>
             </artifactItem>
             <!-- won't need that when nuxeo-platform-faceted-search will be integrated into Nuxeo DM -->
