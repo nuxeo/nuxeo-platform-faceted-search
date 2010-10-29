@@ -32,6 +32,9 @@
           <predicate parameter="dc:creator" operator="IN">
             <field schema="faceted_search_default" name="dc_creator" />
           </predicate>
+          <predicate parameter="dc:nature" operator="IN">
+            <field schema="faceted_search_default" name="dc_nature" />
+          </predicate>
           <predicate parameter="dc:coverage" operator="STARTSWITH">
             <field schema="faceted_search_default" name="dc_coverage" />
           </predicate>
