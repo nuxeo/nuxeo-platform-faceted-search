@@ -39,10 +39,10 @@ import org.nuxeo.ecm.core.test.RepositorySettings;
 import org.nuxeo.ecm.core.test.annotations.BackendType;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
-import org.nuxeo.ecm.platform.ui.web.contentview.ContentView;
-import org.nuxeo.ecm.platform.ui.web.contentview.ContentViewService;
 import org.nuxeo.ecm.platform.ui.web.jsf.MockFacesContext;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.runtime.test.runner.Deploy;
@@ -69,7 +69,7 @@ import static org.junit.Assert.assertTrue;
         "org.nuxeo.ecm.platform.userworkspace.core",
         "org.nuxeo.ecm.platform.dublincore",
         "org.nuxeo.ecm.platform.faceted.search.jsf",
-        "org.nuxeo.ecm.platform.ui:OSGI-INF/contentview-framework.xml" })
+        "org.nuxeo.ecm.platform.contentview.jsf:OSGI-INF/contentview-framework.xml" })
 @LocalDeploy( {
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-contentviews-contrib.xml",
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-core-types-contrib.xml" })

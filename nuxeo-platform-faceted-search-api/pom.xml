@@ -18,7 +18,7 @@
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
-      <artifactId>nuxeo-platform-ui-web</artifactId>
+      <artifactId>nuxeo-platform-contentview-jsf</artifactId>
     </dependency>
   </dependencies>
 
