@@ -69,6 +69,7 @@ import static org.junit.Assert.assertTrue;
         "org.nuxeo.ecm.platform.userworkspace.core",
         "org.nuxeo.ecm.platform.dublincore",
         "org.nuxeo.ecm.platform.faceted.search.jsf",
+        "org.nuxeo.ecm.platform.query.api",
         "org.nuxeo.ecm.platform.contentview.jsf:OSGI-INF/contentview-framework.xml" })
 @LocalDeploy( {
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-contentviews-contrib.xml",
