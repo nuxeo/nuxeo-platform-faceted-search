@@ -2,9 +2,10 @@
 <component name="org.nuxeo.ecm.platform.faceted.search.dm.navtree">
 
   <extension target="org.nuxeo.ecm.platform.virtualnavigation.NavTreeService"
-      point="navigationTree">
+    point="navigationTree">
 
-    <navTree treeId="facetedSearch" treeLabel="label.faceted.search" xhtmlview="/facetedsearch/faceted_search_form.xhtml" />
+    <navTree treeId="facetedSearch" treeLabel="label.faceted.search"
+      xhtmlview="/facetedsearch/faceted_search_form.xhtml" order="10" />
 
   </extension>
 
