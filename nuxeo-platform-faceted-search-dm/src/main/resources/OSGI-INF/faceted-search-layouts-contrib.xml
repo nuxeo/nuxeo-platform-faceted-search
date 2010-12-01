@@ -140,7 +140,7 @@
       </labels>
       <translated>true</translated>
       <subWidgets>
-        <widget name="ecm_path" type="faceted_search_path_tree">
+        <widget name="ecm_path" type="select_path_tree">
           <labels>
             <label mode="any">label.faceted.search.path</label>
           </labels>

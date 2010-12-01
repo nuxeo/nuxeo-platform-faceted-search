@@ -47,7 +47,7 @@
             <td colspan="2"><c:choose>
               <c:when test="#{widget.translated}">
                 <div>
-                <h6><c:if test="#{!empty widget.helpLabel}">
+                <span class="labelOpenPopUp"><c:if test="#{!empty widget.helpLabel}">
                   <span
                     onmouseover="tooltip.show('#{messages[widget.helpLabel]}', 500);"
                     onmouseout="tooltip.hide();"> <h:outputText
@@ -55,18 +55,18 @@
                 </c:if> <c:if test="#{empty widget.helpLabel}">
                   <span> <h:outputText value="#{messages[widget.label]}" />
                   </span>
-                </c:if></h6>
+                </c:if></span>
                 </div>
               </c:when>
               <c:otherwise>
                 <div>
-                <h6><c:if test="#{!empty widget.helpLabel}">
+                <span class="labelOpenPopUp"><c:if test="#{!empty widget.helpLabel}">
                   <span onmouseover="tooltip.show('#{widget.helpLabel}', 500);"
                     onmouseout="tooltip.hide();"> <h:outputText
                     value="#{widget.label}" /> </span>
                 </c:if> <c:if test="#{empty widget.helpLabel}">
                   <span> <h:outputText value="#{widget.label}" /> </span>
-                </c:if></h6>
+                </c:if></span>
                 </div>
               </c:otherwise>
             </c:choose>

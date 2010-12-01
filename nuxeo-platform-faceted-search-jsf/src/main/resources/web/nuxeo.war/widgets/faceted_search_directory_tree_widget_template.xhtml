@@ -7,7 +7,7 @@
 
 <c:if test="#{widget.mode != 'create' and widget.mode != 'edit'}">
 
-  <h6><c:choose>
+  <span class="labelOpenPopUp"><c:choose>
     <c:when test="#{widget.translated}">
       <span class="subLabel"> <h:outputText
         value="#{messages[widget.label]}" /> </span>
@@ -16,7 +16,7 @@
       <span class="subLabel"> <h:outputText value="#{widget.label}" />
       </span>
     </c:otherwise>
-  </c:choose></h6>
+  </c:choose></span>
 
   <h:dataTable value="#{field_0}" var="directoryValue"
     rendered="#{not empty field_0}">
@@ -69,7 +69,7 @@
       });
     </script>
 
-  <h6><c:choose>
+  <span class="labelOpenPopUp"><c:choose>
     <c:when test="#{widget.translated}">
       <span class="subLabel"> <h:outputText
         value="#{messages[widget.label]}" /> </span>
@@ -79,7 +79,7 @@
       </span>
     </c:otherwise>
   </c:choose> <span class="labelTool" onclick="showTree('##{widget.id}_tree');"><img
-    src="/nuxeo/icons/blue_arrow_tool.png" alt="Pop up" /></span></h6>
+    src="/nuxeo/icons/add_popup.png" alt="Pop up" /></span></span>
   <div style="clear: both;"></div>
 
   <div id="#{widget.id}_tree" class="facetedSearchPopUp">

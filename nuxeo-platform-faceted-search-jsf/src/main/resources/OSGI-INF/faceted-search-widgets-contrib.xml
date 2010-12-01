@@ -94,18 +94,6 @@
       </handler-class>
       <property name="template">/widgets/faceted_search_directory_tree_widget_template.xhtml</property>
     </widgetType>
-
-    <widgetType name="faceted_search_path_tree">
-      <documentation>
-        Widget allowing to select one or more values from a Tree constructed
-        from the navigation tree.
-      </documentation>
-      <handler-class>
-        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
-      </handler-class>
-      <property name="template">/widgets/faceted_search_path_tree_widget_template.xhtml</property>
-    </widgetType>
-
   </extension>
 
 </component>
