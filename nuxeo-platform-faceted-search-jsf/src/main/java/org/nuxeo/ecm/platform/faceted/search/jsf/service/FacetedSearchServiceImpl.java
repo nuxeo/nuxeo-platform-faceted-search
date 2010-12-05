@@ -17,7 +17,10 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.nuxeo.common.utils.IdUtils;
@@ -31,6 +34,7 @@ import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
+import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.runtime.api.Framework;
 import org.nuxeo.runtime.model.ComponentInstance;
@@ -50,6 +54,8 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     protected Configuration configuration;
 
     protected ContentViewService contentViewService;
+
+    protected PageProviderService pageProviderService;
 
     protected UserWorkspaceService userWorkspaceService;
 
@@ -73,6 +79,24 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
             }
         }
         return contentViewService;
+    }
+
+    protected PageProviderService getPageProviderService()
+            throws ClientException {
+        if (pageProviderService == null) {
+            try {
+                pageProviderService = Framework.getService(PageProviderService.class);
+            } catch (Exception e) {
+                final String errMsg = "Error connecting to PageProviderService. "
+                        + e.getMessage();
+                throw new ClientException(errMsg, e);
+            }
+            if (pageProviderService == null) {
+                throw new ClientException(
+                        "PageProviderService service not bound");
+            }
+        }
+        return pageProviderService;
     }
 
     protected UserWorkspaceService getUserWorkspaceService()
@@ -125,8 +149,8 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session)
             throws ClientException {
         return getDocuments(
-                Constants.CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME,
-                session.getPrincipal().getName());
+                Constants.CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME,
+                session, session.getPrincipal().getName());
     }
 
     protected DocumentModel getCurrentUserPersonalWorkspace(CoreSession session)
@@ -137,18 +161,21 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     }
 
     @SuppressWarnings("unchecked")
-    protected List<DocumentModel> getDocuments(String contentViewName,
-            Object... parameters) throws ClientException {
-        ContentViewService contentViewService = getContentViewService();
-        ContentView contentView = contentViewService.getContentView(contentViewName);
-        contentView.resetPageProvider();
-        return ((PageProvider<DocumentModel>) contentView.getPageProviderWithParams(parameters)).getCurrentPage();
+    protected List<DocumentModel> getDocuments(String pageProviderName,
+            CoreSession session, Object... parameters) throws ClientException {
+        PageProviderService pageProviderService = getPageProviderService();
+        Map<String, Serializable> properties = new HashMap<String, Serializable>();
+        properties.put("coreSession", (Serializable) session);
+        return ((PageProvider<DocumentModel>) pageProviderService.getPageProvider(
+                pageProviderName, null, null, null, properties, parameters)).getCurrentPage();
+
     }
 
     public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
             throws ClientException {
-        return getDocuments(Constants.ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME,
-                session.getPrincipal().getName());
+        return getDocuments(
+                Constants.OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME,
+                session, session.getPrincipal().getName());
     }
 
     @Override

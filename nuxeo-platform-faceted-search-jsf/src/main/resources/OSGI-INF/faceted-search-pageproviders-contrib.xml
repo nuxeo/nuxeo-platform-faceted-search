@@ -1,32 +1,24 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.ecm.platform.faceted.search.jsf.contentviews">
+<component name="org.nuxeo.ecm.platform.faceted.search.jsf.pageproviders">
 
-  <require>org.nuxeo.ecm.platform.ui.web.ContentViewService</require>
+  <extension target="org.nuxeo.ecm.platform.query.api.PageProviderService"
+    point="providers">
 
-  <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
-             point="contentViews">
-
-    <contentView name="USER_SAVED_SEARCHES">
-      <coreQueryPageProvider>
-        <property name="coreSession">#{documentManager}</property>
+      <coreQueryPageProvider name="USER_SAVED_SEARCHES">
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator = ? AND
           ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
-    </contentView>
 
-    <contentView name="ALL_SAVED_SEARCHES">
-      <coreQueryPageProvider>
-        <property name="coreSession">#{documentManager}</property>
+      <coreQueryPageProvider name="OTHER_USERS_SAVED_SEARCHES">
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator != ? AND
           ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
-    </contentView>
 
   </extension>
 
