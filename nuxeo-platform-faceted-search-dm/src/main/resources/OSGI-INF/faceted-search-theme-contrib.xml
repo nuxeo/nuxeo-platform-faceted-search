@@ -2,12 +2,21 @@
 <component name="org.nuxeo.ecm.platform.faceted.search.theme">
 
   <require>org.nuxeo.theme.jsf</require>
+  <require>org.nuxeo.theme.nuxeo.default</require>
 
   <!-- resources -->
   <extension target="org.nuxeo.theme.services.ThemeService" point="resources">
     <resource name="faceted-search.css">
       <path>css/faceted-search.css</path>
     </resource>
+  </extension>
+
+  <extension target="org.nuxeo.theme.services.ThemeService" point="views">
+    <!-- contribute faceted-search.css to tree explorer view -->
+    <view name="nuxeo5 tree explorer" template-engine="jsf-facelets" merge="true">
+      <format-type>widget</format-type>
+      <resource>faceted-search.css</resource>
+    </view>
   </extension>
 
 </component>
