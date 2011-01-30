@@ -14,13 +14,13 @@ div.facetedSearchBlock .dataInput td{ padding:3px 4px 5px 0 }
 div.facetedSearchBlock input, .facetedSearchBlock select{ width:100% }
 div.facetedSearchBlock .dataInputTextDate{ font-size:9px;  margin:0 5px 3px 3px;  width:45px }
 div.facetedSearchBlock .widgetContent{ border-bottom:1px solid #dcdcdc; font-size: 9px }
-div.facetedSearchBlock h5.widgetTitle{ background-color:#f1f2f3;  border-bottom:1px solid #cacaca;  border-top:1px solid #fff;  color:#323232;  font:bold 11px "Lucida Grande",Helvetica,sans-serif;  padding:3px; margin: 0 }
-div.facetedSearchBlock .widgetContent .labelOpenPopUp{ border-bottom:1px solid #cacaca;  color:#323232;  display:block;  font:normal 10px "Lucida Grande",Helvetica,sans-serif;  margin:0 0 5px;  padding:0 0 1px }
+div.facetedSearchBlock h5.widgetTitle{ background-color:#f1f2f3;  border-bottom:1px solid #cacaca;  border-top:1px solid #fff;  color:#323232;  font-weight: bold font-size: 11px;  padding:3px; margin: 0 }
+div.facetedSearchBlock .widgetContent .labelOpenPopUp{ border-bottom:1px solid #cacaca; color:#323232; display:block; font-size: 10px; margin:0 0 5px; padding:0 0 1px }
 
 #saveFacetedSearchForm input{ margin-left:3px }
 
-div.facetedSearchPopUp{ background-color:white;  border:1px solid #b5bcc6;  display:none;  left:25%;  position:absolute;  top:15%;  width:400px;  z-index:10000 }
-div.facetedSearchPopUp .closePopUpHeader{ background-color:#f6f8ff;  border-bottom:1px dotted #dedede;  padding:3px;  text-align:right }
+div.facetedSearchPopUp{ background-color:white; border:1px solid #b5bcc6; display:none; left:25%; position:absolute; top:15%; width:400px; z-index:10000 }
+div.facetedSearchPopUp .closePopUpHeader{ background-color:#f6f8ff; border-bottom:1px dotted #dedede; padding:3px; text-align:right }
 div.facetedSearchPopUp .closePopUpHeader .closePopUp{ cursor:pointer;  float:right }
 div.facetedSearchPopUp .closePopUpHeader .popUpTitle{ float:left;  font-size:110% }
 div.facetedSearchPopUp .popUpContent{ height:390px;  overflow:auto;  padding:10px }
