@@ -9,6 +9,7 @@ HERE=$(cd $(dirname $0); pwd -P)
 cd ../target
 unzip nuxeo-distribution-jboss-*.zip || exit 1
 mv nuxeo-dm-*-jboss jboss || exit 1
+sed -i "s/-Xmx1024m/-Xmx2g/" jboss/bin/nuxeo.conf || exit 1
 chmod +x jboss/bin/nuxeoctl || exit 1
 jboss/bin/nuxeoctl start || exit 1
 
