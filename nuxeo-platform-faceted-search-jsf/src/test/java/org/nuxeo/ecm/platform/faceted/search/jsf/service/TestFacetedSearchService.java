@@ -17,6 +17,11 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.Set;
 
@@ -51,11 +56,6 @@ import org.nuxeo.runtime.test.runner.FeaturesRunner;
 import org.nuxeo.runtime.test.runner.LocalDeploy;
 
 import com.google.inject.Inject;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
@@ -162,7 +162,8 @@ public class TestFacetedSearchService {
 
     protected DocumentModel createSavedSearch(String title)
             throws ClientException {
-        ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
+        ContentView contentView = contentViewService.getContentView(
+                FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME, session);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
         searchDocumentModel.setPropertyValue("fsd:ecm_fulltext", "fulltext");
         contentView.setSearchDocumentModel(searchDocumentModel);
