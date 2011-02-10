@@ -14,9 +14,9 @@
         <property name="coreSession">#{documentManager}</property>
         <whereClause docType="FacetedSearchDefault">
           <fixedPart>
-            ecm:mixinType != 'HiddenInNavigation' AND
-            ecm:mixinType != 'HiddenInFacetedSearch' AND ecm:isCheckedInVersion = 0
-            AND ecm:currentLifeCycleState != 'deleted'
+            ecm:mixinType != 'HiddenInNavigation' AND ecm:mixinType !=
+            'HiddenInFacetedSearch' AND ecm:isCheckedInVersion = 0 AND
+            ecm:currentLifeCycleState != 'deleted'
           </fixedPart>
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
             <field schema="faceted_search_default" name="ecm_fulltext" />
@@ -62,7 +62,7 @@
       <resultLayouts>
         <layout name="document_virtual_navigation_listing_ajax"
           title="document_listing" translateTitle="true"
-          iconPath="/icons/document_listing_icon.png" />
+          iconPath="/icons/document_listing_icon.png" showCSVExport="true" />
       </resultLayouts>
 
       <selectionList>CURRENT_SELECTION</selectionList>
