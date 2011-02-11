@@ -48,27 +48,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.nuxeo.ecm.distribution</groupId>
-        <artifactId>nuxeo-distribution-jboss</artifactId>
-        <version>${nuxeo.distribution.version}</version>
-        <classifier>nuxeo-dm</classifier>
-        <type>zip</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.distribution</groupId>
-        <artifactId>nuxeo-distribution-tomcat</artifactId>
-        <version>${nuxeo.distribution.version}</version>
-        <classifier>nuxeo-dm</classifier>
-        <type>zip</type>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium.server</groupId>
-        <artifactId>selenium-server</artifactId>
-        <version>1.0.3</version>
-        <classifier>standalone</classifier>
-      </dependency>
-
-      <dependency>
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-platform-ui-web-test</artifactId>
         <version>${nuxeo.jsf.version}</version>
