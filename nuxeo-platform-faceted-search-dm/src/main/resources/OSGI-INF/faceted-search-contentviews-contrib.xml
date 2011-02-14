@@ -9,6 +9,8 @@
     <contentView name="faceted_search_default">
       <title>label.faceted.search.default</title>
       <translateTitle>true</translateTitle>
+      <emptySentence>label.content.empty.search</emptySentence>
+      <translateEmptySentence>true</translateEmptySentence>
 
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
@@ -51,6 +53,7 @@
 
       <searchLayout name="faceted_search_default" />
 
+      <showPageSizeSelector>true</showPageSizeSelector>
       <useGlobalPageSize>true</useGlobalPageSize>
       <refresh>
         <event>documentChanged</event>

@@ -13,37 +13,43 @@
 
     <ui:include src="/incl/message_banner.xhtml" />
 
-    <div id="content"><nxu:set var="contentViewId" value="0">
+    <div id="content">
+
+      <nxu:set var="contentViewId" value="0">
       <nxu:set var="contentViewName"
         value="#{facetedSearchActions.currentContentViewName}">
 
         <ui:decorate template="/incl/content_view.xhtml">
-          <ui:define name="content_view_header_before_selector">
+          <ui:define name="content_view_title">
             <c:if test="#{!empty title}">
-              <h1><h:outputText
-                value="#{messages['title.search.results']}" /> <span> <h:outputLink
-                value="#{facetedSearchActions.permanentLinkUrl}">
-                <nxu:graphicImage value="/icons/permalink.png"
-                  style="vertical-align:middle"
-                  alt="#{messages['label.search.permalink']}"
-                  title="#{messages['label.search.permalink']}" />
-              </h:outputLink> </span></h1>
+              <h1>
+                <h:outputText
+                  value="#{messages['title.search.results']}" />
+                <span>
+                  <h:outputLink
+                    value="#{facetedSearchActions.permanentLinkUrl}">
+                    <nxu:graphicImage value="/icons/permalink.png"
+                      style="vertical-align:middle"
+                      alt="#{messages['label.search.permalink']}"
+                      title="#{messages['label.search.permalink']}" />
+                  </h:outputLink>
+                </span>
+              </h1>
             </c:if>
-          </ui:define>
-          <ui:define name="empty_content_view_label">
-            <h:outputText value="#{messages['label.content.empty.search']}"
-              rendered="#{documents.rowCount == 0 and not provider.hasError()}" />
           </ui:define>
           <ui:define name="content_view_selector">
             <ui:include src="/incl/content_view_result_layout_selector.xhtml" />
-            <div class="action_bar"><ui:include
-              src="/facetedsearch/save_search_form.xhtml" /></div>
+            <div class="action_bar">
+              <ui:include src="/facetedsearch/save_search_form.xhtml" />
+            </div>
             <div style="clear: both;" />
           </ui:define>
         </ui:decorate>
 
       </nxu:set>
-    </nxu:set></div>
+      </nxu:set>
+
+    </div>
 
   </ui:define>
 
