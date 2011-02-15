@@ -21,21 +21,19 @@
 
         <ui:decorate template="/incl/content_view.xhtml">
           <ui:define name="content_view_title">
-            <c:if test="#{!empty title}">
-              <h1>
-                <h:outputText
-                  value="#{messages['title.search.results']}" />
-                <span>
-                  <h:outputLink
-                    value="#{facetedSearchActions.permanentLinkUrl}">
-                    <nxu:graphicImage value="/icons/permalink.png"
-                      style="vertical-align:middle"
-                      alt="#{messages['label.search.permalink']}"
-                      title="#{messages['label.search.permalink']}" />
-                  </h:outputLink>
-                </span>
-              </h1>
-            </c:if>
+            <h1>
+              <h:outputText
+                value="#{messages['label.faceted.search.default']}" />
+              <span>
+                <h:outputLink
+                  value="#{facetedSearchActions.permanentLinkUrl}">
+                  <nxu:graphicImage value="/icons/permalink.png"
+                    style="vertical-align:middle"
+                    alt="#{messages['label.search.permalink']}"
+                    title="#{messages['label.search.permalink']}" />
+                </h:outputLink>
+              </span>
+            </h1>
           </ui:define>
           <ui:define name="content_view_selector">
             <ui:include src="/incl/content_view_result_layout_selector.xhtml" />
