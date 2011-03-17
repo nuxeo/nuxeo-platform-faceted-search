@@ -36,12 +36,12 @@ public final class Constants {
     /* Page provider names */
 
     /**
-     * @since 5.4.1
+     * @since 5.4.2
      */
     public static final String OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME = "OTHER_USERS_SAVED_SEARCHES";
 
     /**
-     * @since 5.4.1
+     * @since 5.4.2
      */
     public static final String CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME = "USER_SAVED_SEARCHES";
 
