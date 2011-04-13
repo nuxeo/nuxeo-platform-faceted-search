@@ -163,7 +163,7 @@ public class TestFacetedSearchService {
     protected DocumentModel createSavedSearch(String title)
             throws ClientException {
         ContentView contentView = contentViewService.getContentView(
-                FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME, session);
+                FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
         searchDocumentModel.setPropertyValue("fsd:ecm_fulltext", "fulltext");
         contentView.setSearchDocumentModel(searchDocumentModel);
