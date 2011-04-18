@@ -28,7 +28,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 
@@ -40,6 +39,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
+import org.jboss.seam.international.StatusMessage;
 import org.json.JSONException;
 import org.nuxeo.common.utils.Base64;
 import org.nuxeo.ecm.core.api.ClientException;
@@ -269,7 +269,7 @@ public class FacetedSearchActions implements Serializable {
 
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
-            facesMessages.add(FacesMessage.SEVERITY_INFO,
+            facesMessages.add(StatusMessage.Severity.INFO,
                     resourcesAccessor.getMessages().get(SEARCH_SAVED_LABEL));
         }
     }
