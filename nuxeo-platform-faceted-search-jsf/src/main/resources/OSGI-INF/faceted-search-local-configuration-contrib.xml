@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.dm.local.configuration">
+
+  <extension target="org.nuxeo.ecm.core.schema.TypeService"
+    point="schema">
+    <schema name="faceted_search_configuration" prefix="fsc"
+      src="schemas/faceted_search_configuration.xsd" />
+  </extension>
+
+  <extension target="org.nuxeo.ecm.core.schema.TypeService"
+    point="doctype">
+
+    <facet name="FacetedSearchLocalConfiguration">
+      <schema name="faceted_search_configuration" />
+    </facet>
+
+  </extension>
+
+  <extension target="org.nuxeo.ecm.core.api.DocumentAdapterService" point="adapters">
+       <adapter class="org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfiguration"
+           factory="org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfigurationFactory" />
+  </extension>
+
+</component>

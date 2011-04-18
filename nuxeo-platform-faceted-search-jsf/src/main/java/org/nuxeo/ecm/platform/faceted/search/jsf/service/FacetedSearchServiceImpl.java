@@ -17,22 +17,28 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.nuxeo.common.utils.IdUtils;
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.PathRef;
+import org.nuxeo.ecm.core.api.localconfiguration.LocalConfigurationService;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
+import org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfiguration;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
@@ -47,6 +53,8 @@ import org.nuxeo.runtime.model.DefaultComponent;
 public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {
 
+    private static Log log = LogFactory.getLog(FacetedSearchServiceImpl.class);
+
     public static final String FACETED_SEARCH_FLAG = "FACETED_SEARCH";
 
     public static final String CONFIGURATION_EP = "configuration";
@@ -59,9 +67,61 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     protected UserWorkspaceService userWorkspaceService;
 
+    protected FacetedSearchConfiguration facetedSearchConfiguration;
+
     public Set<String> getContentViewNames() throws ClientException {
+        return getContentViewNames(null);
+    }
+
+    public Set<String> getContentViewNames(DocumentModel currentDoc)
+            throws ClientException {
         ContentViewService contentViewService = getContentViewService();
-        return contentViewService.getContentViewNames(FACETED_SEARCH_FLAG);
+        return doFilterNames(
+                contentViewService.getContentViewNames(FACETED_SEARCH_FLAG),
+                currentDoc);
+    }
+
+    /**
+     * Filter names depending of the local configuration, if none everything is
+     * returned
+     *
+     * @param contentViewNames
+     * @return allowed contentviewNames or all if no local configuration
+     */
+    protected Set<String> doFilterNames(Set<String> contentViewNames,
+            DocumentModel currentDoc) {
+        FacetedSearchConfiguration fsConf = getFacetedConfiguration(currentDoc);
+        return fsConf == null ? contentViewNames
+                : fsConf.filterAllowedContentViewNames(contentViewNames);
+    }
+
+    /**
+     * Try to get {@code localConfigurationService} and the associated {@code
+     * FacetedSearchConfiguration} to return the instance
+     *
+     * @return null in case of any problem and the local configuration if
+     *         everything goes well
+     */
+    protected FacetedSearchConfiguration getFacetedConfiguration(
+            DocumentModel currentDoc) {
+        if (facetedSearchConfiguration == null) {
+            LocalConfigurationService localConfigurationService = null;
+            try {
+                localConfigurationService = Framework.getService(LocalConfigurationService.class);
+            } catch (Exception e) {
+                final String errMsg = "Error connecting to LocalConfigurationService. "
+                        + e.getMessage();
+                log.error(errMsg, e);
+            }
+            if (localConfigurationService == null) {
+                log.warn("LocalConfigurationService service not bound");
+            } else {
+                facetedSearchConfiguration = localConfigurationService.getConfiguration(
+                        FacetedSearchConfiguration.class,
+                        F_SEARCH_CONFIGURATION_FACET, currentDoc);
+            }
+        }
+        return facetedSearchConfiguration;
     }
 
     protected ContentViewService getContentViewService() throws ClientException {

@@ -21,7 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS;
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS;
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,6 +43,7 @@ import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.localconfiguration.LocalConfigurationService;
 import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.RepositorySettings;
@@ -48,6 +54,7 @@ import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
+import org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfiguration;
 import org.nuxeo.ecm.platform.ui.web.jsf.MockFacesContext;
 import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.runtime.test.runner.Deploy;
@@ -95,6 +102,9 @@ public class TestFacetedSearchService {
     protected UserWorkspaceService userWorkspaceService;
 
     @Inject
+    protected LocalConfigurationService localConfigurationService;
+
+    @Inject
     protected FeaturesRunner featuresRunner;
 
     protected MockFacesContext facesContext;
@@ -121,6 +131,7 @@ public class TestFacetedSearchService {
     @Test
     public void serviceRegistration() {
         assertNotNull(facetedSearchService);
+        assertNotNull(localConfigurationService);
     }
 
     @Test
@@ -162,8 +173,7 @@ public class TestFacetedSearchService {
 
     protected DocumentModel createSavedSearch(String title)
             throws ClientException {
-        ContentView contentView = contentViewService.getContentView(
-                FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
+        ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
         searchDocumentModel.setPropertyValue("fsd:ecm_fulltext", "fulltext");
         contentView.setSearchDocumentModel(searchDocumentModel);
@@ -180,6 +190,45 @@ public class TestFacetedSearchService {
         assertEquals(2, userSavedSearches.size());
         assertTrue(userSavedSearches.contains(firstSavedSearch));
         assertTrue(userSavedSearches.contains(secondSavedSearch));
+    }
+
+    @Test
+    public void defineLocalConfiguration() throws ClientException {
+        DocumentModel confWorkspace = session.createDocumentModel("Workspace");
+        confWorkspace.addFacet(F_SEARCH_CONFIGURATION_FACET);
+        confWorkspace.setPropertyValue(
+                F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS, new String[] {
+                        "FOO_CV", "BAR_CV" });
+        confWorkspace.setPropertyValue(
+                F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS, new String[] {
+                        "JOHN_CV", "DOE_CV" });
+        confWorkspace.setPathInfo("/", "confWorkspace");
+        confWorkspace = session.createDocument(confWorkspace);
+
+        DocumentModel fooFile = session.createDocumentModel(
+                confWorkspace.getPathAsString(), "fooooo", "File");
+        fooFile = session.createDocument(fooFile);
+
+        FacetedSearchConfiguration conf = localConfigurationService.getConfiguration(
+                FacetedSearchConfiguration.class, F_SEARCH_CONFIGURATION_FACET,
+                fooFile);
+
+        assertNotNull(conf);
+        List<String> allowed = conf.getAllowedContentViewNames();
+        assertTrue(allowed.contains("FOO_CV"));
+        assertTrue(allowed.contains("BAR_CV"));
+
+        List<String> denied = conf.getDeniedContentViewNames();
+        assertTrue(denied.contains("JOHN_CV"));
+        assertTrue(denied.contains("DOE_CV"));
+
+        Set<String> test1 = new HashSet<String>(Arrays.asList(new String[] {
+                "JOHN_CV", "DOE_CV", "GOOD", "BAR_CV" }));
+        Set<String> filtered = conf.filterAllowedContentViewNames(test1);
+        assertTrue(filtered.contains("BAR_CV"));
+        assertFalse(filtered.contains("JOHN_CV"));
+        assertFalse(filtered.contains("DOE_CV"));
+        assertFalse(filtered.contains("GOOD"));
     }
 
     @Test
