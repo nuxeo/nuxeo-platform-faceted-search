@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.dm.contentviews">
 
-  <require>org.nuxeo.ecm.platform.ui.web.ContentViewService</require>
-
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
     point="contentViews">
 
