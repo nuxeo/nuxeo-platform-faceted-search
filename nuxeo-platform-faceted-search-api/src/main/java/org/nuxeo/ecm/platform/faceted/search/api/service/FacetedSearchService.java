@@ -41,6 +41,16 @@ public interface FacetedSearchService {
     Set<String> getContentViewNames() throws ClientException;
 
     /**
+     * Returns the list of Content view names associated to a Faceted Search and
+     * depending of a local configuration.
+     *
+     * @param doc corresponds to current navigation context, to try to get some
+     *            local configuration of a parent.
+     * @throws ClientException in case of any error
+     */
+    Set<String> getContentViewNames(DocumentModel doc) throws ClientException;
+
+    /**
      * Save the current Faceted search in the user workspace with the given
      * title.
      *

@@ -45,6 +45,11 @@ public final class Constants {
      */
     public static final String CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME = "USER_SAVED_SEARCHES";
 
+    /**
+     * @since 5.4.2
+     */
+    public static final String FACETED_SEARCH_FLAG = "FACETED_SEARCH";
+
     /* Content view names */
 
     /**

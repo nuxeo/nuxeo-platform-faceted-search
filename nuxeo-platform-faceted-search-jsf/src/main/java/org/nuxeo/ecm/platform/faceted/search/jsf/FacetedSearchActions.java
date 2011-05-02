@@ -20,6 +20,7 @@ package org.nuxeo.ecm.platform.faceted.search.jsf;
 import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.ScopeType.EVENT;
 import static org.jboss.seam.annotations.Install.FRAMEWORK;
+import static org.nuxeo.ecm.webapp.helpers.EventNames.LOCAL_CONFIGURATION_CHANGED;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -36,6 +37,7 @@ import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Install;
 import org.jboss.seam.annotations.Name;
+import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
@@ -57,6 +59,7 @@ import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
+import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
@@ -113,6 +116,9 @@ public class FacetedSearchActions implements Serializable {
     @In(create = true)
     protected ResourcesAccessor resourcesAccessor;
 
+    @In(create = true)
+    protected transient NavigationContext navigationContext;
+
     protected List<String> contentViewNames;
 
     protected String currentContentViewName;
@@ -140,7 +146,7 @@ public class FacetedSearchActions implements Serializable {
     public List<String> getContentViewNames() throws ClientException {
         if (contentViewNames == null) {
             contentViewNames = new ArrayList<String>(
-                    facetedSearchService.getContentViewNames());
+                    facetedSearchService.getContentViewNames(navigationContext.getCurrentDocument()));
         }
         return contentViewNames;
     }
@@ -367,6 +373,13 @@ public class FacetedSearchActions implements Serializable {
         JSONMetadataExporter exporter = new JSONMetadataExporter();
         String values = exporter.run(doc).toString();
         return encodeValues(values);
+    }
+
+    @Observer(value = LOCAL_CONFIGURATION_CHANGED)
+    public void invalidateContentViewsName() {
+        clearSearch();
+        contentViewNames = null;
+        currentContentViewName = null;
     }
 
 }

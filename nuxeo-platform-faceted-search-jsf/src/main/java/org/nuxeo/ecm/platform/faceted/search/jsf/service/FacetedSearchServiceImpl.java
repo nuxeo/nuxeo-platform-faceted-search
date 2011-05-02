@@ -17,7 +17,7 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
-import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
+import static org.nuxeo.ecm.platform.faceted.search.api.Constants.FACETED_SEARCH_FLAG;import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -54,8 +54,6 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {
 
     private static Log log = LogFactory.getLog(FacetedSearchServiceImpl.class);
-
-    public static final String FACETED_SEARCH_FLAG = "FACETED_SEARCH";
 
     public static final String CONFIGURATION_EP = "configuration";
 
@@ -104,24 +102,23 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
      */
     protected FacetedSearchConfiguration getFacetedConfiguration(
             DocumentModel currentDoc) {
-        if (facetedSearchConfiguration == null) {
-            LocalConfigurationService localConfigurationService = null;
-            try {
-                localConfigurationService = Framework.getService(LocalConfigurationService.class);
-            } catch (Exception e) {
-                final String errMsg = "Error connecting to LocalConfigurationService. "
-                        + e.getMessage();
-                log.error(errMsg, e);
-            }
-            if (localConfigurationService == null) {
-                log.warn("LocalConfigurationService service not bound");
-            } else {
-                facetedSearchConfiguration = localConfigurationService.getConfiguration(
-                        FacetedSearchConfiguration.class,
-                        F_SEARCH_CONFIGURATION_FACET, currentDoc);
-            }
+        LocalConfigurationService localConfigurationService = null;
+        try {
+            localConfigurationService = Framework.getService(LocalConfigurationService.class);
+        } catch (Exception e) {
+            final String errMsg = "Error connecting to LocalConfigurationService. "
+                    + e.getMessage();
+            log.error(errMsg, e);
         }
-        return facetedSearchConfiguration;
+
+        if (localConfigurationService == null) {
+            log.warn("LocalConfigurationService service not bound");
+            return null;
+        } else {
+            return localConfigurationService.getConfiguration(
+                    FacetedSearchConfiguration.class,
+                    F_SEARCH_CONFIGURATION_FACET, currentDoc);
+        }
     }
 
     protected ContentViewService getContentViewService() throws ClientException {

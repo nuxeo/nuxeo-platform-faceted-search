@@ -107,8 +107,7 @@ public class FacetedSearchConfigurationAdapter implements
 
         for (String name : names) {
             if (getDeniedContentViewNames().contains(name)
-                    || !getAllowedContentViewNames().isEmpty()
-                    && !getAllowedContentViewNames().contains(name)) {
+                    || !getAllowedContentViewNames().contains(name)) {
                 filtered.remove(name);
             }
         }
