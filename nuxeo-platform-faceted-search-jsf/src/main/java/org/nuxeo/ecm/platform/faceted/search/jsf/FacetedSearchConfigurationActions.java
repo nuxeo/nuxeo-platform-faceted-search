@@ -33,7 +33,7 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentViewHeader;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants;
 import org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfiguration;
@@ -41,6 +41,8 @@ import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.runtime.api.Framework;
 
 /**
+ * Handle local configuration related actions.
+ *
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
@@ -59,17 +61,17 @@ public class FacetedSearchConfigurationActions implements Serializable {
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
 
-    public Set<ContentView> getNotSelectedContentViews() throws Exception {
+    public Set<ContentViewHeader> getNotSelectedContentViews() throws Exception {
         DocumentModel currDoc = navigationContext.getCurrentDocument();
         if (!currDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
 
         List<String> allowedContentView = getAllowedContentViews(currDoc);
-        Set<ContentView> notAllowedContentView = new HashSet<ContentView>();
+        Set<ContentViewHeader> notAllowedContentView = new HashSet<ContentViewHeader>();
         for (String cvName : getRegisteredContentViews()) {
             if (!allowedContentView.contains(cvName)) {
-                notAllowedContentView.add(getContentViewService().getContentView(
+                notAllowedContentView.add(getContentViewService().getContentViewHeader(
                         cvName));
             }
         }
@@ -77,12 +79,12 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return notAllowedContentView;
     }
 
-    public Set<ContentView> getSelectedContentViews() throws Exception {
+    public Set<ContentViewHeader> getSelectedContentViews() throws Exception {
         DocumentModel currDoc = navigationContext.getCurrentDocument();
         if (!currDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
-        return getContentViews(getAllowedContentViews(currDoc));
+        return getContentViewHeaders(getAllowedContentViews(currDoc));
     }
 
     protected List<String> getAllowedContentViews(DocumentModel doc) {
@@ -94,11 +96,11 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return adapter.getAllowedContentViewNames();
     }
 
-    protected Set<ContentView> getContentViews(
+    protected Set<ContentViewHeader> getContentViewHeaders(
             Collection<String> contentViewsNames) throws Exception {
-        Set<ContentView> contentViews = new HashSet<ContentView>();
+        Set<ContentViewHeader> contentViews = new HashSet<ContentViewHeader>();
         for (String name : contentViewsNames) {
-            contentViews.add(getContentViewService().getContentView(name));
+            contentViews.add(getContentViewService().getContentViewHeader(name));
         }
         return contentViews;
     }

@@ -28,9 +28,27 @@ import org.nuxeo.ecm.core.api.localconfiguration.LocalConfiguration;
 public interface FacetedSearchConfiguration extends
         LocalConfiguration<FacetedSearchConfiguration> {
 
+    /**
+     * Return a list of content views name that are associated with the local
+     * configuration
+     *
+     * @return an unmodifiable list of String or null.
+     */
     List<String> getAllowedContentViewNames();
 
+    /**
+     * Return a list of content views name that are denied with the local
+     * configuration
+     *
+     * @return an unmodifiable list of String or null.
+     */
     List<String> getDeniedContentViewNames();
 
+    /**
+     * Provide a filter to remove un authorised content views name.
+     *
+     * @param names set of possible content views name
+     * @return a set without unauthorised content views, it should be empty.
+     */
     Set<String> filterAllowedContentViewNames(Set<String> names);
 }
