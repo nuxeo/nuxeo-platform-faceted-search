@@ -53,25 +53,26 @@ public class FacetedSearchConfigurationActions implements Serializable {
 
     protected Set<String> registeredContentView;
 
-    protected ContentViewService contentViewService;
-
     @In(create = true)
     protected transient NavigationContext navigationContext;
 
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
 
-    public Set<ContentViewHeader> getNotSelectedContentViews() throws Exception {
-        DocumentModel currDoc = navigationContext.getCurrentDocument();
-        if (!currDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
+    @In(create = true)
+    protected transient ContentViewService contentViewService;
+
+    public Set<ContentViewHeader> getNotSelectedContentViewsHeader() throws Exception {
+        DocumentModel currentDoc = navigationContext.getCurrentDocument();
+        if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
 
-        List<String> allowedContentView = getAllowedContentViews(currDoc);
+        List<String> allowedContentView = getAllowedContentViewsName(currentDoc);
         Set<ContentViewHeader> notAllowedContentView = new HashSet<ContentViewHeader>();
         for (String cvName : getRegisteredContentViews()) {
             if (!allowedContentView.contains(cvName)) {
-                notAllowedContentView.add(getContentViewService().getContentViewHeader(
+                notAllowedContentView.add(contentViewService.getContentViewHeader(
                         cvName));
             }
         }
@@ -79,15 +80,15 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return notAllowedContentView;
     }
 
-    public Set<ContentViewHeader> getSelectedContentViews() throws Exception {
-        DocumentModel currDoc = navigationContext.getCurrentDocument();
-        if (!currDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
+    public Set<ContentViewHeader> getSelectedContentViewsHeader() throws Exception {
+        DocumentModel currentDoc = navigationContext.getCurrentDocument();
+        if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
-        return getContentViewHeaders(getAllowedContentViews(currDoc));
+        return getContentViewsHeader(getAllowedContentViewsName(currentDoc));
     }
 
-    protected List<String> getAllowedContentViews(DocumentModel doc) {
+    protected List<String> getAllowedContentViewsName(DocumentModel doc) {
         FacetedSearchConfiguration adapter = doc.getAdapter(FacetedSearchConfiguration.class);
         if (adapter == null) {
             return Collections.emptyList();
@@ -96,11 +97,11 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return adapter.getAllowedContentViewNames();
     }
 
-    protected Set<ContentViewHeader> getContentViewHeaders(
+    protected Set<ContentViewHeader> getContentViewsHeader(
             Collection<String> contentViewsNames) throws Exception {
         Set<ContentViewHeader> contentViews = new HashSet<ContentViewHeader>();
         for (String name : contentViewsNames) {
-            contentViews.add(getContentViewService().getContentViewHeader(name));
+            contentViews.add(contentViewService.getContentViewHeader(name));
         }
         return contentViews;
     }
@@ -112,12 +113,5 @@ public class FacetedSearchConfigurationActions implements Serializable {
                     FACETED_SEARCH_FLAG);
         }
         return registeredContentView;
-    }
-
-    protected ContentViewService getContentViewService() throws Exception {
-        if (contentViewService == null) {
-            contentViewService = Framework.getService(ContentViewService.class);
-        }
-        return contentViewService;
     }
 }

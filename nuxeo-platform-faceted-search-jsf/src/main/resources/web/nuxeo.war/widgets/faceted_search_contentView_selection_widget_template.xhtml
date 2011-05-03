@@ -28,10 +28,10 @@
                 size="5"
                 styleClass="listShuttleSelect">
                 <nxu:selectItems
-                  value="#{facetedSearchConfigurationActions.notSelectedContentViews}"
-                  var="contentViewH"
-                  itemValue="#{contentViewH.name}"
-                  itemLabel="#{contentViewH.translateTitle ? messages[contentViewH.title] : contentView.title}"
+                  value="#{facetedSearchConfigurationActions.notSelectedContentViewsHeader}"
+                  var="contentViewHeader"
+                  itemValue="#{contentViewHeader.name}"
+                  itemLabel="#{contentViewHeader.translateTitle ? messages[contentViewHeader.title] : contentViewHeader.title}"
                   ordering="label" caseSensitive="true"
                   id="#{widget.id}_sourceItems" />
               </h:selectManyListbox>
@@ -103,10 +103,10 @@
                 size="5"
                 styleClass="listShuttleSelect">
                 <nxu:selectItems
-                  value="#{facetedSearchConfigurationActions.selectedContentViews}"
-                  var="contentViewH"
-                  itemValue="#{contentViewH.name}"
-                  itemLabel="#{contentViewH.translateTitle ? messages[contentViewH.title] : contentView.title}"
+                  value="#{facetedSearchConfigurationActions.selectedContentViewsHeader}"
+                  var="contentViewHeader"
+                  itemValue="#{contentViewHeader.name}"
+                  itemLabel="#{contentViewHeader.translateTitle ? messages[contentViewHeader.title] : contentViewHeader.title}"
                   id="#{widget.id}_targetItems" />
               </h:selectManyListbox>
               <h:message styleClass="errorMessage"
