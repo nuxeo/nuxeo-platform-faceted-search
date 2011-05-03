@@ -62,13 +62,13 @@ public class FacetedSearchConfigurationActions implements Serializable {
     @In(create = true)
     protected transient ContentViewService contentViewService;
 
-    public Set<ContentViewHeader> getNotSelectedContentViewsHeader() throws Exception {
+    public Set<ContentViewHeader> getNotSelectedContentViewHeaders() throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
         if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
 
-        List<String> allowedContentView = getAllowedContentViewsName(currentDoc);
+        List<String> allowedContentView = getAllowedContentViewNames(currentDoc);
         Set<ContentViewHeader> notAllowedContentView = new HashSet<ContentViewHeader>();
         for (String cvName : getRegisteredContentViews()) {
             if (!allowedContentView.contains(cvName)) {
@@ -80,15 +80,15 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return notAllowedContentView;
     }
 
-    public Set<ContentViewHeader> getSelectedContentViewsHeader() throws Exception {
+    public Set<ContentViewHeader> getSelectedContentViewHeaders() throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
         if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
-        return getContentViewsHeader(getAllowedContentViewsName(currentDoc));
+        return getContentViewHeaders(getAllowedContentViewNames(currentDoc));
     }
 
-    protected List<String> getAllowedContentViewsName(DocumentModel doc) {
+    protected List<String> getAllowedContentViewNames(DocumentModel doc) {
         FacetedSearchConfiguration adapter = doc.getAdapter(FacetedSearchConfiguration.class);
         if (adapter == null) {
             return Collections.emptyList();
@@ -97,7 +97,7 @@ public class FacetedSearchConfigurationActions implements Serializable {
         return adapter.getAllowedContentViewNames();
     }
 
-    protected Set<ContentViewHeader> getContentViewsHeader(
+    protected Set<ContentViewHeader> getContentViewHeaders(
             Collection<String> contentViewsNames) throws Exception {
         Set<ContentViewHeader> contentViews = new HashSet<ContentViewHeader>();
         for (String name : contentViewsNames) {
