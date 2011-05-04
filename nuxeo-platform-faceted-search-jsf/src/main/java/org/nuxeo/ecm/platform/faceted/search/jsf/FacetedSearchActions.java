@@ -27,7 +27,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashSet;import java.util.List;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
@@ -159,10 +160,11 @@ public class FacetedSearchActions implements Serializable {
         return contentViewNames;
     }
 
-    public Set<ContentViewHeader> getContentViewHeaders() throws ClientException {
+    public Set<ContentViewHeader> getContentViewHeaders()
+            throws ClientException {
         if (contentViewHeaders == null) {
             contentViewHeaders = new HashSet<ContentViewHeader>();
-            for(String name : getContentViewNames()) {
+            for (String name : getContentViewNames()) {
                 ContentViewHeader header = contentViewService.getContentViewHeader(name);
                 if (header != null) {
                     contentViewHeaders.add(header);
@@ -302,9 +304,9 @@ public class FacetedSearchActions implements Serializable {
     }
 
     /**
-     * Create a new {@code DocumentModel} with the same type as {@code
-     * sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc} to the
-     * newly created document, except the {@code dublincore} schema.
+     * Create a new {@code DocumentModel} with the same type as
+     * {@code sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc}
+     * to the newly created document, except the {@code dublincore} schema.
      */
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
