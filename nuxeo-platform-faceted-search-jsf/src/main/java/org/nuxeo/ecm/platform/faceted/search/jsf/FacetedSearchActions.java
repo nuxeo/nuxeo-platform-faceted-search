@@ -27,7 +27,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;import java.util.List;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -54,6 +55,8 @@ import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
 import org.nuxeo.ecm.core.schema.SchemaManager;
 import org.nuxeo.ecm.core.schema.TypeService;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentViewHeader;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
@@ -107,6 +110,9 @@ public class FacetedSearchActions implements Serializable {
     @In(create = true)
     protected ContentViewActions contentViewActions;
 
+    @In(create = true)
+    protected transient ContentViewService contentViewService;
+
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
 
@@ -120,6 +126,8 @@ public class FacetedSearchActions implements Serializable {
     protected transient NavigationContext navigationContext;
 
     protected List<String> contentViewNames;
+
+    protected Set<ContentViewHeader> contentViewHeaders;
 
     protected String currentContentViewName;
 
@@ -149,6 +157,19 @@ public class FacetedSearchActions implements Serializable {
                     facetedSearchService.getContentViewNames(navigationContext.getCurrentDocument()));
         }
         return contentViewNames;
+    }
+
+    public Set<ContentViewHeader> getContentViewHeaders() throws ClientException {
+        if (contentViewHeaders == null) {
+            contentViewHeaders = new HashSet<ContentViewHeader>();
+            for(String name : getContentViewNames()) {
+                ContentViewHeader header = contentViewService.getContentViewHeader(name);
+                if (header != null) {
+                    contentViewHeaders.add(header);
+                }
+            }
+        }
+        return contentViewHeaders;
     }
 
     public void clearSearch() {
@@ -379,6 +400,7 @@ public class FacetedSearchActions implements Serializable {
     public void invalidateContentViewsName() {
         clearSearch();
         contentViewNames = null;
+        contentViewHeaders = null;
         currentContentViewName = null;
     }
 

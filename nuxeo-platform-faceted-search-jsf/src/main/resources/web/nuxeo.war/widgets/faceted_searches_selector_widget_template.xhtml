@@ -12,14 +12,11 @@
       value="#{facetedSearchActions.currentContentViewName}"
       id="facetedSearchSelector" styleClass="langSelect"
       onchange="Element.next(this).firstChild.click();">
-      <c:forEach var="contentViewName"
-        items="#{facetedSearchActions.contentViewNames}"
+      <c:forEach var="contentViewHeader"
+        items="#{facetedSearchActions.contentViewHeaders}"
         varStatus="contentViewListStatus">
-        <nxu:set var="contentView"
-          value="#{contentViewActions.getContentView(contentViewName)}">
-          <f:selectItem itemValue="#{contentViewName}"
-            itemLabel="#{nxu:test(contentView.translateTitle, messages[contentView.title], contentView.title)}" />
-        </nxu:set>
+          <f:selectItem itemValue="#{contentViewHeader.name}"
+            itemLabel="#{nxu:test(contentViewHeader.translateTitle, messages[contentViewHeader.title], contentViewHeader.title)}" />
       </c:forEach>
     </h:selectOneMenu>
 

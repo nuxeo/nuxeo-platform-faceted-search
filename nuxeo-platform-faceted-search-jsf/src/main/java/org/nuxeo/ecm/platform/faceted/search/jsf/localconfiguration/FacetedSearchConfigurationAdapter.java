@@ -103,14 +103,18 @@ public class FacetedSearchConfigurationAdapter implements
         return deniedContentViews;
     }
 
+    protected boolean isAllowedName(String name) {
+        return !getDeniedContentViewNames().contains(name)
+                && getAllowedContentViewNames().contains(name);
+    }
+
     @Override
     public Set<String> filterAllowedContentViewNames(Set<String> names) {
-        Set<String> filtered = new HashSet<String>(names);
+        Set<String> filtered = new HashSet<String>();
 
         for (String name : names) {
-            if (getDeniedContentViewNames().contains(name)
-                    || !getAllowedContentViewNames().contains(name)) {
-                filtered.remove(name);
+            if (isAllowedName(name)) {
+                filtered.add(name);
             }
         }
 
