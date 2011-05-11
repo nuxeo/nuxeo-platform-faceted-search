@@ -17,6 +17,7 @@
       <schema name="uid" />
       <schema name="faceted_search" />
       <facet name="HiddenInFacetedSearch" />
+      <facet name="HiddenInNavigation" />
     </doctype>
 
   </extension>
