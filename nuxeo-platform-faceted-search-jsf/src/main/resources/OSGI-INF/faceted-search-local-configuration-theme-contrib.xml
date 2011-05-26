@@ -35,7 +35,7 @@
       </labels>
       <translated>true</translated>
       <fields>
-        <field>fsc:allowedContentViews</field>
+        <field>fsc:deniedContentViews</field>
       </fields>
     </widget>
   </extension>

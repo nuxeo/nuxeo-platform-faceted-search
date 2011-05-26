@@ -62,39 +62,40 @@ public class FacetedSearchConfigurationActions implements Serializable {
     @In(create = true)
     protected transient ContentViewService contentViewService;
 
-    public Set<ContentViewHeader> getNotSelectedContentViewHeaders() throws Exception {
+    public Set<ContentViewHeader> getSelectedContentViewHeaders()
+            throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
         if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
 
-        List<String> allowedContentView = getAllowedContentViewNames(currentDoc);
-        Set<ContentViewHeader> notAllowedContentView = new HashSet<ContentViewHeader>();
+        List<String> notAllowedContentView = getDeniedContentViewNames(currentDoc);
+        Set<ContentViewHeader> allowedContentView = new HashSet<ContentViewHeader>();
         for (String cvName : getRegisteredContentViews()) {
-            if (!allowedContentView.contains(cvName)) {
-                notAllowedContentView.add(contentViewService.getContentViewHeader(
-                        cvName));
+            if (!notAllowedContentView.contains(cvName)) {
+                allowedContentView.add(contentViewService.getContentViewHeader(cvName));
             }
         }
 
-        return notAllowedContentView;
+        return allowedContentView;
     }
 
-    public Set<ContentViewHeader> getSelectedContentViewHeaders() throws Exception {
+    public Set<ContentViewHeader> getNotSelectedContentViewHeaders()
+            throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
         if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
-        return getContentViewHeaders(getAllowedContentViewNames(currentDoc));
+        return getContentViewHeaders(getDeniedContentViewNames(currentDoc));
     }
 
-    protected List<String> getAllowedContentViewNames(DocumentModel doc) {
+    protected List<String> getDeniedContentViewNames(DocumentModel doc) {
         FacetedSearchConfiguration adapter = doc.getAdapter(FacetedSearchConfiguration.class);
         if (adapter == null) {
             return Collections.emptyList();
         }
 
-        return adapter.getAllowedContentViewNames();
+        return adapter.getDeniedContentViewNames();
     }
 
     protected Set<ContentViewHeader> getContentViewHeaders(

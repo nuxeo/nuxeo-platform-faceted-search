@@ -39,56 +39,56 @@
             </td>
             <td class="listShuttleSelectionActions">
               <a4j:commandLink bypassUpdates="true"
-                actionListener="#{selectionActions.removeFromSelection}"
+                actionListener="#{selectionActions.addToSelection}"
                 id="#{widget.id}_removeFormSelection"
                 reRender="#{widget.id}_panel"
                 ignoreDupResponses="true">
-                <f:param name="leftSelect" value="#{widget.id}_sourceSelect"/>
-                <f:param name="leftItems" value="#{widget.id}_sourceItems"/>
-                <f:param name="rightSelect" value="#{widget.id}_targetSelect"/>
-                <f:param name="rightItems" value="#{widget.id}_targetItems"/>
+                <f:param name="rightSelect" value="#{widget.id}_sourceSelect"/>
+                <f:param name="rightItems" value="#{widget.id}_sourceItems"/>
+                <f:param name="leftSelect" value="#{widget.id}_targetSelect"/>
+                <f:param name="leftItems" value="#{widget.id}_targetItems"/>
                 <f:param name="submittedList" value="#{widget.id}_hiddenTargetList"/>
                 <nxu:graphicImage value="/icons/move_left.png"
                   alt="#{messages['command.selection.remove']}"
                   title="#{messages['command.selection.remove']}"/>
               </a4j:commandLink>
               <a4j:commandLink bypassUpdates="true"
-                actionListener="#{selectionActions.addToSelection}"
+                actionListener="#{selectionActions.removeFromSelection}"
                 id="#{widget.id}_addToSelection"
                 reRender="#{widget.id}_panel"
                 ignoreDupResponses="true">
-                <f:param name="leftSelect" value="#{widget.id}_sourceSelect"/>
-                <f:param name="leftItems" value="#{widget.id}_sourceItems"/>
-                <f:param name="rightSelect" value="#{widget.id}_targetSelect"/>
-                <f:param name="rightItems" value="#{widget.id}_targetItems"/>
+                <f:param name="rightSelect" value="#{widget.id}_sourceSelect"/>
+                <f:param name="rightItems" value="#{widget.id}_sourceItems"/>
+                <f:param name="leftSelect" value="#{widget.id}_targetSelect"/>
+                <f:param name="leftItems" value="#{widget.id}_targetItems"/>
                 <f:param name="submittedList" value="#{widget.id}_hiddenTargetList"/>
                 <nxu:graphicImage value="/icons/move_right.png"
                   alt="#{messages['command.selection.add']}"
                   title="#{messages['command.selection.add']}"/>
               </a4j:commandLink>
               <a4j:commandLink bypassUpdates="true"
-                actionListener="#{selectionActions.addAllToSelection}"
+                actionListener="#{selectionActions.removeAllFromSelection}"
                 id="#{widget.id}_addAllToSelection"
                 reRender="#{widget.id}_panel"
                 ignoreDupResponses="true">
-                <f:param name="leftSelect" value="#{widget.id}_sourceSelect"/>
-                <f:param name="leftItems" value="#{widget.id}_sourceItems"/>
-                <f:param name="rightSelect" value="#{widget.id}_targetSelect"/>
-                <f:param name="rightItems" value="#{widget.id}_targetItems"/>
+                <f:param name="rightSelect" value="#{widget.id}_sourceSelect"/>
+                <f:param name="rightItems" value="#{widget.id}_sourceItems"/>
+                <f:param name="leftSelect" value="#{widget.id}_targetSelect"/>
+                <f:param name="leftItems" value="#{widget.id}_targetItems"/>
                 <f:param name="submittedList" value="#{widget.id}_hiddenTargetList"/>
                 <nxu:graphicImage value="/icons/move_all_right.png"
                   alt="#{messages['command.selection.addAll']}"
                   title="#{messages['command.selection.addAll']}"/>
               </a4j:commandLink>
               <a4j:commandLink bypassUpdates="true"
-                actionListener="#{selectionActions.removeAllFromSelection}"
+                actionListener="#{selectionActions.addAllToSelection}"
                 id="#{widget.id}_removeAllFromSelection"
                 reRender="#{widget.id}_panel"
                 ignoreDupResponses="true">
-                <f:param name="leftSelect" value="#{widget.id}_sourceSelect"/>
-                <f:param name="leftItems" value="#{widget.id}_sourceItems"/>
-                <f:param name="rightSelect" value="#{widget.id}_targetSelect"/>
-                <f:param name="rightItems" value="#{widget.id}_targetItems"/>
+                <f:param name="rightSelect" value="#{widget.id}_sourceSelect"/>
+                <f:param name="rightItems" value="#{widget.id}_sourceItems"/>
+                <f:param name="leftSelect" value="#{widget.id}_targetSelect"/>
+                <f:param name="leftItems" value="#{widget.id}_targetItems"/>
                 <f:param name="submittedList" value="#{widget.id}_hiddenTargetList"/>
                 <nxu:graphicImage value="/icons/move_all_left.png"
                   alt="#{messages['command.selection.removeAll']}"

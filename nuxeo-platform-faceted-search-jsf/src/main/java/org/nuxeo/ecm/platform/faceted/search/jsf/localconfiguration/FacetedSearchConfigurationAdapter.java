@@ -105,7 +105,7 @@ public class FacetedSearchConfigurationAdapter implements
 
     protected boolean isAllowedName(String name) {
         return !getDeniedContentViewNames().contains(name)
-                && getAllowedContentViewNames().contains(name);
+                && (getAllowedContentViewNames().contains(name) || getAllowedContentViewNames().isEmpty());
     }
 
     @Override
