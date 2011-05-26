@@ -17,6 +17,8 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration;
 
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
+
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.adapter.DocumentAdapterFactory;
 
@@ -30,7 +32,7 @@ public class FacetedSearchConfigurationFactory implements
         DocumentAdapterFactory {
     @Override
     public Object getAdapter(DocumentModel doc, Class<?> itf) {
-        if (doc.hasFacet("FacetedSearchLocalConfiguration")) {
+        if (doc.hasFacet(F_SEARCH_CONFIGURATION_FACET)) {
             return new FacetedSearchConfigurationAdapter(doc);
         }
         return null;
