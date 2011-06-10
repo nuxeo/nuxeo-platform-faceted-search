@@ -30,6 +30,7 @@ import java.util.Set;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.localconfiguration.AbstractLocalConfiguration;
 
 /**
  * Default implementation of {@code FacetedSearchConfiguration}
@@ -37,7 +38,8 @@ import org.nuxeo.ecm.core.api.DocumentRef;
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
-public class FacetedSearchConfigurationAdapter implements
+public class FacetedSearchConfigurationAdapter extends
+        AbstractLocalConfiguration<FacetedSearchConfiguration> implements
         FacetedSearchConfiguration {
 
     protected List<String> allowedContentViews;
