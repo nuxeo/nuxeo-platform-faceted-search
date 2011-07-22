@@ -27,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.model.DocumentPart;
 import org.nuxeo.ecm.core.api.model.PropertyException;
 import org.nuxeo.ecm.core.api.model.PropertyVisitor;
 import org.nuxeo.ecm.core.api.model.impl.ListProperty;
@@ -53,21 +52,16 @@ public class JSONMetadataExporter implements PropertyVisitor {
 
     public JSONObject run(DocumentModel doc) throws ClientException {
         result = new JSONObject();
-        for (DocumentPart dp : doc.getParts()) {
-            dp.accept(this, result);
-        }
+        doc.accept(this, result);
         return result;
     }
 
+    @Override
     public boolean acceptPhantoms() {
         return false;
     }
 
-    public Object visit(DocumentPart property, Object arg)
-            throws PropertyException {
-        return arg;
-    }
-
+    @Override
     public Object visit(MapProperty property, Object arg)
             throws PropertyException {
         Object value = null;
@@ -89,6 +83,7 @@ public class JSONMetadataExporter implements PropertyVisitor {
         return value;
     }
 
+    @Override
     public Object visit(ListProperty property, Object arg)
             throws PropertyException {
         Object value = null;
@@ -110,6 +105,7 @@ public class JSONMetadataExporter implements PropertyVisitor {
         return value;
     }
 
+    @Override
     public Object visit(ScalarProperty property, Object arg)
             throws PropertyException {
         Serializable value = property.getValue();
