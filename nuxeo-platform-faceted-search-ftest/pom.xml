@@ -10,31 +10,6 @@
   <name>Nuxeo Platform Faceted Search Functional Tests</name>
   <description>Nuxeo Platform Faceted Search Functional Tests</description>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.nuxeo.ecm.distribution</groupId>
-        <artifactId>nuxeo-distribution-jboss</artifactId>
-        <version>${nuxeo.distribution.version}</version>
-        <classifier>nuxeo-dm</classifier>
-        <type>zip</type>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.distribution</groupId>
-        <artifactId>nuxeo-distribution-tomcat</artifactId>
-        <version>${nuxeo.distribution.version}</version>
-        <classifier>nuxeo-dm</classifier>
-        <type>zip</type>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium.server</groupId>
-        <artifactId>selenium-server</artifactId>
-        <version>1.0.3</version>
-        <classifier>standalone</classifier>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <build>
     <plugins>
       <plugin>
