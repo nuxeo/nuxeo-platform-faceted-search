@@ -46,6 +46,10 @@ import org.nuxeo.runtime.api.Framework;
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
+/**
+ * @author rlegall
+ * 
+ */
 @Name("facetedSearchConfigurationActions")
 @Scope(CONVERSATION)
 @Install(precedence = Install.FRAMEWORK)
@@ -65,11 +69,26 @@ public class FacetedSearchConfigurationActions implements Serializable {
     public Set<ContentViewHeader> getSelectedContentViewHeaders()
             throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
-        if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
+        return getSelectedContentViewHeaders(currentDoc);
+    }
+
+    /**
+     * Return a set of String naming the faceted search allowed for the domain
+     * passed as parameter
+     * 
+     * @param document the domain requiring faceted searches.
+     * @return a set of String corresponding the name of faceted search allowed
+     *         for the domain
+     * @throws Exception
+     * @Since 5.4.3
+     */
+    public Set<ContentViewHeader> getSelectedContentViewHeaders(
+            DocumentModel document) throws Exception {
+        if (!document.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
 
-        List<String> notAllowedContentView = getDeniedContentViewNames(currentDoc);
+        List<String> notAllowedContentView = getDeniedContentViewNames(document);
         Set<ContentViewHeader> allowedContentView = new HashSet<ContentViewHeader>();
         for (String cvName : getRegisteredContentViews()) {
             if (!notAllowedContentView.contains(cvName)) {
@@ -83,10 +102,24 @@ public class FacetedSearchConfigurationActions implements Serializable {
     public Set<ContentViewHeader> getNotSelectedContentViewHeaders()
             throws Exception {
         DocumentModel currentDoc = navigationContext.getCurrentDocument();
-        if (!currentDoc.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
+        return getNotSelectedContentViewHeaders(currentDoc);
+    }
+
+    /**
+     * Return a set of String naming the faceted search not currently selected
+     * for the domain passed as parameter
+     * 
+     * @param document the domain 
+     * @return a set of String naming the faceted search unselected for the domain
+     * @throws Exception
+     * @Since 5.4.3
+     */
+    public Set<ContentViewHeader> getNotSelectedContentViewHeaders(
+            DocumentModel document) throws Exception {
+        if (!document.hasFacet(ConfigConstants.F_SEARCH_CONFIGURATION_FACET)) {
             return Collections.emptySet();
         }
-        return getContentViewHeaders(getDeniedContentViewNames(currentDoc));
+        return getContentViewHeaders(getDeniedContentViewNames(document));
     }
 
     protected List<String> getDeniedContentViewNames(DocumentModel doc) {

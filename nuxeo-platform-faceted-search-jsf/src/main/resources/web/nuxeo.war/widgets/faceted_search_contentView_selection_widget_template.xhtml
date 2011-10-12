@@ -28,7 +28,7 @@
                 size="5"
                 styleClass="listShuttleSelect">
                 <nxu:selectItems
-                  value="#{facetedSearchConfigurationActions.notSelectedContentViewHeaders}"
+                  value="#{facetedSearchConfigurationActions.getNotSelectedContentViewHeaders(layoutValue)}"
                   var="contentViewHeader"
                   itemValue="#{contentViewHeader.name}"
                   itemLabel="#{contentViewHeader.translateTitle ? messages[contentViewHeader.title] : contentViewHeader.title}"
@@ -103,7 +103,7 @@
                 size="5"
                 styleClass="listShuttleSelect">
                 <nxu:selectItems
-                  value="#{facetedSearchConfigurationActions.selectedContentViewHeaders}"
+                  value="#{facetedSearchConfigurationActions.getSelectedContentViewHeaders(layoutValue)}"
                   var="contentViewHeader"
                   itemValue="#{contentViewHeader.name}"
                   itemLabel="#{contentViewHeader.translateTitle ? messages[contentViewHeader.title] : contentViewHeader.title}"
