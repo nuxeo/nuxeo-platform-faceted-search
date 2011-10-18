@@ -55,6 +55,8 @@ import org.nuxeo.runtime.api.Framework;
 @Install(precedence = Install.FRAMEWORK)
 public class FacetedSearchConfigurationActions implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     protected Set<String> registeredContentView;
 
     @In(create = true)

@@ -114,6 +114,7 @@ public class TestFacetedSearchService {
     public void initializeFacesContext() {
         // set mock faces context for needed properties resolution
         facesContext = new MockFacesContext() {
+            @SuppressWarnings("rawtypes")
             @Override
             public Object evaluateExpressionGet(FacesContext context,
                     String expression, Class expectedType) throws ELException {

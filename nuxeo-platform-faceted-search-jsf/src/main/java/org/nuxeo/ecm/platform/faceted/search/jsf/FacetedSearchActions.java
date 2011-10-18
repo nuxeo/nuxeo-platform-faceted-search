@@ -311,7 +311,7 @@ public class FacetedSearchActions implements Serializable {
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
         DocumentModel doc = documentManager.createDocumentModel(sourceDoc.getType());
-        for (String schema : sourceDoc.getDeclaredSchemas()) {
+        for (String schema : sourceDoc.getDocumentType().getSchemaNames()) {
             // Copy everything except dublincore schema, required values will be
             // created again on the next save, if any
             if (!DUBLINCORE_SCHEMA.equals(schema)) {
