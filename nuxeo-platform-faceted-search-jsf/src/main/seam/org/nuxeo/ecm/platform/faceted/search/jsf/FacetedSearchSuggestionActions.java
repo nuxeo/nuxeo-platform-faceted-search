@@ -23,7 +23,9 @@ import static org.jboss.seam.ScopeType.CONVERSATION;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -32,8 +34,19 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
+import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
+import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
+import org.nuxeo.ecm.platform.query.api.PageProvider;
+import org.nuxeo.ecm.platform.query.api.PageProviderService;
+import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
+import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.invalidations.AutomaticDocumentBasedInvalidation;
 import org.nuxeo.ecm.platform.ui.web.invalidations.DocumentContextBoundActionBean;
+import org.nuxeo.runtime.api.Framework;
+
+import com.google.inject.Inject;
 
 @Name("facetedSearchSuggestionActions")
 @Scope(CONVERSATION)
@@ -46,6 +59,24 @@ public class FacetedSearchSuggestionActions extends
     @In(create = true, required = false)
     protected transient CoreSession documentManager;
 
+    public static final String FACETED_SEARCH_SUGGESTION = "DEFAULT_DOCUMENT_SUGGESTION";
+
+    public static final String FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME = "faceted_search_default";
+
+    public static final String FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE = "FacetedSearchDefault";
+
+    @In(create = true)
+    protected FacetedSearchService facetedSearchService;
+
+    @In(create = true)
+    protected ContentViewActions contentViewActions;
+
+    @Inject
+    protected ContentViewService contentViewService;
+
+    @In(create = true)
+    protected transient NavigationContext navigationContext;
+
     public DocumentModel getDocumentModel(String id) throws ClientException {
         return documentManager.getDocument(new IdRef(id));
     }
@@ -53,7 +84,25 @@ public class FacetedSearchSuggestionActions extends
     public List<DocumentModel> getDocumentSuggestions(Object input)
             throws ClientException {
         List<DocumentModel> docs = new ArrayList<DocumentModel>();
-        return null;
+        try{
+            PageProviderService ppService = Framework.getService(PageProviderService.class);
+            Map<String, Serializable> props = new HashMap<String, Serializable>();
+            props.put(
+                    CoreQueryDocumentPageProvider.CORE_SESSION_PROPERTY,
+                    (Serializable) documentManager);
+            PageProvider<DocumentModel> pp = (PageProvider<DocumentModel>) ppService.getPageProvider(
+                    FACETED_SEARCH_SUGGESTION, null, null, null, props,
+                    new Object[] { input });
+            docs = pp.getCurrentPage();
+        }catch(Exception e){
+            
+        }
+        return docs;
+    }
+
+    public String createSavedSearch(DocumentModel doc)
+            throws ClientException {
+        return navigationContext.navigateToDocument(doc);
     }
 
     @Override

@@ -20,6 +20,15 @@
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
 
+      <coreQueryPageProvider name="DEFAULT_DOCUMENT_SUGGESTION">
+        <pattern quoteParameters="false" escapeParameters="true">
+          SELECT * FROM Document WHERE dc:title ILIKE '?' AND ecm:mixinType !=
+          'HiddenInNavigation' AND ecm:isCheckedInVersion = 0 AND
+          ecm:currentLifeCycleState != 'deleted'
+          </pattern>
+        <pageSize>5</pageSize>
+      </coreQueryPageProvider>
+
   </extension>
 
 </component>
