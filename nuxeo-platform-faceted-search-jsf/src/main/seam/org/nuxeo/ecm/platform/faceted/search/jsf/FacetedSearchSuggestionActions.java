@@ -249,7 +249,7 @@ public class FacetedSearchSuggestionActions extends
                 throws ClientException {
             // TODO handle i18n
             return new SearchBoxSuggestion(DOCUMENTS_WITH_KEY_WORDS_SUGGESTION,
-                    keyWords, "Documents with key words: '" + keyWords + "'",
+                    keyWords, "Documents with keywords: '" + keyWords + "'",
                     "/icons/file.gif");
         }
 
