@@ -20,7 +20,8 @@
       <h:panelGroup>
         <span id="#{widget.id}_mailbox_suggestDiv"> <h:inputText
             id="#{widget.id}_faceted_search_suggest"
-            onkeydown="if (event.keyCode == 13) {return false;}" /> </span>
+            onkeydown="if (event.keyCode == 13) {return false;}"
+            value="#{documentSearchActions.simpleSearchKeywords}" /> </span>
         <a4j:status>
           <f:facet name="start">
             <h:graphicImage value="/img/standart_waiter.gif" />
