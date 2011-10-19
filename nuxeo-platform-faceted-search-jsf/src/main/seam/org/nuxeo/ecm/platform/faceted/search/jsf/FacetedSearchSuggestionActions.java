@@ -23,6 +23,7 @@ import static org.jboss.seam.ScopeType.CONVERSATION;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.core.api.model.Property;
+import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
@@ -44,6 +47,7 @@ import org.nuxeo.ecm.platform.types.adapter.TypeInfo;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.invalidations.AutomaticDocumentBasedInvalidation;
 import org.nuxeo.ecm.platform.ui.web.invalidations.DocumentContextBoundActionBean;
+import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
 import org.nuxeo.ecm.webapp.security.GroupManagementActions;
 import org.nuxeo.ecm.webapp.security.UserManagementActions;
 import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
@@ -59,14 +63,17 @@ public class FacetedSearchSuggestionActions extends
 
     private static final long serialVersionUID = 1L;
 
-    @In(create = true, required = false)
-    protected transient CoreSession documentManager;
-
     public static final String FACETED_SEARCH_SUGGESTION = "DEFAULT_DOCUMENT_SUGGESTION";
 
     public static final String FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME = "faceted_search_default";
 
     public static final String FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE = "FacetedSearchDefault";
+
+    @In(create = true, required = false)
+    protected transient CoreSession documentManager;
+
+    @In(create = true)
+    protected FacetedSearchActions facetedSearchActions;
 
     @In(create = true)
     protected FacetedSearchService facetedSearchService;
@@ -86,8 +93,11 @@ public class FacetedSearchSuggestionActions extends
     @In(create = true)
     protected UserManagementActions userManagementActions;
 
-    @In(create =true)
+    @In(create = true)
     protected GroupManagementActions groupManagementActions;
+
+    @In(create = true)
+    protected MultiNavTreeManager multiNavTreeManager;
 
     public DocumentModel getDocumentModel(String id) throws ClientException {
         return documentManager.getDocument(new IdRef(id));
@@ -133,7 +143,29 @@ public class FacetedSearchSuggestionActions extends
             return userManagementActions.viewUser(suggestionValue);
         } else if (suggestionType.equals(SearchBoxSuggestion.GROUP_SUGGESTION)) {
             return groupManagementActions.viewGroup(suggestionValue);
+        } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_BY_AUTHOR_SUGGESTION)) {
+            return handleFacetedSearch("fsd:dc_creator", suggestionValue);
+        } else {
+            // fallback to basic keyword search suggestion
+            return handleFacetedSearch("fsd:ecm_fulltext", suggestionValue);
         }
+    }
+
+    protected String handleFacetedSearch(String searchField, String searchValue)
+            throws ClientException {
+        facetedSearchActions.clearSearch();
+        facetedSearchActions.setCurrentContentViewName(null);
+        String contentViewName = facetedSearchActions.getCurrentContentViewName();
+        ContentView contentView = contentViewActions.getContentView(contentViewName);
+        DocumentModel dm = contentView.getSearchDocumentModel();
+        Property searchProperty = dm.getProperty(searchField);
+        if (searchProperty.isList()) {
+            dm.setPropertyValue(searchField,
+                    (Serializable) Arrays.asList(searchValue));
+        } else {
+            dm.setPropertyValue(searchField, searchValue);
+        }
+        multiNavTreeManager.setSelectedNavigationTree("facetedSearch");
         return "faceted_search_results";
     }
 
@@ -213,7 +245,7 @@ public class FacetedSearchSuggestionActions extends
                 throws ClientException {
             // TODO handle i18n
             return new SearchBoxSuggestion(DOCUMENTS_WITH_KEY_WORDS_SUGGESTION,
-                    keyWords, "Documents with key words: " + keyWords,
+                    keyWords, "Documents with key words: '" + keyWords + "'",
                     "/icons/file.gif");
         }
 

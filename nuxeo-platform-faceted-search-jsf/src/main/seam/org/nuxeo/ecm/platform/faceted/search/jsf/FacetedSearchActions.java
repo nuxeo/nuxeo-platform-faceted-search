@@ -63,7 +63,6 @@ import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
-import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
