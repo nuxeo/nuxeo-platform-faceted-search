@@ -23,13 +23,20 @@
             <h:graphicImage value="/img/standart_waiter.gif" />
           </f:facet>
         </a4j:status>
-        <span id="#{widget.id}_mailbox_suggestDiv"> <h:inputText
-            id="#{widget.id}_faceted_search_suggest"
+        <h:inputText id="faceted_search_suggest_box"
+            class="faceted_search_suggest_box"
             onkeydown="if (event.keyCode == 13) {return false;}"
-            value="#{documentSearchActions.simpleSearchKeywords}" /> </span>
+            value="#{documentSearchActions.simpleSearchKeywords}" />
+        <script type="text/javascript">
+        <!--
+         jQuery(document).bind('keypress', '/', function() {
+            jQuery('input.faceted_search_suggest_box').focus();
+         });
+        -->
+        </script>
         <rich:suggestionbox
-          id="#{widget.id}_faceted_search_suggestionBox"
-          for="#{widget.id}_faceted_search_suggest" tokens=""
+          id="faceted_search_suggestionBox"
+          for="faceted_search_suggest_box" tokens=""
           suggestionAction="#{facetedSearchSuggestionActions.getDocumentSuggestions}"
           var="result" fetchValue="" width="300"
           nothingLabel="Search with key words" minChars="#{minChars}"
