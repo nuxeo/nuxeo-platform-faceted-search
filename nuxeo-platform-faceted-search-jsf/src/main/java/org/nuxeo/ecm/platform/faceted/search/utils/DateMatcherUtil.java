@@ -5,8 +5,6 @@ import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import sun.util.calendar.Gregorian;
-
 public class DateMatcherUtil {
     private boolean withYears = false;
 
