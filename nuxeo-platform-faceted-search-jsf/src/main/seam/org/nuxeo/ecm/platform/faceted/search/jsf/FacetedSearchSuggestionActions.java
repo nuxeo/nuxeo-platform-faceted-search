@@ -34,7 +34,6 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
-import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
@@ -85,34 +84,97 @@ public class FacetedSearchSuggestionActions extends
         return documentManager.getDocument(new IdRef(id));
     }
 
-    public List<DocumentModel> getDocumentSuggestions(Object input)
+    @SuppressWarnings("unchecked")
+    public List<SearchBoxSuggestion> getDocumentSuggestions(Object input)
             throws ClientException {
-        List<DocumentModel> docs = new ArrayList<DocumentModel>();
+        List<SearchBoxSuggestion> suggestions = new ArrayList<SearchBoxSuggestion>();
         try{
             PageProviderService ppService = Framework.getService(PageProviderService.class);
             Map<String, Serializable> props = new HashMap<String, Serializable>();
-            props.put(
-                    CoreQueryDocumentPageProvider.CORE_SESSION_PROPERTY,
+            props.put(CoreQueryDocumentPageProvider.CORE_SESSION_PROPERTY,
                     (Serializable) documentManager);
             PageProvider<DocumentModel> pp = (PageProvider<DocumentModel>) ppService.getPageProvider(
                     FACETED_SEARCH_SUGGESTION, null, null, null, props,
                     new Object[] { input });
-            docs = pp.getCurrentPage();
+            for (DocumentModel doc : pp.getCurrentPage()) {
+                suggestions.add(SearchBoxSuggestion.forDocument(doc));
+            }
+            //docs.addAll(getUsersSuggestions(input));
         }catch(Exception e){
-         
+          throw new ClientException(e);
         }
-        
-        try {
-            docs.addAll(getUsersSuggestions(input));
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        return docs;
+        return suggestions;
     }
 
-    public String createSavedSearch(DocumentModel doc)
+    public String handleSelection(String suggestionType, String suggestionValue)
             throws ClientException {
-        return navigationContext.navigateToDocument(doc);
+        return "";
+    }
+    
+    public static class SearchBoxSuggestion {
+        
+        public static final String DOCUMENT_SUGGESTION = "document";
+
+        public static final String USER_SUGGESTION = "user";
+
+        public static final String GROUP_SUGGESTION = "group";
+
+        public static final String DOCUMENTS_BY_AUTHOR_SUGGESTION = "documentsByAuthor";
+
+        public static final String DOCUMENTS_BY_DATE_SUGGESTION = "documentsByDate";
+
+        private final String type;
+
+        private final String value;
+
+        private final String label;
+
+        private final String iconURL;
+
+        public SearchBoxSuggestion(String type, String value, String label,
+                String iconURL) {
+            this.type = type;
+            this.label = label;
+            this.iconURL = iconURL;
+            this.value = value;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public String getIconURL() {
+            return iconURL;
+        }
+        
+        public static SearchBoxSuggestion forDocument(DocumentModel doc)
+                throws ClientException {
+            return new SearchBoxSuggestion(DOCUMENT_SUGGESTION,
+                    doc.getRepositoryName() + ":" + doc.getId(),
+                    doc.getTitle(), "/TODO");
+        }
+
+        public static SearchBoxSuggestion forUser(DocumentModel user)
+                throws ClientException {
+            return new SearchBoxSuggestion(USER_SUGGESTION, user.getId(),
+                    user.getTitle(), "/TODO");
+        }
+
+        public static SearchBoxSuggestion forDocumentsByAuthor(
+                DocumentModel user) throws ClientException {
+            // TODO handle i18n
+            return new SearchBoxSuggestion(DOCUMENTS_BY_AUTHOR_SUGGESTION,
+                    user.getId(), "Documents by " + user.getTitle(), "/TODO");
+        }
+
     }
 
     @Override
