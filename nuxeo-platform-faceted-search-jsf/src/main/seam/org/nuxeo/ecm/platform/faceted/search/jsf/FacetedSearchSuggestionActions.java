@@ -37,7 +37,6 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.model.Property;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
-import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
@@ -51,8 +50,6 @@ import org.nuxeo.ecm.webapp.security.GroupManagementActions;
 import org.nuxeo.ecm.webapp.security.UserManagementActions;
 import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
 import org.nuxeo.runtime.api.Framework;
-
-import com.google.inject.Inject;
 
 import edu.emory.mathcs.backport.java.util.Collections;
 
@@ -79,9 +76,6 @@ public class FacetedSearchSuggestionActions extends
     @In(create = true)
     protected ContentViewActions contentViewActions;
 
-    @Inject
-    protected ContentViewService contentViewService;
-
     @In(create = true)
     protected transient NavigationContext navigationContext;
 
@@ -102,7 +96,7 @@ public class FacetedSearchSuggestionActions extends
     }
 
     @SuppressWarnings("unchecked")
-    public List<SearchBoxSuggestion> getDocumentSuggestions(Object input)
+    public List<SearchBoxSuggestion> getSuggestions(Object input)
             throws ClientException {
         if (input == null) {
             return Collections.emptyList();
