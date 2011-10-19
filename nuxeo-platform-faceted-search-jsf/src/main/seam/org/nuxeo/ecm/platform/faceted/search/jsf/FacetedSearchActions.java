@@ -285,27 +285,18 @@ public class FacetedSearchActions implements Serializable {
     }
 
     public void saveSearch() throws ClientException {
-        saveSearch(currentContentViewName);
-    }
-
-    /**
-     * @param currentContentViewName
-     * @throws ClientException
-     */
-    public void saveSearch(String currentContentViewName)
-            throws ClientException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         if (contentView != null) {
             DocumentModel savedSearch = facetedSearchService.saveSearch(
                     documentManager, contentView, savedSearchTitle);
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
-
+        
             // Do not reuse the just saved document as it can be modified and
             // re-saved
             DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
             contentView.setSearchDocumentModel(searchDocument);
-
+        
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
             facesMessages.add(StatusMessage.Severity.INFO,
@@ -416,11 +407,4 @@ public class FacetedSearchActions implements Serializable {
         currentContentViewName = null;
     }
 
-    public void createTempContentView(DocumentModel doc) throws ClientException,Exception{
-        String defaultContentViewName = getContentViewNames().get(0);
-        
-        ContentView tempContentView = contentViewActions.getContentView(defaultContentViewName);
-        PageProviderService pps = Framework.getService(PageProviderService.class);
-    }
-    
 }
