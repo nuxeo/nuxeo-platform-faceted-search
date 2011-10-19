@@ -100,25 +100,29 @@ public class FacetedSearchSuggestionActions extends
             for (DocumentModel doc : pp.getCurrentPage()) {
                 suggestions.add(SearchBoxSuggestion.forDocument(doc));
             }
-            List<SearchBoxSuggestion> searchBoxByAuthor= new ArrayList<SearchBoxSuggestion>();
-            for(DocumentModel user : getUsersSuggestions(input)){
+            List<SearchBoxSuggestion> searchBoxByAuthor = new ArrayList<SearchBoxSuggestion>();
+            for (DocumentModel user : getUsersSuggestions(input)) {
                 suggestions.add(SearchBoxSuggestion.forUser(user));
                 searchBoxByAuthor.add(SearchBoxSuggestion.forDocumentsByAuthor(user));
             }
-            
-            for(DocumentModel group : getGroupSuggestions(input)){
+
+            for (DocumentModel group : getGroupSuggestions(input)) {
                 suggestions.add(SearchBoxSuggestion.forGroup(group));
             }
             suggestions.addAll(searchBoxByAuthor);
-        }catch(Exception e){
-          throw new ClientException(e);
+        } catch (Exception e) {
+            throw new ClientException(e);
         }
         return suggestions;
     }
 
     public String handleSelection(String suggestionType, String suggestionValue)
             throws ClientException {
-        return "";
+        if (suggestionType.equals(SearchBoxSuggestion.DOCUMENT_SUGGESTION)) {
+            navigationContext.navigateToRef(new IdRef(suggestionValue));
+            return "view_documents";
+        }
+        return "faceted_search_results";
     }
 
     public static class SearchBoxSuggestion {
@@ -132,6 +136,8 @@ public class FacetedSearchSuggestionActions extends
         public static final String DOCUMENTS_BY_AUTHOR_SUGGESTION = "documentsByAuthor";
 
         public static final String DOCUMENTS_BY_DATE_SUGGESTION = "documentsByDate";
+
+        public static final String DOCUMENTS_WITH_KEY_WORDS_SUGGESTION = "documentsWithKeyWords";
 
         private final String type;
 
@@ -167,8 +173,7 @@ public class FacetedSearchSuggestionActions extends
 
         public static SearchBoxSuggestion forDocument(DocumentModel doc)
                 throws ClientException {
-            return new SearchBoxSuggestion(DOCUMENT_SUGGESTION,
-                    doc.getRepositoryName() + ":" + doc.getId(),
+            return new SearchBoxSuggestion(DOCUMENT_SUGGESTION, doc.getId(),
                     doc.getTitle(), doc.getAdapter(TypeInfo.class).getIcon());
         }
 
@@ -181,14 +186,22 @@ public class FacetedSearchSuggestionActions extends
         public static SearchBoxSuggestion forGroup(DocumentModel group)
                 throws ClientException {
             return new SearchBoxSuggestion(GROUP_SUGGESTION, group.getId(),
-                    group.getTitle(),"/icons/group.gif");
+                    group.getTitle(), "/icons/group.gif");
         }
-        
+
         public static SearchBoxSuggestion forDocumentsByAuthor(
                 DocumentModel user) throws ClientException {
             // TODO handle i18n
             return new SearchBoxSuggestion(DOCUMENTS_BY_AUTHOR_SUGGESTION,
                     user.getId(), "Documents by " + user.getTitle(),
+                    "/icons/file.gif");
+        }
+
+        public static SearchBoxSuggestion forDocumentsByKeyWords(String keyWords)
+                throws ClientException {
+            // TODO handle i18n
+            return new SearchBoxSuggestion(DOCUMENTS_WITH_KEY_WORDS_SUGGESTION,
+                    keyWords, "Documents with key words: " + keyWords,
                     "/icons/file.gif");
         }
 
@@ -203,7 +216,8 @@ public class FacetedSearchSuggestionActions extends
         return userSuggestionActions.getUserSuggestions(user);
     }
 
-    public List<DocumentModel> getGroupSuggestions(Object user) throws Exception, ClientException{
+    public List<DocumentModel> getGroupSuggestions(Object user)
+            throws Exception, ClientException {
         return userSuggestionActions.getGroupsSuggestions(user);
     }
 }
