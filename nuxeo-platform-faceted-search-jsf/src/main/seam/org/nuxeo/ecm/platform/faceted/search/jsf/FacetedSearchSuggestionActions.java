@@ -100,9 +100,18 @@ public class FacetedSearchSuggestionActions extends
             for (DocumentModel doc : pp.getCurrentPage()) {
                 suggestions.add(SearchBoxSuggestion.forDocument(doc));
             }
-            // docs.addAll(getUsersSuggestions(input));
-        } catch (Exception e) {
-            throw new ClientException(e);
+            List<SearchBoxSuggestion> searchBoxByAuthor= new ArrayList<SearchBoxSuggestion>();
+            for(DocumentModel user : getUsersSuggestions(input)){
+                suggestions.add(SearchBoxSuggestion.forUser(user));
+                searchBoxByAuthor.add(SearchBoxSuggestion.forDocumentsByAuthor(user));
+            }
+            
+            for(DocumentModel group : getGroupSuggestions(input)){
+                suggestions.add(SearchBoxSuggestion.forGroup(group));
+            }
+            suggestions.addAll(searchBoxByAuthor);
+        }catch(Exception e){
+          throw new ClientException(e);
         }
         return suggestions;
     }
@@ -169,6 +178,12 @@ public class FacetedSearchSuggestionActions extends
                     user.getTitle(), "/icons/user.gif");
         }
 
+        public static SearchBoxSuggestion forGroup(DocumentModel group)
+                throws ClientException {
+            return new SearchBoxSuggestion(GROUP_SUGGESTION, group.getId(),
+                    group.getName(), "/TODO");
+        }
+        
         public static SearchBoxSuggestion forDocumentsByAuthor(
                 DocumentModel user) throws ClientException {
             // TODO handle i18n
@@ -188,4 +203,7 @@ public class FacetedSearchSuggestionActions extends
         return userSuggestionActions.getUserSuggestions(user);
     }
 
+    public List<DocumentModel> getGroupSuggestions(Object user) throws Exception, ClientException{
+        return userSuggestionActions.getGroupsSuggestions(user);
+    }
 }
