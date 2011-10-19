@@ -26,7 +26,7 @@
         <h:inputText id="faceted_search_suggest_box"
             class="faceted_search_suggest_box"
             onkeydown="if (event.keyCode == 13) {return false;}"
-            value="#{documentSearchActions.simpleSearchKeywords}" />
+            value="#{facetedSearchSuggestionActions.searchKeywords}" />
         <script type="text/javascript">
         <!--
          jQuery(document).bind('keypress', '/', function() {
@@ -54,7 +54,8 @@
             <h:outputText value="#{result.label}" />
           </h:column>
         </rich:suggestionbox>
-        <h:commandButton action="search_results_simple"
+        <h:commandButton
+          action="#{facetedSearchSuggestionActions.performKerwordsSearch}"
           value="#{messages['command.search']}" styleClass="button"
           id="simpleSearchSubmitButton" />
       </h:panelGroup>

@@ -95,6 +95,16 @@ public class FacetedSearchSuggestionActions extends
         return documentManager.getDocument(new IdRef(id));
     }
 
+    protected String searchKeywords = "";
+
+    public String getSearchKeywords() {
+        return searchKeywords;
+    }
+
+    public void setSearchKeywords(String searchKeywords) {
+        this.searchKeywords = searchKeywords;
+    }
+
     @SuppressWarnings("unchecked")
     public List<SearchBoxSuggestion> getSuggestions(Object input)
             throws ClientException {
@@ -134,6 +144,7 @@ public class FacetedSearchSuggestionActions extends
 
     public String handleSelection(String suggestionType, String suggestionValue)
             throws ClientException {
+        setSearchKeywords("");
         if (suggestionType.equals(SearchBoxSuggestion.DOCUMENT_SUGGESTION)) {
             navigationContext.navigateToRef(new IdRef(suggestionValue));
             return "view_documents";
@@ -165,6 +176,12 @@ public class FacetedSearchSuggestionActions extends
         }
         multiNavTreeManager.setSelectedNavigationTree("facetedSearch");
         return "faceted_search_results";
+    }
+
+    public String performKerwordsSearch() throws ClientException {
+        String outcome = handleFacetedSearch("fsd:ecm_fulltext", searchKeywords);
+        setSearchKeywords("");
+        return outcome;
     }
 
     public static class SearchBoxSuggestion {
