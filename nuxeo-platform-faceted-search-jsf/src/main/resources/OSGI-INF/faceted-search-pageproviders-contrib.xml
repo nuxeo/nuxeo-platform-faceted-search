@@ -20,14 +20,6 @@
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
       
-            <coreQueryPageProvider name="USER_SUGGESTION_FACETED_SEARCH">
-        <pattern>
-          SELECT * FROM FacetedSearch WHERE dc:creator != ? AND
-          ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
-        </pattern>
-        <sort column="dc:title" ascending="true" />
-      </coreQueryPageProvider>
-      
 
       <coreQueryPageProvider name="DEFAULT_DOCUMENT_SUGGESTION">
         <pattern quoteParameters="false" escapeParameters="true">
