@@ -63,6 +63,7 @@ import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
+import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
@@ -284,6 +285,15 @@ public class FacetedSearchActions implements Serializable {
     }
 
     public void saveSearch() throws ClientException {
+        saveSearch(currentContentViewName);
+    }
+
+    /**
+     * @param currentContentViewName
+     * @throws ClientException
+     */
+    public void saveSearch(String currentContentViewName)
+            throws ClientException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         if (contentView != null) {
             DocumentModel savedSearch = facetedSearchService.saveSearch(
@@ -406,4 +416,11 @@ public class FacetedSearchActions implements Serializable {
         currentContentViewName = null;
     }
 
+    public void createTempContentView(DocumentModel doc) throws ClientException,Exception{
+        String defaultContentViewName = getContentViewNames().get(0);
+        
+        ContentView tempContentView = contentViewActions.getContentView(defaultContentViewName);
+        PageProviderService pps = Framework.getService(PageProviderService.class);
+    }
+    
 }

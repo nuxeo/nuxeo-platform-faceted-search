@@ -44,6 +44,7 @@ import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.invalidations.AutomaticDocumentBasedInvalidation;
 import org.nuxeo.ecm.platform.ui.web.invalidations.DocumentContextBoundActionBean;
+import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
 import org.nuxeo.runtime.api.Framework;
 
 import com.google.inject.Inject;
@@ -76,6 +77,9 @@ public class FacetedSearchSuggestionActions extends
 
     @In(create = true)
     protected transient NavigationContext navigationContext;
+    
+    @In(create = true)
+    protected transient UserSuggestionActionsBean userSuggestionActions;
 
     public DocumentModel getDocumentModel(String id) throws ClientException {
         return documentManager.getDocument(new IdRef(id));
@@ -95,7 +99,13 @@ public class FacetedSearchSuggestionActions extends
                     new Object[] { input });
             docs = pp.getCurrentPage();
         }catch(Exception e){
-            
+         
+        }
+        
+        try {
+            docs.addAll(getUsersSuggestions(input));
+        } catch (Exception e) {
+            // TODO: handle exception
         }
         return docs;
     }
@@ -107,6 +117,10 @@ public class FacetedSearchSuggestionActions extends
 
     @Override
     protected void resetBeanCache(DocumentModel newCurrentDocumentModel) {
+    }
+    
+    public List<DocumentModel> getUsersSuggestions(Object user) throws Exception, ClientException{
+        return userSuggestionActions.getUserSuggestions(user);
     }
 
 }
