@@ -44,6 +44,7 @@ import org.nuxeo.ecm.platform.types.adapter.TypeInfo;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.invalidations.AutomaticDocumentBasedInvalidation;
 import org.nuxeo.ecm.platform.ui.web.invalidations.DocumentContextBoundActionBean;
+import org.nuxeo.ecm.webapp.security.GroupManagementActions;
 import org.nuxeo.ecm.webapp.security.UserManagementActions;
 import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
 import org.nuxeo.runtime.api.Framework;
@@ -84,6 +85,9 @@ public class FacetedSearchSuggestionActions extends
 
     @In(create = true)
     protected UserManagementActions userManagementActions;
+
+    @In(create =true)
+    protected GroupManagementActions groupManagementActions;
 
     public DocumentModel getDocumentModel(String id) throws ClientException {
         return documentManager.getDocument(new IdRef(id));
@@ -127,6 +131,8 @@ public class FacetedSearchSuggestionActions extends
             return "view_documents";
         } else if (suggestionType.equals(SearchBoxSuggestion.USER_SUGGESTION)) {
             return userManagementActions.viewUser(suggestionValue);
+        } else if (suggestionType.equals(SearchBoxSuggestion.GROUP_SUGGESTION)) {
+            return groupManagementActions.viewGroup(suggestionValue);
         }
         return "faceted_search_results";
     }
