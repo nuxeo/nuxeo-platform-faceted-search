@@ -18,15 +18,15 @@
   <a4j:region renderRegionOnly="true">
     <h:panelGrid id="#{widget.id}_mailbox_panel" columns="3">
       <h:panelGroup>
-        <span id="#{widget.id}_mailbox_suggestDiv"> <h:inputText
-            id="#{widget.id}_faceted_search_suggest"
-            onkeydown="if (event.keyCode == 13) {return false;}"
-            value="#{documentSearchActions.simpleSearchKeywords}" /> </span>
         <a4j:status>
           <f:facet name="start">
             <h:graphicImage value="/img/standart_waiter.gif" />
           </f:facet>
         </a4j:status>
+        <span id="#{widget.id}_mailbox_suggestDiv"> <h:inputText
+            id="#{widget.id}_faceted_search_suggest"
+            onkeydown="if (event.keyCode == 13) {return false;}"
+            value="#{documentSearchActions.simpleSearchKeywords}" /> </span>
         <rich:suggestionbox
           id="#{widget.id}_faceted_search_suggestionBox"
           for="#{widget.id}_faceted_search_suggest" tokens=""
