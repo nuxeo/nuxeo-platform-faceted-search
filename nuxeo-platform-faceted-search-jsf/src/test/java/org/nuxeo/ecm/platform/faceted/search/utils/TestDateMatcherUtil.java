@@ -2,8 +2,16 @@ package org.nuxeo.ecm.platform.faceted.search.utils;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
+import org.apache.derby.tools.sysinfo;
+import org.joda.time.Chronology;
+import org.joda.time.DateTime;
+import org.joda.time.chrono.GregorianChronology;
 import org.junit.Test;
 
 public class TestDateMatcherUtil {
@@ -82,6 +90,41 @@ public class TestDateMatcherUtil {
         assertEquals(10, dateOnlyMonth.getDateSuggestion().get(GregorianCalendar.MONTH));
         assertEquals(1, dateOnlyMonth.getDateSuggestion().get(GregorianCalendar.DAY_OF_MONTH));
 
+        DateMatcherUtil dateMonthDayYear = DateMatcherUtil.fromInput("02 28 2011");
+        assertNotNull(dateMonthDayYear);
+        assertTrue(dateMonthDayYear.isWithYears());
+        assertTrue(dateMonthDayYear.isWithMonth());
+        assertTrue(dateMonthDayYear.isWitDay());
+        assertNotNull(dateMonthDayYear.getDateSuggestion());
+        assertEquals(2011, dateMonthDayYear.getDateSuggestion().get(GregorianCalendar.YEAR));
+        assertEquals(2, dateMonthDayYear.getDateSuggestion().get(GregorianCalendar.MONTH));
+        assertEquals(28, dateMonthDayYear.getDateSuggestion().get(GregorianCalendar.DAY_OF_MONTH));
+
+        DateMatcherUtil dateMonthDayUnder12Year = DateMatcherUtil.fromInput("02 12 2011");
+        assertNotNull(dateMonthDayUnder12Year);
+        assertTrue(dateMonthDayUnder12Year.isWithYears());
+        assertTrue(dateMonthDayUnder12Year.isWithMonth());
+        assertTrue(dateMonthDayUnder12Year.isWitDay());
+        assertNotNull(dateMonthDayUnder12Year.getDateSuggestion());
+        assertEquals(2011, dateMonthDayUnder12Year.getDateSuggestion().get(GregorianCalendar.YEAR));
+        assertEquals(2, dateMonthDayUnder12Year.getDateSuggestion().get(GregorianCalendar.MONTH));
+        assertEquals(12, dateMonthDayUnder12Year.getDateSuggestion().get(GregorianCalendar.DAY_OF_MONTH));
+        
+        DateMatcherUtil dateYearMonthDay = DateMatcherUtil.fromInput("2009 03 30");
+        assertNotNull(dateYearMonthDay);
+        assertTrue(dateYearMonthDay.isWithYears());
+        assertTrue(dateYearMonthDay.isWithMonth());
+        assertTrue(dateYearMonthDay.isWitDay());
+        assertNotNull(dateYearMonthDay.getDateSuggestion());
+        assertEquals(2009, dateYearMonthDay.getDateSuggestion().get(GregorianCalendar.YEAR));
+        assertEquals(3, dateYearMonthDay.getDateSuggestion().get(GregorianCalendar.MONTH));
+        assertEquals(30, dateYearMonthDay.getDateSuggestion().get(GregorianCalendar.DAY_OF_MONTH));
+    
+    DateFormat datef = DateFormat.getDateInstance(DateFormat.FULL
+            , Locale.GERMAN);
+    System.out.println(datef.format(new Date()));
+    Chronology chrono = GregorianChronology.getInstance();
+    DateTime dt = new DateTime(2009, 02, 29, 12, 0, 0, 0, chrono);
     }
 
 }
