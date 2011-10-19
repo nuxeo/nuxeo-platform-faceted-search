@@ -22,8 +22,12 @@ package org.nuxeo.ecm.platform.faceted.search.jsf;
 import static org.jboss.seam.ScopeType.CONVERSATION;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +42,7 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.model.Property;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
+import org.nuxeo.ecm.platform.faceted.search.utils.DateMatcherUtil;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
@@ -111,6 +116,7 @@ public class FacetedSearchSuggestionActions extends
             return suggestions;
         }
         try {
+            // Document repository related suggestions
             PageProviderService ppService = Framework.getService(PageProviderService.class);
             Map<String, Serializable> props = new HashMap<String, Serializable>();
             props.put(CoreQueryDocumentPageProvider.CORE_SESSION_PROPERTY,
@@ -121,18 +127,30 @@ public class FacetedSearchSuggestionActions extends
             for (DocumentModel doc : pp.getCurrentPage()) {
                 suggestions.add(SearchBoxSuggestion.forDocument(doc));
             }
+
+            // Users and groups related suggestions
             List<SearchBoxSuggestion> searchBoxByAuthor = new ArrayList<SearchBoxSuggestion>();
             for (DocumentModel user : getUsersSuggestions(input)) {
                 suggestions.add(SearchBoxSuggestion.forUser(user));
                 searchBoxByAuthor.add(SearchBoxSuggestion.forDocumentsByAuthor(user));
             }
-
             for (DocumentModel group : getGroupSuggestions(input)) {
                 suggestions.add(SearchBoxSuggestion.forGroup(group));
             }
             suggestions.addAll(searchBoxByAuthor);
 
-            // always add the classical fulltext search
+            // Handle date related suggestions
+            DateMatcherUtil matcher = DateMatcherUtil.fromInput(input.toString());
+            if (matcher != null && matcher.hasMatch()) {
+                Calendar date = matcher.getDateSuggestion();
+                suggestions.add(SearchBoxSuggestion.forDocumentsCreatedAfterDate(date));
+                suggestions.add(SearchBoxSuggestion.forDocumentsModifiedAfterDate(date));
+                suggestions.add(SearchBoxSuggestion.forDocumentsCreatedBeforeDate(date));
+                suggestions.add(SearchBoxSuggestion.forDocumentsModifiedBeforeDate(date));
+                // TODO: handle date ranges too
+            }
+
+            // always add the classical full-text search
             suggestions.add(SearchBoxSuggestion.forDocumentsByKeyWords(input.toString()));
         } catch (Exception e) {
             throw new ClientException(e);
@@ -141,8 +159,10 @@ public class FacetedSearchSuggestionActions extends
     }
 
     public String handleSelection(String suggestionType, String suggestionValue)
-            throws ClientException {
+            throws ClientException, ParseException {
         setSearchKeywords("");
+        DateFormat df = new SimpleDateFormat(
+                SearchBoxSuggestion.DATE_FORMAT_PATTERN);
         if (suggestionType.equals(SearchBoxSuggestion.DOCUMENT_SUGGESTION)) {
             navigationContext.navigateToRef(new IdRef(suggestionValue));
             return "view_documents";
@@ -152,14 +172,26 @@ public class FacetedSearchSuggestionActions extends
             return groupManagementActions.viewGroup(suggestionValue);
         } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_BY_AUTHOR_SUGGESTION)) {
             return handleFacetedSearch("fsd:dc_creator", suggestionValue);
+        } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_MODIFIED_AFTER_SUGGESTION)) {
+            return handleFacetedSearch("fsd:dc_modified_min",
+                    df.parse(suggestionValue));
+        } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_CREATED_AFTER_SUGGESTION)) {
+            return handleFacetedSearch("fsd:dc_created_min",
+                    df.parse(suggestionValue));
+        } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_MODIFIED_BEFORE_SUGGESTION)) {
+            return handleFacetedSearch("fsd:dc_modified_max",
+                    df.parse(suggestionValue));
+        } else if (suggestionType.equals(SearchBoxSuggestion.DOCUMENTS_CREATED_BEFORE_SUGGESTION)) {
+            return handleFacetedSearch("fsd:dc_created_max",
+                    df.parse(suggestionValue));
         } else {
             // fallback to basic keyword search suggestion
             return handleFacetedSearch("fsd:ecm_fulltext", suggestionValue);
         }
     }
 
-    protected String handleFacetedSearch(String searchField, String searchValue)
-            throws ClientException {
+    protected String handleFacetedSearch(String searchField,
+            Serializable searchValue) throws ClientException {
         facetedSearchActions.clearSearch();
         facetedSearchActions.setCurrentContentViewName(null);
         String contentViewName = facetedSearchActions.getCurrentContentViewName();
@@ -184,6 +216,8 @@ public class FacetedSearchSuggestionActions extends
 
     public static class SearchBoxSuggestion {
 
+        public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
+
         public static final String DOCUMENT_SUGGESTION = "document";
 
         public static final String USER_SUGGESTION = "user";
@@ -192,9 +226,15 @@ public class FacetedSearchSuggestionActions extends
 
         public static final String DOCUMENTS_BY_AUTHOR_SUGGESTION = "documentsByAuthor";
 
-        public static final String DOCUMENTS_BY_DATE_SUGGESTION = "documentsByDate";
-
         public static final String DOCUMENTS_WITH_KEY_WORDS_SUGGESTION = "documentsWithKeyWords";
+
+        public static final String DOCUMENTS_CREATED_AFTER_SUGGESTION = "documentsCreatedAfterDate";
+
+        public static final String DOCUMENTS_MODIFIED_AFTER_SUGGESTION = "documentsModifiedAfterDate";
+
+        public static final String DOCUMENTS_CREATED_BEFORE_SUGGESTION = "documentsCreatedBeforeDate";
+
+        public static final String DOCUMENTS_MODIFIED_BEFORE_SUGGESTION = "documentsModifiedBeforeDate";
 
         private final String type;
 
@@ -252,6 +292,39 @@ public class FacetedSearchSuggestionActions extends
             return new SearchBoxSuggestion(DOCUMENTS_BY_AUTHOR_SUGGESTION,
                     user.getId(), "Documents by " + user.getTitle(),
                     "/icons/file.gif");
+        }
+
+        public static SearchBoxSuggestion forDocumentsByDate(String type,
+                String label, Calendar date) {
+            SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT_PATTERN);
+            String formatted = df.format(date.getTime());
+            // TODO handle i18n for label
+            return new SearchBoxSuggestion(type, formatted, label + formatted,
+                    "/icons/file.gif");
+        }
+
+        public static SearchBoxSuggestion forDocumentsModifiedBeforeDate(
+                Calendar date) {
+            return forDocumentsByDate(DOCUMENTS_MODIFIED_BEFORE_SUGGESTION,
+                    "Documents modified before ", date);
+        }
+
+        public static SearchBoxSuggestion forDocumentsCreatedBeforeDate(
+                Calendar date) {
+            return forDocumentsByDate(DOCUMENTS_CREATED_BEFORE_SUGGESTION,
+                    "Documents created before ", date);
+        }
+
+        public static SearchBoxSuggestion forDocumentsModifiedAfterDate(
+                Calendar date) {
+            return forDocumentsByDate(DOCUMENTS_MODIFIED_AFTER_SUGGESTION,
+                    "Documents modified after ", date);
+        }
+
+        public static SearchBoxSuggestion forDocumentsCreatedAfterDate(
+                Calendar date) {
+            return forDocumentsByDate(DOCUMENTS_CREATED_AFTER_SUGGESTION,
+                    "Documents created after ", date);
         }
 
         public static SearchBoxSuggestion forDocumentsByKeyWords(String keyWords)
