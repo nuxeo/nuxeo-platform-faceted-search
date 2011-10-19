@@ -39,15 +39,18 @@
           <a4j:support event="onselect" id="#{widget.id}_a4jSupport"
             focus="" bypassUpdates="true" reRender="">
             <nxu:actionListenerMethod
-              value="#{facetedSearchSuggestionActions.handleSelection(result.type,result.id)}" />
+              value="#{facetedSearchSuggestionActions.handleSelection(result.type,result.value)}" />
           </a4j:support>
           <h:column>
-            <h:outputText value="#{result.title}" />
+            <h:graphicImage value="#{result.iconURL}" />
+          </h:column>
+          <h:column>
+            <h:outputText value="#{result.label}" />
           </h:column>
         </rich:suggestionbox>
         <h:commandButton action="search_results_simple"
-    value="#{messages['command.search']}" styleClass="button"
-    id="simpleSearchSubmitButton" />
+          value="#{messages['command.search']}" styleClass="button"
+          id="simpleSearchSubmitButton" />
       </h:panelGroup>
 
     </h:panelGrid>

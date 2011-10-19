@@ -40,6 +40,7 @@ import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
+import org.nuxeo.ecm.platform.types.adapter.TypeInfo;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.invalidations.AutomaticDocumentBasedInvalidation;
 import org.nuxeo.ecm.platform.ui.web.invalidations.DocumentContextBoundActionBean;
@@ -76,7 +77,7 @@ public class FacetedSearchSuggestionActions extends
 
     @In(create = true)
     protected transient NavigationContext navigationContext;
-    
+
     @In(create = true)
     protected transient UserSuggestionActionsBean userSuggestionActions;
 
@@ -88,7 +89,7 @@ public class FacetedSearchSuggestionActions extends
     public List<SearchBoxSuggestion> getDocumentSuggestions(Object input)
             throws ClientException {
         List<SearchBoxSuggestion> suggestions = new ArrayList<SearchBoxSuggestion>();
-        try{
+        try {
             PageProviderService ppService = Framework.getService(PageProviderService.class);
             Map<String, Serializable> props = new HashMap<String, Serializable>();
             props.put(CoreQueryDocumentPageProvider.CORE_SESSION_PROPERTY,
@@ -99,9 +100,9 @@ public class FacetedSearchSuggestionActions extends
             for (DocumentModel doc : pp.getCurrentPage()) {
                 suggestions.add(SearchBoxSuggestion.forDocument(doc));
             }
-            //docs.addAll(getUsersSuggestions(input));
-        }catch(Exception e){
-          throw new ClientException(e);
+            // docs.addAll(getUsersSuggestions(input));
+        } catch (Exception e) {
+            throw new ClientException(e);
         }
         return suggestions;
     }
@@ -110,9 +111,9 @@ public class FacetedSearchSuggestionActions extends
             throws ClientException {
         return "";
     }
-    
+
     public static class SearchBoxSuggestion {
-        
+
         public static final String DOCUMENT_SUGGESTION = "document";
 
         public static final String USER_SUGGESTION = "user";
@@ -154,25 +155,26 @@ public class FacetedSearchSuggestionActions extends
         public String getIconURL() {
             return iconURL;
         }
-        
+
         public static SearchBoxSuggestion forDocument(DocumentModel doc)
                 throws ClientException {
             return new SearchBoxSuggestion(DOCUMENT_SUGGESTION,
                     doc.getRepositoryName() + ":" + doc.getId(),
-                    doc.getTitle(), "/TODO");
+                    doc.getTitle(), doc.getAdapter(TypeInfo.class).getIcon());
         }
 
         public static SearchBoxSuggestion forUser(DocumentModel user)
                 throws ClientException {
             return new SearchBoxSuggestion(USER_SUGGESTION, user.getId(),
-                    user.getTitle(), "/TODO");
+                    user.getTitle(), "/icons/user.gif");
         }
 
         public static SearchBoxSuggestion forDocumentsByAuthor(
                 DocumentModel user) throws ClientException {
             // TODO handle i18n
             return new SearchBoxSuggestion(DOCUMENTS_BY_AUTHOR_SUGGESTION,
-                    user.getId(), "Documents by " + user.getTitle(), "/TODO");
+                    user.getId(), "Documents by " + user.getTitle(),
+                    "/icons/file.gif");
         }
 
     }
@@ -180,8 +182,9 @@ public class FacetedSearchSuggestionActions extends
     @Override
     protected void resetBeanCache(DocumentModel newCurrentDocumentModel) {
     }
-    
-    public List<DocumentModel> getUsersSuggestions(Object user) throws Exception, ClientException{
+
+    public List<DocumentModel> getUsersSuggestions(Object user)
+            throws Exception, ClientException {
         return userSuggestionActions.getUserSuggestions(user);
     }
 
