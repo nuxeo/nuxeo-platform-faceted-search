@@ -39,7 +39,6 @@ import org.nuxeo.ecm.core.api.model.Property;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
-import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
@@ -54,6 +53,8 @@ import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
 import org.nuxeo.runtime.api.Framework;
 
 import com.google.inject.Inject;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Name("facetedSearchSuggestionActions")
 @Scope(CONVERSATION)
@@ -74,9 +75,6 @@ public class FacetedSearchSuggestionActions extends
 
     @In(create = true)
     protected FacetedSearchActions facetedSearchActions;
-
-    @In(create = true)
-    protected FacetedSearchService facetedSearchService;
 
     @In(create = true)
     protected ContentViewActions contentViewActions;
@@ -106,6 +104,9 @@ public class FacetedSearchSuggestionActions extends
     @SuppressWarnings("unchecked")
     public List<SearchBoxSuggestion> getDocumentSuggestions(Object input)
             throws ClientException {
+        if (input == null) {
+            return Collections.emptyList();
+        }
         List<SearchBoxSuggestion> suggestions = new ArrayList<SearchBoxSuggestion>();
         try {
             PageProviderService ppService = Framework.getService(PageProviderService.class);
@@ -128,6 +129,9 @@ public class FacetedSearchSuggestionActions extends
                 suggestions.add(SearchBoxSuggestion.forGroup(group));
             }
             suggestions.addAll(searchBoxByAuthor);
+
+            // always add the classical fulltext search
+            suggestions.add(SearchBoxSuggestion.forDocumentsByKeyWords(input.toString()));
         } catch (Exception e) {
             throw new ClientException(e);
         }
