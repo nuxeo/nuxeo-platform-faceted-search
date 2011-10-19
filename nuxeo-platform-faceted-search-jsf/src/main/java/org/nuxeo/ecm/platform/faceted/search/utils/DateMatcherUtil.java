@@ -35,55 +35,37 @@ public class DateMatcherUtil {
         this.dateSuggestion = dateSuggestion;
     }
 
-    
-    
     public boolean isWithYears() {
         return withYears;
     }
-
-
 
     public void setWithYears(boolean withYears) {
         this.withYears = withYears;
     }
 
-
-
     public boolean isWithMonth() {
         return withMonth;
     }
-
-
 
     public void setWithMonth(boolean withMonth) {
         this.withMonth = withMonth;
     }
 
-
-
     public boolean isWitDay() {
         return witDay;
     }
-
-
 
     public void setWitDay(boolean witDay) {
         this.witDay = witDay;
     }
 
-
-
     public Calendar getDateSuggestion() {
         return dateSuggestion;
     }
 
-
-
     public void setDateSuggestion(Calendar dateSuggestion) {
         this.dateSuggestion = dateSuggestion;
     }
-
-
 
     public static Matcher parsingDate(Pattern pattern, String input) {
         Matcher matcher = pattern.matcher(input.trim());
@@ -136,14 +118,14 @@ public class DateMatcherUtil {
             int first = Integer.parseInt(matcher.group().substring(0, 2));
             int second = Integer.parseInt(matcher.group().substring(3, 5));
             int year = Integer.parseInt(matcher.group().substring(6));
-            int control = first + second ;
-            if(control < 2 || control > 12 + 31 ){
-                return null ;
-            }else if (control < 12 + 12 + 1 ){
+            int control = first + second;
+            if (control < 2 || control > 12 + 31) {
+                return null;
+            } else if (control < 12 + 12 + 1) {
                 new DateMatcherUtil(true, true, true, dateToInstance(year,
                         first, second));
             }
-            
+
             return new DateMatcherUtil(true, true, true, dateToInstance(year,
                     first, second));
         }
@@ -152,10 +134,10 @@ public class DateMatcherUtil {
             int year = Integer.parseInt(matcher.group().substring(0, 4));
             int first = Integer.parseInt(matcher.group().substring(5, 7));
             int second = Integer.parseInt(matcher.group().substring(8));
-            int control = first + second ;
-            if(control < 2 || control > 12 + 31 ){
-                return null ;
-            }else if (control < 12 + 12 + 1){
+            int control = first + second;
+            if (control < 2 || control > 12 + 31) {
+                return null;
+            } else if (control < 12 + 12 + 1) {
                 new DateMatcherUtil(true, true, true, dateToInstance(year,
                         first, second));
             }
@@ -168,7 +150,7 @@ public class DateMatcherUtil {
 
     protected static Calendar dateToInstance(int year, int month, int day) {
 
-        Calendar retour = new GregorianCalendar(year,month,day);
+        Calendar retour = new GregorianCalendar(year, month, day);
         return retour;
     }
 

@@ -51,8 +51,6 @@ import org.nuxeo.ecm.webapp.security.UserManagementActions;
 import org.nuxeo.ecm.webapp.security.UserSuggestionActionsBean;
 import org.nuxeo.runtime.api.Framework;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
 @Name("facetedSearchSuggestionActions")
 @Scope(CONVERSATION)
 @AutomaticDocumentBasedInvalidation
@@ -108,10 +106,10 @@ public class FacetedSearchSuggestionActions extends
     @SuppressWarnings("unchecked")
     public List<SearchBoxSuggestion> getSuggestions(Object input)
             throws ClientException {
-        if (input == null) {
-            return Collections.emptyList();
-        }
         List<SearchBoxSuggestion> suggestions = new ArrayList<SearchBoxSuggestion>();
+        if (input == null) {
+            return suggestions;
+        }
         try {
             PageProviderService ppService = Framework.getService(PageProviderService.class);
             Map<String, Serializable> props = new HashMap<String, Serializable>();
