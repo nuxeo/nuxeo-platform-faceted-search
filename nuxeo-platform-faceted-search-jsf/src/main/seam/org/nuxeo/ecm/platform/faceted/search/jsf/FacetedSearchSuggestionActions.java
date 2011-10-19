@@ -181,7 +181,7 @@ public class FacetedSearchSuggestionActions extends
         public static SearchBoxSuggestion forGroup(DocumentModel group)
                 throws ClientException {
             return new SearchBoxSuggestion(GROUP_SUGGESTION, group.getId(),
-                    group.getName(), "/TODO");
+                    group.getTitle(),"/icons/group.gif");
         }
         
         public static SearchBoxSuggestion forDocumentsByAuthor(
