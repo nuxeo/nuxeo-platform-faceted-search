@@ -1,7 +1,6 @@
 package org.nuxeo.ecm.platform.faceted.search.utils;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -38,8 +38,6 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.nuxeo.common.utils.IdUtils;
-import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -167,10 +165,8 @@ public class TestFacetedSearchService {
         assertTrue(savedSearchPath.startsWith(uws.getPathAsString()));
 
         // Check that the search is saved in the configured folder
-        FacetedSearchServiceImpl serviceImpl = (FacetedSearchServiceImpl) facetedSearchService;
-        String rootSavedSearchesPath = new Path(uws.getPathAsString()).append(
-                IdUtils.generatePathSegment(serviceImpl.configuration.getRootSavedSearchesTitle())).toString();
-        assertTrue(savedSearchPath.startsWith(rootSavedSearchesPath));
+        assertEquals(savedSearchPath,
+                "/default-domain/UserWorkspaces/Administrator/Saved Searches/My saved search");
     }
 
     protected DocumentModel createSavedSearch(String title)
