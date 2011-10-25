@@ -29,8 +29,10 @@
             value="#{facetedSearchSuggestionActions.searchKeywords}" />
         <script type="text/javascript">
         <!--
-         jQuery(document).bind('keypress', '/', function() {
+         jQuery(document).bind('keydown', '/', function(event) {
+            event.preventDefault();
             jQuery('input.faceted_search_suggest_box').focus();
+            return false;
          });
         -->
         </script>
