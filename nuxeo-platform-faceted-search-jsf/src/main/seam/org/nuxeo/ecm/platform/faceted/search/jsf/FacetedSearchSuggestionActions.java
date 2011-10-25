@@ -42,7 +42,7 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.model.Property;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
-import org.nuxeo.ecm.platform.faceted.search.utils.DateMatcherUtil;
+import org.nuxeo.ecm.platform.faceted.search.utils.DateMatcher;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
 import org.nuxeo.ecm.platform.query.api.PageProviderService;
 import org.nuxeo.ecm.platform.query.nxql.CoreQueryDocumentPageProvider;
@@ -140,7 +140,7 @@ public class FacetedSearchSuggestionActions extends
             suggestions.addAll(searchBoxByAuthor);
 
             // Handle date related suggestions
-            DateMatcherUtil matcher = DateMatcherUtil.fromInput(input.toString());
+            DateMatcher matcher = DateMatcher.fromInput(input.toString());
             if (matcher != null && matcher.hasMatch()) {
                 Calendar date = matcher.getDateSuggestion();
                 suggestions.add(SearchBoxSuggestion.forDocumentsCreatedAfterDate(date));

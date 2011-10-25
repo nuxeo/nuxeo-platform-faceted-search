@@ -18,22 +18,22 @@
   <a4j:region renderRegionOnly="true">
     <h:panelGrid id="#{widget.id}_mailbox_panel" columns="3">
       <h:panelGroup>
-        <a4j:status>
-          <f:facet name="start">
-            <h:graphicImage value="/img/standart_waiter.gif" />
-          </f:facet>
-        </a4j:status>
         <h:inputText id="faceted_search_suggest_box"
             class="faceted_search_suggest_box"
             onkeydown="if (event.keyCode == 13) {return false;}"
             value="#{facetedSearchSuggestionActions.searchKeywords}" />
         <script type="text/javascript">
         <!--
-         jQuery(document).bind('keydown', '/', function(event) {
-            event.preventDefault();
-            jQuery('input.faceted_search_suggest_box').focus();
-            return false;
-         });
+        function focus_searchbox(event) {
+           event.preventDefault();
+           jQuery('input.faceted_search_suggest_box').focus();
+           return false;
+        }
+        // bind the '/' key to focus the searchbox
+        jQuery(document).bind('keydown', '/', focus_searchbox);
+        // handle keyboard layouts such as French where the '/' char is
+        // accessed through the Shift modifier
+        jQuery(document).bind('keydown', 'Shift+/', focus_searchbox);
         -->
         </script>
         <rich:suggestionbox
