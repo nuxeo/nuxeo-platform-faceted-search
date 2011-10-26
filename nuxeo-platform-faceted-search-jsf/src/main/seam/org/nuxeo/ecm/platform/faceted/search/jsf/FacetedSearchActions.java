@@ -291,12 +291,12 @@ public class FacetedSearchActions implements Serializable {
                     contentView, savedSearchTitle);
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
-        
+
             // Do not reuse the just saved document as it can be modified and
             // re-saved
             DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
             contentView.setSearchDocumentModel(searchDocument);
-        
+
             Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
                     savedSearch);
             facesMessages.add(StatusMessage.Severity.INFO,

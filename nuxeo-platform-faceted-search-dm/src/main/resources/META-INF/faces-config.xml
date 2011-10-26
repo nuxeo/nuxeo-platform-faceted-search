@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?> 
- 
-<faces-config> 
+<?xml version="1.0" encoding="UTF-8"?>
 
-  <navigation-rule> 
+<faces-config>
+
+  <navigation-rule>
 
     <navigation-case>
       <from-outcome>faceted_search_results</from-outcome>
       <to-view-id>/facetedsearch/faceted_search_results.xhtml</to-view-id>
       <redirect />
     </navigation-case>
-    
-  </navigation-rule> 
-  
+
+  </navigation-rule>
+
 </faces-config>
