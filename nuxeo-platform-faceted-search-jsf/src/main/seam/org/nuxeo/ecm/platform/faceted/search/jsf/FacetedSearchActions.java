@@ -106,9 +106,6 @@ public class FacetedSearchActions implements Serializable {
     public static final String ENCODED_VALUES_ENCODING = "UTF-8";
 
     @In(create = true)
-    protected FacetedSearchService facetedSearchService;
-
-    @In(create = true)
     protected ContentViewActions contentViewActions;
 
     @In(create = true)
@@ -154,8 +151,9 @@ public class FacetedSearchActions implements Serializable {
 
     public List<String> getContentViewNames() throws ClientException {
         if (contentViewNames == null) {
-            contentViewNames = new ArrayList<String>(
-                    facetedSearchService.getContentViewNames(navigationContext.getCurrentDocument()));
+            contentViewNames = new ArrayList<String>(Framework.getLocalService(
+                    FacetedSearchService.class).getContentViewNames(
+                    navigationContext.getCurrentDocument()));
         }
         return contentViewNames;
     }
@@ -185,12 +183,14 @@ public class FacetedSearchActions implements Serializable {
 
     public List<DocumentModel> getCurrentUserSavedSearches()
             throws ClientException {
-        return facetedSearchService.getCurrentUserSavedSearches(documentManager);
+        return Framework.getLocalService(FacetedSearchService.class).getCurrentUserSavedSearches(
+                documentManager);
     }
 
     public List<DocumentModel> getOtherUsersSavedSearches()
             throws ClientException {
-        return facetedSearchService.getOtherUsersSavedSearches(documentManager);
+        return Framework.getLocalService(FacetedSearchService.class).getOtherUsersSavedSearches(
+                documentManager);
     }
 
     @Factory(value = "savedSearchesSelectItems", scope = ScopeType.EVENT)
@@ -286,8 +286,9 @@ public class FacetedSearchActions implements Serializable {
     public void saveSearch() throws ClientException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         if (contentView != null) {
-            DocumentModel savedSearch = facetedSearchService.saveSearch(
-                    documentManager, contentView, savedSearchTitle);
+            DocumentModel savedSearch = Framework.getLocalService(
+                    FacetedSearchService.class).saveSearch(documentManager,
+                    contentView, savedSearchTitle);
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
 
@@ -311,7 +312,7 @@ public class FacetedSearchActions implements Serializable {
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
         DocumentModel doc = documentManager.createDocumentModel(sourceDoc.getType());
-        for (String schema : sourceDoc.getDeclaredSchemas()) {
+        for (String schema : sourceDoc.getDocumentType().getSchemaNames()) {
             // Copy everything except dublincore schema, required values will be
             // created again on the next save, if any
             if (!DUBLINCORE_SCHEMA.equals(schema)) {

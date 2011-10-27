@@ -48,12 +48,14 @@ import org.nuxeo.runtime.api.Framework;
  */
 /**
  * @author rlegall
- * 
+ *
  */
 @Name("facetedSearchConfigurationActions")
 @Scope(CONVERSATION)
 @Install(precedence = Install.FRAMEWORK)
 public class FacetedSearchConfigurationActions implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     protected Set<String> registeredContentView;
 
@@ -75,7 +77,7 @@ public class FacetedSearchConfigurationActions implements Serializable {
     /**
      * Return a set of String naming the faceted search allowed for the domain
      * passed as parameter
-     * 
+     *
      * @param document the domain requiring faceted searches.
      * @return a set of String corresponding the name of faceted search allowed
      *         for the domain
@@ -108,8 +110,8 @@ public class FacetedSearchConfigurationActions implements Serializable {
     /**
      * Return a set of String naming the faceted search not currently selected
      * for the domain passed as parameter
-     * 
-     * @param document the domain 
+     *
+     * @param document the domain
      * @return a set of String naming the faceted search unselected for the domain
      * @throws Exception
      * @Since 5.4.3

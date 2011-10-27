@@ -17,7 +17,8 @@
 
 package org.nuxeo.ecm.platform.faceted.search.jsf.service;
 
-import static org.nuxeo.ecm.platform.faceted.search.api.Constants.FACETED_SEARCH_FLAG;import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
+import static org.nuxeo.ecm.platform.faceted.search.api.Constants.FACETED_SEARCH_FLAG;
+import static org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.ConfigConstants.F_SEARCH_CONFIGURATION_FACET;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,13 +28,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.nuxeo.common.utils.IdUtils;
-import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.localconfiguration.LocalConfigurationService;
+import org.nuxeo.ecm.core.api.pathsegment.PathSegmentService;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
@@ -180,14 +180,17 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         DocumentModel uws = getCurrentUserPersonalWorkspace(session);
 
         String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
-        String rootSavedSearchesName = IdUtils.generatePathSegment(rootSavedSearchesTitle);
-        Path rootSavedSearchesPath = new Path(uws.getPathAsString()).append(rootSavedSearchesName);
-        if (!session.exists(new PathRef(rootSavedSearchesPath.toString()))) {
-            DocumentModel rootSavedSearches = session.createDocumentModel(
-                    uws.getPathAsString(), rootSavedSearchesName, "Folder");
+        PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
+        DocumentModel rootSavedSearches = session.createDocumentModel(
+                uws.getPathAsString(), rootSavedSearchesTitle, "Folder");
+        rootSavedSearches.setPathInfo(uws.getPathAsString(),
+                pathService.generatePathSegment(rootSavedSearches));
+
+        PathRef rootPathRef = new PathRef(rootSavedSearches.getPathAsString());
+        if (!session.exists(new PathRef(rootSavedSearches.getPathAsString()))) {
             rootSavedSearches.setPropertyValue("dc:title",
                     rootSavedSearchesTitle);
-            session.createDocument(rootSavedSearches);
+            rootSavedSearches = session.createDocument(rootSavedSearches);
             session.save();
         }
 
@@ -196,8 +199,8 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
                 Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY,
                 facetedSearchContentView.getName());
         searchDoc.setPropertyValue("dc:title", title);
-        searchDoc.setPathInfo(rootSavedSearchesPath.toString(),
-                IdUtils.generatePathSegment(title));
+        searchDoc.setPathInfo(rootPathRef.toString(),
+                pathService.generatePathSegment(searchDoc));
         searchDoc = session.createDocument(searchDoc);
         session.save();
         return searchDoc;
