@@ -82,7 +82,7 @@ public class FacetedSearchConfigurationActions implements Serializable {
      * @return a set of String corresponding the name of faceted search allowed
      *         for the domain
      * @throws Exception
-     * @Since 5.4.3
+     * @Since 5.5
      */
     public Set<ContentViewHeader> getSelectedContentViewHeaders(
             DocumentModel document) throws Exception {
@@ -114,7 +114,7 @@ public class FacetedSearchConfigurationActions implements Serializable {
      * @param document the domain
      * @return a set of String naming the faceted search unselected for the domain
      * @throws Exception
-     * @Since 5.4.3
+     * @Since 5.5
      */
     public Set<ContentViewHeader> getNotSelectedContentViewHeaders(
             DocumentModel document) throws Exception {
