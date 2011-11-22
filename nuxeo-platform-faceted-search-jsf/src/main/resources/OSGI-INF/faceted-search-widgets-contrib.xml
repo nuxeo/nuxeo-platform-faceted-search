@@ -5,6 +5,11 @@
     point="widgettypes">
 
     <widgetType name="date_range">
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <documentation>Widget used to search on a date range.</documentation>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
@@ -15,6 +20,11 @@
     </widgetType>
 
     <widgetType name="faceted_search_users_suggestion">
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <documentation>
         Widget allowing to search and select one or more users with a suggestion
         box.
@@ -37,6 +47,11 @@
         label and content are displayed on the same row - noLabel: the sub
         widget label is not displayed at all.
       </documentation>
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
@@ -50,6 +65,11 @@
         Widget displaying all the registered faceted searches. Hidden in case
         only one faceted search is registered.
       </documentation>
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
@@ -67,6 +87,11 @@
         The "outcome" property needs to be defined: on which JSF view should we
         redirect after selecting a saved search.
       </documentation>
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
@@ -79,7 +104,6 @@
       <documentation>
         Widget allowing to select one or more values from a Tree constructed
         from the directory tree specified in the directoryTreeName property.
-
         <code>
           <widget name="dc_coverage" type="faceted_search_directory_tree">
             <labels>
@@ -95,8 +119,12 @@
             </properties>
           </widget>
         </code>
-
       </documentation>
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>

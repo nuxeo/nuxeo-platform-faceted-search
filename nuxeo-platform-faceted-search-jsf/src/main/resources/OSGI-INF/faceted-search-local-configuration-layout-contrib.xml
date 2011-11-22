@@ -3,9 +3,8 @@
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
-    <action id="FACETED_SEARCH_CONFIGURATION"
-      link="/incl/tabs/faceted_search_configuration.xhtml" order="100"
-      label="action.view.theme" icon="/icons/file.gif">
+    <action id="FACETED_SEARCH_CONFIGURATION" link="/incl/tabs/faceted_search_configuration.xhtml"
+      order="100" label="action.view.theme" icon="/icons/file.gif">
       <category>LOCAL_CONFIGURATION</category>
       <filter-id>manage</filter-id>
     </action>
@@ -17,6 +16,11 @@
     point="widgettypes">
 
     <widgetType name="faceted_search_content_views_selection">
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
       <handler-class>
         org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
       </handler-class>
