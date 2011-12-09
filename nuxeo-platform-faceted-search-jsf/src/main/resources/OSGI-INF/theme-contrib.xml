@@ -1,12 +1,10 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.theme">
 
-  <require>org.nuxeo.theme.nuxeo.default</require>
-
   <!-- mapping between theme pages and resources -->
   <extension target="org.nuxeo.theme.styling.service" point="pages">
 
-    <themePage name="galaxy/default">
+    <themePage name="*">
       <styles append="true">
         <style>faceted_search</style>
       </styles>
