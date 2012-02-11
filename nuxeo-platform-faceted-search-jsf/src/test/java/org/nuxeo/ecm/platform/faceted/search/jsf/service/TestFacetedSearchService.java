@@ -254,7 +254,7 @@ public class TestFacetedSearchService {
         RepositorySettings repository = coreFeature.getRepository();
         repository.shutdown();
         repository.setUsername(username);
-        session = repository.get();
+        session = repository.createSession();
     }
 
 }
