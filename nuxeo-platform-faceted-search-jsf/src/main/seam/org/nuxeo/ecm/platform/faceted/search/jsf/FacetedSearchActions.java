@@ -45,7 +45,6 @@ import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.json.JSONException;
-import org.nuxeo.common.utils.Base64;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DataModel;
@@ -63,6 +62,7 @@ import org.nuxeo.ecm.platform.faceted.search.api.Constants;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
+import org.nuxeo.ecm.platform.forms.layout.io.Base64;
 import org.nuxeo.ecm.platform.ui.web.api.NavigationContext;
 import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
@@ -306,15 +306,16 @@ public class FacetedSearchActions implements Serializable {
 
     /**
      * Create a new {@code DocumentModel} with the same type as
-     * {@code sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc}
-     * to the newly created document, except the {@code dublincore} schema.
+     * {@code sourceDoc}. Copy all the {@code DataModel}s from
+     * {@code sourceDoc} to the newly created document, except the
+     * {@code dublincore} schema.
      */
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
         DocumentModel doc = documentManager.createDocumentModel(sourceDoc.getType());
         for (String schema : sourceDoc.getDocumentType().getSchemaNames()) {
-            // Copy everything except dublincore schema, required values will be
-            // created again on the next save, if any
+            // Copy everything except dublincore schema, required values will
+            // be created again on the next save, if any
             if (!DUBLINCORE_SCHEMA.equals(schema)) {
                 DataModel dm = sourceDoc.getDataModel(schema);
                 SchemaManager mgr = TypeService.getSchemaManager();
