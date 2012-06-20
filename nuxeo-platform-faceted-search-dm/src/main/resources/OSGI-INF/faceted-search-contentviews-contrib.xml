@@ -12,6 +12,7 @@
 
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
+        <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <whereClause docType="FacetedSearchDefault">
           <fixedPart>
             ecm:mixinType != 'HiddenInNavigation' AND ecm:mixinType !=

@@ -5,6 +5,7 @@
     point="providers">
 
       <coreQueryPageProvider name="USER_SAVED_SEARCHES">
+        <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator = ? AND
           ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
@@ -13,6 +14,7 @@
       </coreQueryPageProvider>
 
       <coreQueryPageProvider name="OTHER_USERS_SAVED_SEARCHES">
+        <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator != ? AND
           ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
