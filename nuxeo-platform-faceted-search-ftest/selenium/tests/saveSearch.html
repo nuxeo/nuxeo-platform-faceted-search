@@ -16,15 +16,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>setTimeout</td>
-	<td>120000</td>
-	<td></td>
+  <td>setTimeout</td>
+  <td>120000</td>
+  <td></td>
 </tr>
 <tr>
   <td>open</td>
-  <td>restAPI/systemLog?token=dolog&amp;level=INFO&amp;message=----- Selenium
-    saveSearch
-  </td>
+  <td>restAPI/systemLog?token=dolog&amp;level=INFO&amp;message=----- Selenium saveSearch</td>
   <td></td>
 </tr>
 <tr>
@@ -59,8 +57,7 @@
 </tr>
 <tr>
   <td>click</td>
-  <td>//a[@id='virtualNavTreeTab:virtualNavTreeList:1:virtualNavTreeLink']/img
-  </td>
+  <td>//a[@id='virtualNavTreeTab:virtualNavTreeList:1:virtualNavTreeLink']/img</td>
   <td></td>
 </tr>
 <tr>
@@ -68,7 +65,6 @@
   <td>10000</td>
   <td></td>
 </tr>
-
 <tr>
   <td>waitForTextPresent</td>
   <td>Keywords</td>
@@ -76,14 +72,12 @@
 </tr>
 <tr>
   <td>type</td>
-  <td>
-    facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1
-  </td>
+  <td>facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1</td>
   <td>Klaatu</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//input[@value="Go »"]</td>
+  <td>//input[@value=&quot;Go »&quot;]</td>
   <td></td>
 </tr>
 <tr>
@@ -122,7 +116,6 @@
   <td>Your search has been saved in your personal workspace</td>
   <td></td>
 </tr>
-
 <tr>
   <td>clickAndWait</td>
   <td>link=Clear</td>
@@ -151,15 +144,12 @@
 <!-- load the search -->
 <tr>
   <td>selectAndWait</td>
-  <td>//select[@id="facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector"]
-  </td>
+  <td>//select[@id=&quot;facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector&quot;]</td>
   <td>label=My search</td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>
-    //*[@id='facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1']
-  </td>
+  <td>//*[@id='facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1']</td>
   <td>Klaatu</td>
 </tr>
 <tr>
@@ -177,7 +167,6 @@
   <td>Nikto</td>
   <td></td>
 </tr>
-
 <!-- check that the search is in our user workspace, and remove it -->
 <tr>
   <td>clickAndWait</td>
@@ -190,9 +179,14 @@
   <td></td>
 </tr>
 <tr>
-  <td>clickAndWait</td>
-  <td>link=Saved Searches</td>
-  <td></td>
+  <td>selectAndWait</td>
+  <td>facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector</td>
+  <td>None</td>
+</tr>
+<tr>
+  <td>selectAndWait</td>
+  <td>facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector</td>
+  <td>My search</td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
@@ -279,7 +273,6 @@
   <td>This folder contains no document.</td>
   <td></td>
 </tr>
-
 </tbody>
 </table>
 </body>
