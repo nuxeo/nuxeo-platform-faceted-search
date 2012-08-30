@@ -27,7 +27,8 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock .tinyLabel { display: inline-block; min-width: 54px }
 .facetedSearchBlock .dataInput { width: 100% }
 .facetedSearchBlock .dataInput td { padding: .3em .4em .5em 0 }
-.facetedSearchBlock input, .facetedSearchBlock select { width: 95% }
+.facetedSearchBlock input[type="text"], .facetedSearchBlock select { width: 95% }
+.facetedSearchBlock input[type="image"], .facetedSearchBlock input[type="button"] { width: auto }
 .facetedSearchBlock input.rich-calendar-input { margin: .1em .3em .1em 0em; width: 50% }
 .facetedSearchBlock .dataInputTextDate { font-size: .9em; margin: 0 .4em .3em .3em; width: 45px }
 .facetedSearchBlock .widgetContent { border-bottom: 1px solid #dcdcdc; color: "gray.dark (__FLAVOR__ color)" }
