@@ -53,7 +53,6 @@ import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
 import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
 import org.nuxeo.ecm.core.schema.SchemaManager;
-import org.nuxeo.ecm.core.schema.TypeService;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewHeader;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
@@ -318,7 +317,7 @@ public class FacetedSearchActions implements Serializable {
             // be created again on the next save, if any
             if (!DUBLINCORE_SCHEMA.equals(schema)) {
                 DataModel dm = sourceDoc.getDataModel(schema);
-                SchemaManager mgr = TypeService.getSchemaManager();
+                SchemaManager mgr = Framework.getLocalService(SchemaManager.class);
                 DataModel newDM = DocumentModelImpl.cloneDataModel(
                         mgr.getSchema(dm.getSchema()), dm);
                 doc.getDataModel(schema).setMap(newDM.getMap());
