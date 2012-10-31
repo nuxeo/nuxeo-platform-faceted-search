@@ -4,21 +4,6 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
-    <widgetType name="date_range">
-      <configuration>
-        <categories>
-          <category>configuration_not_ready</category>
-        </categories>
-      </configuration>
-      <documentation>Widget used to search on a date range.</documentation>
-      <handler-class>
-        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
-      </handler-class>
-      <property name="template">
-        /widgets/date_range_widget_template.xhtml
-      </property>
-    </widgetType>
-
     <widgetType name="faceted_search_users_suggestion">
       <configuration>
         <categories>
