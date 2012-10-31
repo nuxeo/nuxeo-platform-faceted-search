@@ -5,6 +5,7 @@
     point="widgettypes">
 
     <widgetType name="faceted_search_users_suggestion">
+    <!-- deprecated since 5.7 , the widget type "multipleUsersSuggestion" is used instead-->
       <configuration>
         <categories>
           <category>configuration_not_ready</category>
@@ -23,7 +24,7 @@
     </widgetType>
 
     <widgetType name="faceted_search_wrapper">
-     <!-- deprecated since 5.6 , a widget of type "container" is used instead-->
+     <!-- deprecated since 5.7 , a widget of type "container" is used instead-->
       <documentation>
         Template widget dedicated to wrap other sub widgets. It displays the
         widget label, and list the sub widgets below according to the
