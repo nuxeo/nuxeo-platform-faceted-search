@@ -5,6 +5,10 @@
   xmlns:c="http://java.sun.com/jstl/core"
   xmlns:a4j="https://ajax4jsf.dev.java.net/ajax" id="#{widget.id}">
 
+<c:if test="false">
+  deprecated since 5.7 , the widget type "select_l10n_vocabulary_tree" 
+  is used instead
+</c:if>
 <c:if test="#{widget.mode != 'create' and widget.mode != 'edit'}">
 
   <span class="labelOpenPopUp"><c:choose>

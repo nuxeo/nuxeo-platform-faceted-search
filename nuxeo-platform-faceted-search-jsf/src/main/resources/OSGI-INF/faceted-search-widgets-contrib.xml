@@ -88,6 +88,7 @@
     </widgetType>
 
     <widgetType name="faceted_search_directory_tree">
+    <!-- deprecated since 5.7 , the widget type "select_l10n_vocabulary_tree" is used instead-->
       <documentation>
         Widget allowing to select one or more values from a Tree constructed
         from the directory tree specified in the directoryTreeName property.
