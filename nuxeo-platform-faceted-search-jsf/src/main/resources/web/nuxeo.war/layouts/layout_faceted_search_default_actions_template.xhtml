@@ -4,21 +4,11 @@
   xmlns:nxl="http://nuxeo.org/nxforms/layout" id="#{layout.id}">
 
   <div class="facetedSearchBlock">
-  
-  <nxl:layout name="faceted_search_default_selectors"
-        mode="#{layoutMode}" value="#{value}" />
-  
-  <nxl:layout name="faceted_search_default_actions"
-        mode="#{layoutMode}" value="#{value}" />
-        
-  <nxl:layoutRow>
+   <nxl:layoutRow>
     <nxl:layoutRowWidget>
       <nxl:widget widget="#{widget}" value="#{value}" />
     </nxl:layoutRowWidget>
   </nxl:layoutRow>
-  
-  <nxl:layout name="faceted_search_default_actions"
-        mode="#{layoutMode}" value="#{value}" />
   </div>
 
 </f:subview>

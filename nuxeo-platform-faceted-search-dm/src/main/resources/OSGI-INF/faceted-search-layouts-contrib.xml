@@ -192,10 +192,10 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="layouts">
 
-    <layout name="faceted_search_default">
+    <layout name="faceted_search_default_selectors">
       <templates>
         <template mode="any">
-          /layouts/layout_faceted_search_template.xhtml
+          /layouts/layout_faceted_search_default_actions_template.xhtml
         </template>
       </templates>
       <rows>
@@ -205,9 +205,29 @@
         <row>
           <widget>saved_faceted_searches_selector</widget>
         </row>
+      </rows>
+    </layout>
+    
+    <layout name="faceted_search_default_actions">
+     <templates>
+        <template mode="any">
+          /layouts/layout_faceted_search_default_actions_template.xhtml
+        </template>
+      </templates>
+      <rows>
         <row>
           <widget>actions_bar</widget>
         </row>
+      </rows>
+    </layout>
+    
+    <layout name="faceted_search_default">  
+     <templates>
+        <template mode="any">
+          /layouts/layout_faceted_search_template.xhtml
+        </template>
+      </templates>
+      <rows>
         <row>
           <widget>text_search</widget>
         </row>
@@ -222,9 +242,6 @@
         </row>
         <row>
           <widget>path_search</widget>
-        </row>
-        <row>
-          <widget>actions_bar</widget>
         </row>
       </rows>
     </layout>
