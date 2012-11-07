@@ -17,13 +17,25 @@
       </h:commandButton>
     </div>
 
-    <nxu:set var="contentView"
-      value="#{contentViewActions.getContentViewWithProvider(contentViewName)}"
+   <nxu:set var="contentView"
+    value="#{contentViewActions.getContentViewWithProvider(contentViewName)}"
       cache="true">
       <c:if test="#{contentView != null}">
+      
+       <div class="facetedSearchBlock">
+        <nxl:layout name="faceted_search_default_selectors"
+         mode="#{layoutMode}" value="#{value}" />
+        <nxl:layout name="faceted_search_default_actions"
+         mode="#{layoutMode}" value="#{value}" />
+        
         <nxl:layout name="#{contentView.searchLayout.name}" mode="search"
           value="#{contentView.searchDocumentModel}" />
-      </c:if>
+        
+        <nxl:layout name="faceted_search_default_actions"
+         mode="#{layoutMode}" value="#{value}" />
+       </div>
+       
+     </c:if>
     </nxu:set>
 
   </nxu:set>

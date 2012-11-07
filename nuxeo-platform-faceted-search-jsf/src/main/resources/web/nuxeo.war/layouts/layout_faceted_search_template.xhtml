@@ -5,13 +5,10 @@
   xmlns:nxu="http://nuxeo.org/nxweb/util"
   xmlns:ui="http://java.sun.com/jsf/facelets" id="#{layout.id}">
   <div class="facetedSearchBlock">
-  
-  <nxl:layout name="faceted_search_default_selectors"
-        mode="#{layoutMode}" value="#{value}" />
-  
-  <nxl:layout name="faceted_search_default_actions"
-        mode="#{layoutMode}" value="#{value}" />
-  
+<c:if test="false">
+ deprecated since 5.7, layout_default_template.xhtml is used instead
+</c:if>
+
   <nxu:set var="layoutWidgetsDisplay"
     value="#{layout.properties.widgetsDisplay}"
     resolveTwice="true">
@@ -68,8 +65,6 @@
 
   </nxu:set>     
   
-  <nxl:layout name="faceted_search_default_actions"
-        mode="#{layoutMode}" value="#{value}" />
   </div>
 
 </f:subview>
