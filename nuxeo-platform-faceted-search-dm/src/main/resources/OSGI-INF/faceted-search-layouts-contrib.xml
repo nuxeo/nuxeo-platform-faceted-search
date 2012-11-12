@@ -4,7 +4,8 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgets">
 
-    <widget name="text_search" type="faceted_search_wrapper">
+    <widget name="text_search" type="container">
+     <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.textSearch</label>
       </labels>
@@ -22,7 +23,8 @@
       </subWidgets>
     </widget>
 
-    <widget name="date_search" type="faceted_search_wrapper">
+    <widget name="date_search" type="container">
+     <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.dateSearch</label>
       </labels>
@@ -39,7 +41,6 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
-            <property name="wrapperMode">row</property>
           </properties>
         </widget>
 
@@ -54,19 +55,19 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
-            <property name="wrapperMode">row</property>
           </properties>
         </widget>
       </subWidgets>
     </widget>
 
-    <widget name="people_search" type="faceted_search_wrapper">
+    <widget name="people_search" type="container">
+     <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.peopleSearch</label>
       </labels>
       <translated>true</translated>
       <subWidgets>
-        <widget name="dc_creator" type="faceted_search_users_suggestion">
+        <widget name="dc_creator" type="multipleUsersSuggestion">
           <labels>
             <label mode="any">label.dublincore.creator</label>
           </labels>
@@ -75,19 +76,22 @@
           </fields>
           <properties widgetMode="any">
             <property name="userSuggestionSearchType">USER_TYPE</property>
-            <property name="displayHorizontally">false</property>
+            <property name="displaySuggestionOnTop">true</property>
+            <property name="hideHelpLabel">true</property>
             <property name="hideSearchTypeText">true</property>
-            <property name="displayHelpLabel">false</property>
           </properties>
         </widget>
       </subWidgets>
     </widget>
 
-    <widget name="categorization_search" type="faceted_search_wrapper">
+    <widget name="categorization_search" type="container">
+      <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.categorizationSearch</label>
       </labels>
       <translated>true</translated>
+      <properties widgetMode="any">
+      </properties>
       <subWidgets>
         <widget name="dc_nature" type="selectManyDirectory">
           <labels>
@@ -101,11 +105,8 @@
             <property name="directoryName">nature</property>
             <property name="localize">true</property>
           </properties>
-          <properties widgetMode="edit">
-            <property name="wrapperMode">row</property>
-          </properties>
         </widget>
-        <widget name="dc_coverage" type="faceted_search_directory_tree">
+        <widget name="dc_coverage" type="select_l10n_vocabulary_tree">
           <labels>
             <label mode="any">label.faceted.search.coverage</label>
           </labels>
@@ -114,11 +115,10 @@
             <field>fsd:dc_coverage</field>
           </fields>
           <properties widgetMode="any">
-            <property name="directoryTreeName">byCoverageNavigation</property>
-            <property name="wrapperMode">noLabel</property>
+            <property name="directoryName">l10ncoverage</property>
           </properties>
         </widget>
-        <widget name="dc_subjects" type="faceted_search_directory_tree">
+        <widget name="dc_subjects" type="select_l10n_vocabulary_tree">
           <labels>
             <label mode="any">label.faceted.search.subjects</label>
           </labels>
@@ -127,18 +127,21 @@
             <field>fsd:dc_subjects</field>
           </fields>
           <properties widgetMode="any">
-            <property name="directoryTreeName">bySubjectsNavigation</property>
-            <property name="wrapperMode">noLabel</property>
+            <property name="directoryName">l10nsubjects</property>
           </properties>
         </widget>
       </subWidgets>
     </widget>
 
-    <widget name="path_search" type="faceted_search_wrapper">
+    <widget name="path_search" type="container">
+     <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.pathSearch</label>
       </labels>
       <translated>true</translated>
+      <properties widgetMode="any">
+        <property name="hideSubLabels">true</property>
+      </properties>
       <subWidgets>
         <widget name="ecm_path" type="select_path_tree">
           <labels>
@@ -148,9 +151,6 @@
           <fields>
             <field>fsd:ecm_path</field>
           </fields>
-          <properties widgetMode="any">
-            <property name="wrapperMode">noLabel</property>
-          </properties>
         </widget>
       </subWidgets>
     </widget>
@@ -192,10 +192,10 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="layouts">
 
-    <layout name="faceted_search_default">
+    <layout name="faceted_search_default_selectors">
       <templates>
         <template mode="any">
-          /layouts/layout_faceted_search_template.xhtml
+          /layouts/layout_faceted_search_default_actions_template.xhtml
         </template>
       </templates>
       <rows>
@@ -205,9 +205,29 @@
         <row>
           <widget>saved_faceted_searches_selector</widget>
         </row>
+      </rows>
+    </layout>
+    
+    <layout name="faceted_search_default_actions">
+     <templates>
+        <template mode="any">
+          /layouts/layout_faceted_search_default_actions_template.xhtml
+        </template>
+      </templates>
+      <rows>
         <row>
           <widget>actions_bar</widget>
         </row>
+      </rows>
+    </layout>
+    
+    <layout name="faceted_search_default">  
+     <templates>
+        <template mode="any">
+          /layouts/layout_default_template.xhtml
+        </template>
+      </templates>
+      <rows>
         <row>
           <widget>text_search</widget>
         </row>
@@ -222,9 +242,6 @@
         </row>
         <row>
           <widget>path_search</widget>
-        </row>
-        <row>
-          <widget>actions_bar</widget>
         </row>
       </rows>
     </layout>

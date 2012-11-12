@@ -4,22 +4,8 @@
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"
     point="widgettypes">
 
-    <widgetType name="date_range">
-      <configuration>
-        <categories>
-          <category>configuration_not_ready</category>
-        </categories>
-      </configuration>
-      <documentation>Widget used to search on a date range.</documentation>
-      <handler-class>
-        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
-      </handler-class>
-      <property name="template">
-        /widgets/date_range_widget_template.xhtml
-      </property>
-    </widgetType>
-
     <widgetType name="faceted_search_users_suggestion">
+    <!-- deprecated since 5.7 , the widget type "multipleUsersSuggestion" is used instead-->
       <configuration>
         <categories>
           <category>configuration_not_ready</category>
@@ -38,6 +24,7 @@
     </widgetType>
 
     <widgetType name="faceted_search_wrapper">
+     <!-- deprecated since 5.7 , a widget of type "container" is used instead-->
       <documentation>
         Template widget dedicated to wrap other sub widgets. It displays the
         widget label, and list the sub widgets below according to the
@@ -101,6 +88,7 @@
     </widgetType>
 
     <widgetType name="faceted_search_directory_tree">
+    <!-- deprecated since 5.7 , the widget type "select_l10n_vocabulary_tree" is used instead-->
       <documentation>
         Widget allowing to select one or more values from a Tree constructed
         from the directory tree specified in the directoryTreeName property.
