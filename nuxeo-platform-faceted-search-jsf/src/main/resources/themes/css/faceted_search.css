@@ -50,8 +50,8 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock input[type="image"], .facetedSearchBlock input[type="button"] { width: auto }
 .facetedSearchBlock input[type="text"] { width: 95% }
 .facetedSearchBlock select { width: 100% }
-.facetedSearchBlock .tinyLabel { display: inline; min-width: 54px }
-.facetedSearchBlock input.rich-calendar-input { margin: .1em .3em .1em 0em; max-width: 66%; min-width: 61%; }
+.facetedSearchBlock .tinyLabel { display: inline-block; text-align: right; width: 30px }
+.facetedSearchBlock input.rich-calendar-input { margin: .1em .3em .1em 0em; max-width: 56%; min-width: 50%; }
 
 .UserSuggestionInput table { width: 100% }
 #saveFacetedSearchForm input { margin-left: .3em }
