@@ -5,7 +5,7 @@
     point="widgets">
 
     <widget name="text_search" type="container">
-     <handlingLabels>true</handlingLabels>
+      <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.textSearch</label>
       </labels>
@@ -24,7 +24,7 @@
     </widget>
 
     <widget name="date_search" type="container">
-     <handlingLabels>true</handlingLabels>
+      <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.dateSearch</label>
       </labels>
@@ -41,6 +41,7 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
+            <property name="format">#{nxu:basicDateAndTimeFormater()}</property>
           </properties>
         </widget>
 
@@ -55,13 +56,14 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
+            <property name="format">#{nxu:basicDateAndTimeFormater()}</property>
           </properties>
         </widget>
       </subWidgets>
     </widget>
 
     <widget name="people_search" type="container">
-     <handlingLabels>true</handlingLabels>
+      <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.peopleSearch</label>
       </labels>
@@ -134,7 +136,7 @@
     </widget>
 
     <widget name="path_search" type="container">
-     <handlingLabels>true</handlingLabels>
+      <handlingLabels>true</handlingLabels>
       <labels>
         <label mode="any">label.faceted.search.pathSearch</label>
       </labels>
@@ -207,9 +209,9 @@
         </row>
       </rows>
     </layout>
-    
+
     <layout name="faceted_search_default_actions">
-     <templates>
+      <templates>
         <template mode="any">
           /layouts/layout_faceted_search_default_actions_template.xhtml
         </template>
@@ -220,9 +222,9 @@
         </row>
       </rows>
     </layout>
-    
-    <layout name="faceted_search_default">  
-     <templates>
+
+    <layout name="faceted_search_default">
+      <templates>
         <template mode="any">
           /layouts/layout_default_template.xhtml
         </template>
