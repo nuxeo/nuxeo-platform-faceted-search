@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="selenium.base" href="http://localhost:8080/nuxeo"/>
+  <link rel="selenium.base" href="http://localhost:8080/nuxeo/"/>
   <title>saveSearch</title>
 </head>
 <body>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
   <td>type</td>
-  <td>facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1</td>
+  <td>id=facetedSearchForm:nxl_faceted_search_default:nxw_ecm_fulltext_1</td>
   <td>Klaatu</td>
 </tr>
 <tr>
@@ -103,7 +103,7 @@
 <!-- save the search -->
 <tr>
   <td>type</td>
-  <td>saveFacetedSearchForm:savedSearchTitle</td>
+  <td>id=saveFacetedSearchForm:savedSearchTitle</td>
   <td>My search</td>
 </tr>
 <tr>
@@ -144,12 +144,12 @@
 <!-- load the search -->
 <tr>
   <td>selectAndWait</td>
-  <td>//select[@id=&quot;facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector&quot;]</td>
+  <td>id=facetedSearchForm:nxl_faceted_search_default_selectors:savedFacetedSearchSelector</td>
   <td>label=My search</td>
 </tr>
 <tr>
   <td>verifyValue</td>
-  <td>//*[@id='facetedSearchForm:nxl_faceted_search_default:nxw_text_search:nxw_ecm_fulltext_1']</td>
+  <td>id=facetedSearchForm:nxl_faceted_search_default:nxw_ecm_fulltext_1</td>
   <td>Klaatu</td>
 </tr>
 <tr>
@@ -180,12 +180,12 @@
 </tr>
 <tr>
   <td>selectAndWait</td>
-  <td>facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector</td>
+  <td>id=facetedSearchForm:nxl_faceted_search_default_selectors:savedFacetedSearchSelector</td>
   <td>None</td>
 </tr>
 <tr>
   <td>selectAndWait</td>
-  <td>facetedSearchForm:nxl_faceted_search_default:savedFacetedSearchSelector</td>
+  <td>id=facetedSearchForm:nxl_faceted_search_default_selectors:savedFacetedSearchSelector</td>
   <td>My search</td>
 </tr>
 <tr>
