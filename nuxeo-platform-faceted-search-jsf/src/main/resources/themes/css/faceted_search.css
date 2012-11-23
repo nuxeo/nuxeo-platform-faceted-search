@@ -6,11 +6,14 @@ author: lkemen@nuxeo.com
 /* Action Bar in Faceted Search*/
 .facetedSearchActionBar { border-width: 1px; border-style: none none solid;  border-color: "neutral.light (__FLAVOR__ border)"; padding: .2em; color: "default (__FLAVOR__ color)" }
 .facetedSearchActionBar a { float: left; padding-top: .3em }
+
+/* Buttons */
+.facetedSearchBlock .button,
 .facetedSearchActionBar input.button {
   float: right;
   font-weight: bold;
-  margin: 0 0 0 4em;
-  padding: 0 .4em 0 .6em;
+  margin: 0 0 .1em 4em;
+  padding: 0 .4em;
   width: auto }
 
 /* Saved Search field */
@@ -25,6 +28,7 @@ author: lkemen@nuxeo.com
   font-weight: bold; margin-bottom: .2em; padding: .3em }
 
 /* Faceted Search Widgets */
+.facetedSearchBlock { clear: both }
 .facetedSearchBlock .widgetPanel { border-bottom: 1px solid #dcdcdc;
   color: "gray.dark (__FLAVOR__ color)";
   padding: 0 0 2% }
@@ -42,7 +46,7 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock .containerLabel { min-width: 6em; padding-right: .2em }
 .facetedSearchBlock .widgetTable .boldColumn,
 .facetedSearchBlock .widgetTable .boldLabel { font-weight: normal }
-.facetedSearchBlock .dataInput { margin-top: 0; width: 100% }
+.facetedSearchBlock .dataInput { clear: both; margin-top: 0; width: 100% }
 .facetedSearchBlock .dataInput td { padding: 0 }
 .facetedSearchBlock .fieldColumn { padding-left: .1em }
 .facetedSearchBlock .fieldColumn img { margin: 0 }
