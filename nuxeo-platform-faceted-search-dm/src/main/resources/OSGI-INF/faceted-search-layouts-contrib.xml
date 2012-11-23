@@ -143,9 +143,6 @@
         <label mode="any">label.faceted.search.pathSearch</label>
       </labels>
       <translated>true</translated>
-      <properties widgetMode="any">
-        <property name="hideSubLabels">true</property>
-      </properties>
       <subWidgets>
         <widget name="ecm_path" type="select_path_tree">
           <labels>
