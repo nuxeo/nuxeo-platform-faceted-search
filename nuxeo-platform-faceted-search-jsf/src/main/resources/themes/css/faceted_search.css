@@ -39,7 +39,6 @@ author: lkemen@nuxeo.com
   margin: 0 0 .5em;
   padding: .4em .3em;
   text-transform: none }
-.facetedSearchBlock .widgetContent { border-bottom: 1px solid #dcdcdc; color: "gray.dark (__FLAVOR__ color)" }
 .facetedSearchBlock .containerLabel { min-width: 6em; padding-right: .2em }
 .facetedSearchBlock .widgetTable .boldColumn,
 .facetedSearchBlock .widgetTable .boldLabel { font-weight: normal }
@@ -50,8 +49,12 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock input[type="image"], .facetedSearchBlock input[type="button"] { width: auto }
 .facetedSearchBlock input[type="text"] { width: 95% }
 .facetedSearchBlock select { width: 100% }
-.facetedSearchBlock .tinyLabel { display: inline-block; text-align: right; width: 30px }
+.facetedSearchBlock .tinyLabel { display: inline-block; text-align: right; padding-right: .2em; width: 30px }
 .facetedSearchBlock input.rich-calendar-input { margin: .1em .3em .1em 0em; max-width: 56%; min-width: 50%; }
 
 .UserSuggestionInput table { width: 100% }
 #saveFacetedSearchForm input { margin-left: .3em }
+
+/* Faceted Search Layouts from Studio */
+.facetedSearchBlock .containerWidgetPanel .labelColumn { font-weight: normal; text-align: left }
+.facetedSearchBlock .widgetLabel { color: "gray.dark (__FLAVOR__ color)"; padding: 0 1em .4em }
