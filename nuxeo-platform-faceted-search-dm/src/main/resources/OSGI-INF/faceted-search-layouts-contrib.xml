@@ -118,6 +118,7 @@
           </fields>
           <properties widgetMode="any">
             <property name="directoryName">l10ncoverage</property>
+            <property name="multiSelect">true</property>
           </properties>
         </widget>
         <widget name="dc_subjects" type="select_l10n_vocabulary_tree">
@@ -130,6 +131,7 @@
           </fields>
           <properties widgetMode="any">
             <property name="directoryName">l10nsubjects</property>
+            <property name="multiSelect">true</property>
           </properties>
         </widget>
       </subWidgets>
