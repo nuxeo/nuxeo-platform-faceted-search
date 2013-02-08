@@ -33,7 +33,7 @@ author: lkemen@nuxeo.com
   color: "gray.dark (__FLAVOR__ color)";
   padding: 0 0 2% }
 .facetedSearchBlock h3.widgetHeader,
-.facetedSearchBlock h3.summaryTitle {
+.facetedSearchBlock .summaryTitle {
   background-color: "neutral.light (__FLAVOR__ background)";
   border-width: 1px; border-style: solid none;
   border-color: "noborder (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)";
@@ -46,6 +46,7 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock .containerLabel { min-width: 6em; padding-right: .2em }
 .facetedSearchBlock .widgetTable .boldColumn,
 .facetedSearchBlock .widgetTable .boldLabel { font-weight: normal }
+.facetedSearchBlock .dataInput .containerLabel span { display: block }
 .facetedSearchBlock .dataInput { clear: both; margin-top: 0; width: 100% }
 .facetedSearchBlock .dataInput td { padding: 0 }
 .facetedSearchBlock .fieldColumn { padding-left: .1em }
@@ -63,4 +64,7 @@ author: lkemen@nuxeo.com
 .facetedSearchBlock .containerWidgetPanel .labelColumn,
 .facetedSearchBlock .widgetPanel .labelColumn,
 .facetedSearchBlock .widgetTable .labelColumn { font-weight: normal; text-align: left; width: auto }
-.facetedSearchBlock .widgetLabel { color: "gray.dark (__FLAVOR__ color)"; padding: 0 1em .4em }
+.facetedSearchBlock .widgetLabel { color: "gray.dark (__FLAVOR__ color)";
+  padding: 0 .7em .4em .3em }
+.facetedSearchBlock .containerWidgetPanel .summaryTitle.foldedDisabled {
+  padding-left: 0 }
