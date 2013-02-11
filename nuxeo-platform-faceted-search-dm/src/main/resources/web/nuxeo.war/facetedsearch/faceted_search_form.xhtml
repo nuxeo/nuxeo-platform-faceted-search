@@ -21,20 +21,21 @@
     value="#{contentViewActions.getContentViewWithProvider(contentViewName)}"
       cache="true">
       <c:if test="#{contentView != null}">
-      
+
        <div class="facetedSearchBlock">
-        <nxl:layout name="faceted_search_default_selectors"
-         mode="#{layoutMode}" value="#{value}" />
-        <nxl:layout name="faceted_search_default_actions"
-         mode="#{layoutMode}" value="#{value}" />
-        
+
+         <nxl:layout name="faceted_search_default_selectors"
+           mode="search" value="#{contentView.searchDocumentModel}" />
+         <nxl:layout name="faceted_search_default_actions"
+          mode="search" value="#{contentView.searchDocumentModel}" />
+
         <nxl:layout name="#{contentView.searchLayout.name}" mode="search"
           value="#{contentView.searchDocumentModel}" />
-        
+
         <nxl:layout name="faceted_search_default_actions"
-         mode="#{layoutMode}" value="#{value}" />
+          mode="search" value="#{contentView.searchDocumentModel}" />
        </div>
-       
+
      </c:if>
     </nxu:set>
 
