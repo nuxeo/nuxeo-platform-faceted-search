@@ -182,12 +182,14 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
         PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
         DocumentModel rootSavedSearches = session.createDocumentModel(
-                uws.getPathAsString(), rootSavedSearchesTitle, "Folder");
+                uws.getPathAsString(), rootSavedSearchesTitle, Constants.FACETED_SAVED_SEARCH_FOLDER);
         rootSavedSearches.setPathInfo(uws.getPathAsString(),
                 pathService.generatePathSegment(rootSavedSearches));
 
         PathRef rootPathRef = new PathRef(rootSavedSearches.getPathAsString());
-        if (!session.exists(new PathRef(rootSavedSearches.getPathAsString()))) {
+        DocumentModel saveSearchFolder = session.getDocument(rootPathRef);
+        if (saveSearchFolder == null
+                || !Constants.FACETED_SAVED_SEARCH_FOLDER.equals(saveSearchFolder.getType())) {
             rootSavedSearches.setPropertyValue("dc:title",
                     rootSavedSearchesTitle);
             rootSavedSearches = session.createDocument(rootSavedSearches);

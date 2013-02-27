@@ -50,6 +50,13 @@ public final class Constants {
      */
     public static final String FACETED_SEARCH_FLAG = "FACETED_SEARCH";
 
+    /* Faceted types name */
+
+    /**
+     * @since 5.7
+     */
+    public static final String FACETED_SAVED_SEARCH_FOLDER = "FacetedSavedSearchesFolder";
+
     /* Content view names */
 
     /**

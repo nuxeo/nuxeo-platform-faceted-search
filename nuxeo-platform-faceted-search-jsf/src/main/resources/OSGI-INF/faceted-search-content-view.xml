@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<component name="org.nuxeo.ecm.platform.faceted.search.dm.contentviews">
+<component name="org.nuxeo.ecm.platform.faceted.search.jsf.content.view">
 
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
-    point="contentViews">
-
-    <contentView name="faceted_search_default">
+             point="contentViews">
+    <contentView name="faceted_saved_search_default_content">
       <title>label.faceted.search.default</title>
       <translateTitle>true</translateTitle>
       <emptySentence>label.content.empty.search</emptySentence>
@@ -12,10 +11,8 @@
 
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
-        <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <whereClause docType="FacetedSearchDefault">
           <fixedPart>
-            ecm:mixinType != 'HiddenInNavigation' AND ecm:isCheckedInVersion = 0 AND
             ecm:currentLifeCycleState != 'deleted'
           </fixedPart>
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
@@ -62,8 +59,8 @@
 
       <resultLayouts>
         <layout name="document_virtual_navigation_listing_ajax" title="document_listing"
-          translateTitle="true" iconPath="/icons/document_listing_icon.png"
-          showCSVExport="true" showSyndicationLinks="true" />
+                translateTitle="true" iconPath="/icons/document_listing_icon.png"
+                showCSVExport="true" showSyndicationLinks="true" />
       </resultLayouts>
 
       <selectionList>CURRENT_SELECTION</selectionList>
@@ -75,5 +72,4 @@
     </contentView>
 
   </extension>
-
 </component>
