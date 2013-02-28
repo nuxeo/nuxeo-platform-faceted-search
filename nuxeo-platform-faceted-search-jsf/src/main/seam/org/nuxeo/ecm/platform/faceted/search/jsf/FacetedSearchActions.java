@@ -94,6 +94,8 @@ public class FacetedSearchActions implements Serializable {
 
     public static final String ALL_SAVED_SEARCHES_LABEL = "label.all.saved.searches";
 
+    public static final String FLAGGED_SAVED_SEARCHES_LABEL = "label.flagged.saved.searches";
+
     public static final String SEARCH_SAVED_LABEL = "label.search.saved";
 
     public static final String FACETED_SEARCH_CODEC = "facetedSearch";
@@ -216,11 +218,33 @@ public class FacetedSearchActions implements Serializable {
         return items;
     }
 
+    @Factory(value = "allSavedSearchesSelectItems", scope = ScopeType.EVENT)
+    public List<SelectItem> getAllSavedSearchesSelectItems()
+            throws ClientException {
+        List<SelectItem> items = new ArrayList<SelectItem>();
+        items.addAll(getSavedSearchesSelectItems());
+        SelectItemGroup flaggedGroup = new SelectItemGroup(
+                resourcesAccessor.getMessages().get(FLAGGED_SAVED_SEARCHES_LABEL));
+        List<String> flaggedSavedSearches = getContentViewNames();
+        List<SelectItem> flaggedSavedSearchesItems = convertCVToSelectItems(flaggedSavedSearches);
+        flaggedGroup.setSelectItems(flaggedSavedSearchesItems.toArray(new SelectItem[flaggedSavedSearchesItems.size()]));
+        items.add(flaggedGroup);
+        return items;
+    }
+
     protected List<SelectItem> convertToSelectItems(List<DocumentModel> docs)
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
         for (DocumentModel doc : docs) {
             items.add(new SelectItem(doc.getId(), doc.getTitle(), ""));
+        }
+        return items;
+    }
+
+    protected List<SelectItem> convertCVToSelectItems(List<String> names) {
+        List<SelectItem> items = new ArrayList<SelectItem>();
+        for (String name : names) {
+            items.add(new SelectItem(name, name, ""));
         }
         return items;
     }
@@ -256,10 +280,19 @@ public class FacetedSearchActions implements Serializable {
     }
 
     public void loadSavedSearch(String savedSearchId) throws ClientException {
-        DocumentModel savedSearch = documentManager.getDocument(new IdRef(
-                savedSearchId));
-        String contentViewName = (String) savedSearch.getPropertyValue(Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY);
-        loadSavedSearch(contentViewName, savedSearch);
+        String contentViewName;
+        DocumentModel savedSearch;
+        // Check if the selected entry is a flagged content view (FACETED_SEARCH
+        // flag)
+        // Set the current contentViewName to this one
+        if (contentViewNames.contains(savedSearchId)) {
+            contentViewActions.reset(currentContentViewName);
+            this.currentContentViewName = savedSearchId;
+        } else {
+            savedSearch = documentManager.getDocument(new IdRef(savedSearchId));
+            contentViewName = (String) savedSearch.getPropertyValue(Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY);
+            loadSavedSearch(contentViewName, savedSearch);
+        }
     }
 
     public void loadSavedSearch(String contentViewName,

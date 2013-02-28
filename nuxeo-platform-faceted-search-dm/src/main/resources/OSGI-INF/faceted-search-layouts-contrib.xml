@@ -175,6 +175,17 @@
       </properties>
     </widget>
 
+    <widget name="all_saved_faceted_searches_selector" type="all_saved_faceted_searches_selector">
+      <widgetModes>
+        <!-- not shown in edit and view modes -->
+        <mode value="view">hidden</mode>
+        <mode value="edit">hidden</mode>
+      </widgetModes>
+      <properties widgetMode="any">
+        <property name="outcome">faceted_search_results</property>
+      </properties>
+    </widget>
+
     <widget name="actions_bar" type="template">
       <properties widgetMode="any">
         <property name="template">
@@ -205,6 +216,9 @@
         </row>
         <row>
           <widget>saved_faceted_searches_selector</widget>
+        </row>
+        <row>
+          <widget>all_saved_faceted_searches_selector</widget>
         </row>
       </rows>
     </layout>

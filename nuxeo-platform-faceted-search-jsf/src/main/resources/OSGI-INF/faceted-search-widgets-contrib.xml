@@ -67,8 +67,7 @@
 
     <widgetType name="saved_faceted_searches_selector">
       <documentation>
-        Widget displaying all the saved faceted searches. It displays 2
-        categories: - Your searches: your saved faceted searches - All searches:
+        It displays 2 categories: - Your searches: your saved faceted searches - All searches:
         all the other users shared saved faceted searches.
 
         The "outcome" property needs to be defined: on which JSF view should we
@@ -84,6 +83,30 @@
       </handler-class>
       <property name="template">
         /widgets/saved_faceted_searches_selector_widget_template.xhtml
+      </property>
+    </widgetType>
+
+    <widgetType name="all_saved_faceted_searches_selector">
+      <documentation>
+        Since 5.7
+        Widget displaying all the saved faceted searches. It displays 3
+        categories: - Your searches: your saved faceted searches - All searches:
+        all the other users shared saved faceted searches - Contributed searches:
+        all contributed searches (content views with faceted search flag)
+
+        The "outcome" property needs to be defined: on which JSF view should we
+        redirect after selecting a saved search.
+      </documentation>
+      <configuration>
+        <categories>
+          <category>configuration_not_ready</category>
+        </categories>
+      </configuration>
+      <handler-class>
+        org.nuxeo.ecm.platform.forms.layout.facelets.plugins.TemplateWidgetTypeHandler
+      </handler-class>
+      <property name="template">
+        /widgets/all_saved_faceted_searches_selector_widget_template.xhtml
       </property>
     </widgetType>
 
