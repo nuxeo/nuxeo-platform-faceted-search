@@ -8,7 +8,7 @@
         <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator = ? AND
-          ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
+          ecm:currentLifeCycleState != 'deleted'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>
@@ -17,7 +17,7 @@
         <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <pattern>
           SELECT * FROM FacetedSearch WHERE dc:creator != ? AND
-          ecm:currentLifeCycleState != 'deleted' AND ecm:mixinType != 'HiddenInNavigation'
+          ecm:currentLifeCycleState != 'deleted'
         </pattern>
         <sort column="dc:title" ascending="true" />
       </coreQueryPageProvider>

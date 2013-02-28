@@ -54,17 +54,11 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {
 
     private static Log log = LogFactory.getLog(FacetedSearchServiceImpl.class);
-
     public static final String CONFIGURATION_EP = "configuration";
-
     protected Configuration configuration;
-
     protected ContentViewService contentViewService;
-
     protected PageProviderService pageProviderService;
-
     protected UserWorkspaceService userWorkspaceService;
-
     protected FacetedSearchConfiguration facetedSearchConfiguration;
 
     public Set<String> getContentViewNames() throws ClientException {
@@ -182,12 +176,12 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
         PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
         DocumentModel rootSavedSearches = session.createDocumentModel(
-                uws.getPathAsString(), rootSavedSearchesTitle, "Folder");
+                uws.getPathAsString(), rootSavedSearchesTitle, Constants.FACETED_SAVED_SEARCH_FOLDER);
         rootSavedSearches.setPathInfo(uws.getPathAsString(),
                 pathService.generatePathSegment(rootSavedSearches));
 
         PathRef rootPathRef = new PathRef(rootSavedSearches.getPathAsString());
-        if (!session.exists(new PathRef(rootSavedSearches.getPathAsString()))) {
+        if (!session.exists(rootPathRef)) {
             rootSavedSearches.setPropertyValue("dc:title",
                     rootSavedSearchesTitle);
             rootSavedSearches = session.createDocument(rootSavedSearches);
