@@ -4,49 +4,35 @@
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
              point="contentViews">
     <contentView name="faceted_saved_search_default_content">
-      <title>label.faceted.search.default</title>
+      <title>label.contentview.document_content</title>
       <translateTitle>true</translateTitle>
-      <emptySentence>label.content.empty.search</emptySentence>
-      <translateEmptySentence>true</translateEmptySentence>
+      <showTitle>false</showTitle>
 
       <coreQueryPageProvider>
         <property name="coreSession">#{documentManager}</property>
+        <property name="maxResults">DEFAULT_NAVIGATION_RESULTS</property>
         <whereClause docType="FacetedSearchDefault">
           <fixedPart>
-            ecm:currentLifeCycleState != 'deleted'
+            ecm:parentId = ? AND ecm:isCheckedInVersion = 0 AND ecm:currentLifeCycleState
+            != 'deleted'
           </fixedPart>
           <predicate parameter="ecm:fulltext" operator="FULLTEXT">
-            <field schema="faceted_search_default" name="ecm_fulltext" />
+            <field schema="advanced_search" name="fulltext_all" />
           </predicate>
-          <predicate parameter="dc:created" operator="BETWEEN">
-            <field schema="faceted_search_default" name="dc_created_min" />
-            <field schema="faceted_search_default" name="dc_created_max" />
+          <predicate parameter="dc:title" operator="FULLTEXT">
+            <field schema="advanced_search" name="title" />
           </predicate>
           <predicate parameter="dc:modified" operator="BETWEEN">
-            <field schema="faceted_search_default" name="dc_modified_min" />
-            <field schema="faceted_search_default" name="dc_modified_max" />
-          </predicate>
-          <predicate parameter="dc:creator" operator="IN">
-            <field schema="faceted_search_default" name="dc_creator" />
-          </predicate>
-          <predicate parameter="dc:nature" operator="IN">
-            <field schema="faceted_search_default" name="dc_nature" />
-          </predicate>
-          <predicate parameter="dc:coverage" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="dc_coverage" />
-          </predicate>
-          <predicate parameter="dc:subjects" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="dc_subjects" />
-          </predicate>
-          <predicate parameter="ecm:path" operator="STARTSWITH">
-            <field schema="faceted_search_default" name="ecm_path" />
+            <field schema="advanced_search" name="modified_min" />
+            <field schema="advanced_search" name="modified_max" />
           </predicate>
         </whereClause>
+        <parameter>#{currentDocument.id}</parameter>
         <sort column="dc:title" ascending="true" />
         <pageSize>20</pageSize>
       </coreQueryPageProvider>
 
-      <searchLayout name="faceted_search_default" />
+      <searchLayout name="document_content_filter" filterDisplayType="quick" />
 
       <showPageSizeSelector>true</showPageSizeSelector>
       <useGlobalPageSize>true</useGlobalPageSize>
@@ -54,21 +40,23 @@
         <event>documentChanged</event>
         <event>documentChildrenChanged</event>
       </refresh>
-      <cacheKey>only_one_cache</cacheKey>
-      <cacheSize>1</cacheSize>
+      <cacheKey>#{currentDocument.id}</cacheKey>
+      <cacheSize>10</cacheSize>
 
       <resultLayouts>
-        <layout name="document_virtual_navigation_listing_ajax" title="document_listing"
+        <layout name="document_listing_ajax" title="document_listing"
                 translateTitle="true" iconPath="/icons/document_listing_icon.png"
-                showCSVExport="true" showSyndicationLinks="true" />
+                showCSVExport="true" showPDFExport="false" showSyndicationLinks="true" />
+        <layout name="document_listing_ajax_compact_2_columns" title="document_listing_compact_2_columns"
+                translateTitle="true" iconPath="/icons/document_listing_compact_2_columns_icon.png"
+                showCSVExport="true" showPDFExport="false" showSyndicationLinks="true" />
+        <layout name="document_listing_ajax_icon_2_columns" title="document_listing_icon_2_columns"
+                translateTitle="true" iconPath="/icons/document_listing_icon_2_columns_icon.png"
+                showCSVExport="true" showPDFExport="false" showSyndicationLinks="true" />
       </resultLayouts>
 
       <selectionList>CURRENT_SELECTION</selectionList>
       <actions category="CURRENT_SELECTION_LIST" />
-
-      <flags>
-        <flag>FACETED_SEARCH</flag>
-      </flags>
     </contentView>
 
   </extension>

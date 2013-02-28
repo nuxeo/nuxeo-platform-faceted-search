@@ -16,7 +16,7 @@
         <layout>heading</layout>
       </layouts>
       <contentViews category="content">
-        <contentView>faceted_saved_search_default</contentView>
+        <contentView>faceted_saved_search_default_content</contentView>
       </contentViews>
       <contentViews category="trash_content">
         <contentView showInExportView="false">
@@ -24,6 +24,12 @@
         </contentView>
       </contentViews>
     </type>
+  </extension>
+
+  <extension target="org.nuxeo.ecm.core.lifecycle.LifeCycleService" point="types">
+    <types>
+      <type name="FacetedSavedSearchesFolder">default</type>
+    </types>
   </extension>
 
 </component>
