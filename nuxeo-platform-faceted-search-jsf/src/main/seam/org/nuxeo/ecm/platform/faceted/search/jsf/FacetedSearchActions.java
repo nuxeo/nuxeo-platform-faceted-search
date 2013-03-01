@@ -194,38 +194,32 @@ public class FacetedSearchActions implements Serializable {
                 documentManager);
     }
 
-    @Factory(value = "savedSearchesSelectItems", scope = ScopeType.EVENT)
-    public List<SelectItem> getSavedSearchesSelectItems()
+    @Factory(value = "allSavedSearchesSelectItems", scope = ScopeType.EVENT)
+    public List<SelectItem> getAllSavedSearchesSelectItems()
             throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
+        // Add none label
         items.add(new SelectItem(NONE_VALUE,
                 resourcesAccessor.getMessages().get(NONE_LABEL)));
-
+        // Add current user searches
         SelectItemGroup userGroup = new SelectItemGroup(
                 resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
         List<DocumentModel> userSavedSearches = getCurrentUserSavedSearches();
         List<SelectItem> userSavedSearchesItems = convertToSelectItems(userSavedSearches);
         userGroup.setSelectItems(userSavedSearchesItems.toArray(new SelectItem[userSavedSearchesItems.size()]));
         items.add(userGroup);
-
+        // Add shared searches
         List<DocumentModel> otherUsersSavedFacetedSearches = getOtherUsersSavedSearches();
         List<SelectItem> otherUsersSavedSearchesItems = convertToSelectItems(otherUsersSavedFacetedSearches);
         SelectItemGroup allGroup = new SelectItemGroup(
                 resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
         allGroup.setSelectItems(otherUsersSavedSearchesItems.toArray(new SelectItem[otherUsersSavedSearchesItems.size()]));
         items.add(allGroup);
-
-        return items;
-    }
-
-    @Factory(value = "allSavedSearchesSelectItems", scope = ScopeType.EVENT)
-    public List<SelectItem> getAllSavedSearchesSelectItems()
-            throws ClientException {
-        List<SelectItem> items = new ArrayList<SelectItem>();
-        items.addAll(getSavedSearchesSelectItems());
         SelectItemGroup flaggedGroup = new SelectItemGroup(
-                resourcesAccessor.getMessages().get(FLAGGED_SAVED_SEARCHES_LABEL));
-        List<String> flaggedSavedSearches = getContentViewNames();
+                resourcesAccessor.getMessages().get(
+                        FLAGGED_SAVED_SEARCHES_LABEL));
+        // Add faceted flagged content views
+        Set<ContentViewHeader> flaggedSavedSearches = getContentViewHeaders();
         List<SelectItem> flaggedSavedSearchesItems = convertCVToSelectItems(flaggedSavedSearches);
         flaggedGroup.setSelectItems(flaggedSavedSearchesItems.toArray(new SelectItem[flaggedSavedSearchesItems.size()]));
         items.add(flaggedGroup);
@@ -241,10 +235,13 @@ public class FacetedSearchActions implements Serializable {
         return items;
     }
 
-    protected List<SelectItem> convertCVToSelectItems(List<String> names) {
+    protected List<SelectItem> convertCVToSelectItems(
+            Set<ContentViewHeader> contentViewHeaders) {
         List<SelectItem> items = new ArrayList<SelectItem>();
-        for (String name : names) {
-            items.add(new SelectItem(name, name, ""));
+        for (ContentViewHeader contentViewHeader : contentViewHeaders) {
+            items.add(new SelectItem(contentViewHeader.getName(),
+                    resourcesAccessor.getMessages().get(
+                            contentViewHeader.getTitle()), ""));
         }
         return items;
     }

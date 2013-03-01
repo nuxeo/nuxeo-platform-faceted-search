@@ -156,25 +156,6 @@
       </subWidgets>
     </widget>
 
-    <widget name="faceted_searches_selector" type="faceted_searches_selector">
-      <widgetModes>
-        <!-- not shown in edit and view modes -->
-        <mode value="view">hidden</mode>
-        <mode value="edit">hidden</mode>
-      </widgetModes>
-    </widget>
-
-    <widget name="saved_faceted_searches_selector" type="saved_faceted_searches_selector">
-      <widgetModes>
-        <!-- not shown in edit and view modes -->
-        <mode value="view">hidden</mode>
-        <mode value="edit">hidden</mode>
-      </widgetModes>
-      <properties widgetMode="any">
-        <property name="outcome">faceted_search_results</property>
-      </properties>
-    </widget>
-
     <widget name="all_saved_faceted_searches_selector" type="all_saved_faceted_searches_selector">
       <widgetModes>
         <!-- not shown in edit and view modes -->
@@ -211,12 +192,6 @@
         </template>
       </templates>
       <rows>
-        <row>
-          <widget>faceted_searches_selector</widget>
-        </row>
-        <row>
-          <widget>saved_faceted_searches_selector</widget>
-        </row>
         <row>
           <widget>all_saved_faceted_searches_selector</widget>
         </row>
