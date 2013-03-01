@@ -23,7 +23,7 @@
           <ui:define name="content_view_title">
             <h1>
               <h:outputText
-                value="#{messages['label.faceted.search.default']}" />
+                value="#{messages[contentViewActions.getContentView(contentViewName).title]}" />
               <span>
                 <h:outputLink
                   value="#{facetedSearchActions.permanentLinkUrl}">
