@@ -21,9 +21,14 @@
 
         <ui:decorate template="/incl/content_view.xhtml">
           <ui:define name="content_view_title">
+          <nxu:set var="title"
+            value="#{nxu:test(empty contentView.title, 'label.faceted.search.default', contentView.title)}">
+          <nxu:set var="translateTitle"
+            value="#{nxu:test(empty contentView.translateTitle, nxu:test(empty contentView.title, true, false), contentView.translateTitle)}">
+          <nxu:set var="finalTitle"
+            value="#{nxu:test(translateTitle, messages[title], title)}">
             <h1>
-              <h:outputText
-                value="#{messages[contentViewActions.getContentView(contentViewName).title]}" />
+              <h:outputText value="#{finalTitle}" />
               <span>
                 <h:outputLink
                   value="#{facetedSearchActions.permanentLinkUrl}">
@@ -34,6 +39,9 @@
                 </h:outputLink>
               </span>
             </h1>
+          </nxu:set>
+          </nxu:set>
+          </nxu:set>
           </ui:define>
           <ui:define name="content_view_selector">
             <ui:include src="/incl/content_view_result_layout_selector.xhtml" />
