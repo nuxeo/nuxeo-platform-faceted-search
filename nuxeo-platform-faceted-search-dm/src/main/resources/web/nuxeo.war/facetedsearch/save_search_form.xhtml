@@ -1,7 +1,8 @@
 <h:form xmlns:h="http://java.sun.com/jsf/html"
   id="saveFacetedSearchForm">
 
-  <p><h:outputText
+  <div class="tips">
+  <p class="specification"><h:outputText
     value="#{messages['label.save.search.description']}" /></p>
   <h:inputText id="savedSearchTitle"
     value="#{facetedSearchActions.savedSearchTitle}"
@@ -11,5 +12,6 @@
   <h:commandButton styleClass="button"
     value="#{messages['command.save']}"
     action="#{facetedSearchActions.saveSearch}" />
+  </div>
 
 </h:form>

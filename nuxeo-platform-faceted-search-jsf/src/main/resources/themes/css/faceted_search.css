@@ -3,12 +3,20 @@ Faceted Search styles, used in the left column.
 author: lkemen@nuxeo.com
 */
 
-/* Action Bar in Faceted Search*/
-.facetedSearchActionBar { border-width: 1px; border-style: none none solid;  border-color: "neutral.light (__FLAVOR__ border)"; padding: .2em; color: "default (__FLAVOR__ color)" }
-.facetedSearchActionBar a { float: left; padding-top: .3em }
+/* Custom action bar */
+.facetedSearchActionBar {
+  background-color: "color.major.light (__FLAVOR__ background)";
+  border-width: 1px;
+  border-color: "color.major.medium (__FLAVOR__ border)";
+  border-style: solid none;
+  color: "default (__FLAVOR__ color)";
+  padding: .2em .4em;
+  text-align: right }
 
-/* Buttons */
-.facetedSearchBlock .button,
+.facetedSearchActionBar a {
+  float: left;
+  padding-top: .3em }
+
 .facetedSearchActionBar input.button {
   float: right;
   font-weight: bold;
@@ -17,54 +25,23 @@ author: lkemen@nuxeo.com
   width: auto }
 
 /* Saved Search field */
-#facetedSearchSelectorDiv, #savedFacetedSearchSelectorDiv {
-  border-width: 1px; border-style: none none solid;
+#facetedSearchSelectorDiv,
+#savedFacetedSearchSelectorDiv,
+#allSavedFacetedSearchSelectorDiv {
+  border-width: 1px;
+  border-style: none none solid;
   border-color: "neutral.lighter (__FLAVOR__ border)";
   margin: 0;
   padding: 0 0 .4em }
-#facetedSearchSelectorDiv p, #savedFacetedSearchSelectorDiv p {
+#facetedSearchSelectorDiv p,
+#savedFacetedSearchSelectorDiv p,
+#allSavedFacetedSearchSelectorDiv p {
   background-color:"color.major.light (__FLAVOR__ background)";
-  border-width: 1px; border-style: solid none; border-color: "noborder (__FLAVOR__ border)" "noborder (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)";
-  font-weight: bold; margin-bottom: .2em; padding: .3em }
-
-/* Faceted Search Widgets */
-.facetedSearchBlock { clear: both }
-.facetedSearchBlock .widgetPanel { border-bottom: 1px solid #dcdcdc;
-  color: "gray.dark (__FLAVOR__ color)";
-  padding: 0 0 2% }
-.facetedSearchBlock h3.widgetHeader,
-.facetedSearchBlock .summaryTitle {
-  background-color: "neutral.light (__FLAVOR__ background)";
-  border-width: 1px; border-style: solid none;
-  border-color: "noborder (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)";
-  color: "default (__FLAVOR__ color)";
-  font-size: 1em;
+  border-width: 1px;
+  border-style: solid none;
+  border-color: "noborder (__FLAVOR__ border)" "noborder (__FLAVOR__ border)" "neutral.light (__FLAVOR__ border)";
   font-weight: bold;
-  margin: 0 0 .5em;
-  padding: .4em .3em;
-  text-transform: none }
-.facetedSearchBlock .containerLabel { min-width: 6em; padding-right: .2em }
-.facetedSearchBlock .widgetTable .boldColumn,
-.facetedSearchBlock .widgetTable .boldLabel { font-weight: normal }
-.facetedSearchBlock .dataInput .containerLabel span { display: block }
-.facetedSearchBlock .dataInput { clear: both; margin-top: 0; width: 100% }
-.facetedSearchBlock .dataInput td { padding: 0 }
-.facetedSearchBlock .fieldColumn { padding-left: .1em }
-.facetedSearchBlock .fieldColumn img { margin: 0 }
-.facetedSearchBlock input[type="image"], .facetedSearchBlock input[type="button"] { width: auto }
-.facetedSearchBlock input[type="text"] { width: 95% }
-.facetedSearchBlock select { width: 100% }
-.facetedSearchBlock .tinyLabel { display: inline-block; text-align: right; padding-right: .2em; width: 30px }
-.facetedSearchBlock input.rich-calendar-input { margin: .1em .3em .1em 0em; max-width: 56%; min-width: 50% }
-
-.UserSuggestionInput table { width: 100% }
-#saveFacetedSearchForm input { margin-left: .3em }
-
-.facetedSearchBlock .labelColumn,
-.facetedSearchBlock .containerWidgetPanel .labelColumn,
-.facetedSearchBlock .widgetPanel .labelColumn,
-.facetedSearchBlock .widgetTable .labelColumn { font-weight: normal; text-align: left; width: auto }
-.facetedSearchBlock .widgetLabel { color: "gray.dark (__FLAVOR__ color)";
-  padding: 0 .7em .4em .3em }
-.facetedSearchBlock .containerWidgetPanel .summaryTitle.foldedDisabled {
-  padding-left: 0 }
+  margin-bottom: .2em;
+  padding: .3em }
+#saveFacetedSearchForm input,
+#allSavedFacetedSearchSelectorDiv input { margin-left: .3em }
