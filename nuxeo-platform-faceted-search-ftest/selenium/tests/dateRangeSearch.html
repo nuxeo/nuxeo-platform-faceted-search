@@ -93,7 +93,7 @@
 <tr>
 	<td>type</td>
 	<td>id=facetedSearchForm:nxl_faceted_search_default:nxw_dc_created_startInputDateInputDate</td>
-	<td>${currentMonth}/${currentDay}/${currentYear} 00:00 AM</td>
+	<td>${currentMonth}/${currentDay}/${currentYear} 12:00 AM</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -104,16 +104,6 @@
 	<td>clickAndWait</td>
 	<td>//input[@value=&quot;Filter&quot;]</td>
 	<td></td>
-</tr>
-<tr>
-  <td>storeEval</td>
-  <td>selenium.browserbot.getCurrentWindow().document.body.innerHTML</td>
-  <td>innerhtml</td>
-</tr>
-<tr>
-  <td>echo</td>
-  <td>${innerhtml}</td>
-  <td></td>
 </tr>
 <tr>
 	<td>verifyTextPresent</td>
@@ -163,7 +153,7 @@
 <tr>
 	<td>type</td>
 	<td>id=facetedSearchForm:nxl_faceted_search_default:nxw_dc_modified_startInputDateInputDate</td>
-	<td>${currentMonth}/${currentDay}/${currentYear} 00:00 AM</td>
+	<td>${currentMonth}/${currentDay}/${currentYear} 12:00 AM</td>
 </tr>
 <tr>
 	<td>type</td>
