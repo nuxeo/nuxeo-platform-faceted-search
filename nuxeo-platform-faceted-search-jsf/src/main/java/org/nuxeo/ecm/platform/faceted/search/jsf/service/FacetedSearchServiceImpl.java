@@ -221,7 +221,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         Map<String, Serializable> properties = new HashMap<String, Serializable>();
         properties.put("coreSession", (Serializable) session);
         return ((PageProvider<DocumentModel>) pageProviderService.getPageProvider(
-                pageProviderName, null, null, null, properties, parameters)).getCurrentPage();
+                pageProviderName, null, null, null, properties, null, parameters)).getCurrentPage();
 
     }
 
