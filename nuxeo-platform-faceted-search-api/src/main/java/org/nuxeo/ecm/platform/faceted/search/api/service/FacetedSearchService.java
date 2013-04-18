@@ -84,4 +84,11 @@ public interface FacetedSearchService {
     List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
             throws ClientException;
 
+    /**
+     *
+     *
+     * @since 5.7
+     */
+     Configuration getConfiguration();
+
 }

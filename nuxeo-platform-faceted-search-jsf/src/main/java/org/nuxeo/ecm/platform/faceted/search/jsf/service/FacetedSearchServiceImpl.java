@@ -31,12 +31,12 @@ import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
-import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.localconfiguration.LocalConfigurationService;
 import org.nuxeo.ecm.core.api.pathsegment.PathSegmentService;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
+import org.nuxeo.ecm.platform.faceted.search.api.service.Configuration;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.jsf.localconfiguration.FacetedSearchConfiguration;
 import org.nuxeo.ecm.platform.query.api.PageProvider;
@@ -54,11 +54,17 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         FacetedSearchService {
 
     private static Log log = LogFactory.getLog(FacetedSearchServiceImpl.class);
+
     public static final String CONFIGURATION_EP = "configuration";
+
     protected Configuration configuration;
+
     protected ContentViewService contentViewService;
+
     protected PageProviderService pageProviderService;
+
     protected UserWorkspaceService userWorkspaceService;
+
     protected FacetedSearchConfiguration facetedSearchConfiguration;
 
     public Set<String> getContentViewNames() throws ClientException {
@@ -88,8 +94,8 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     }
 
     /**
-     * Try to get {@code localConfigurationService} and the associated {@code
-     * FacetedSearchConfiguration} to return the instance
+     * Try to get {@code localConfigurationService} and the associated
+     * {@code FacetedSearchConfiguration} to return the instance
      *
      * @return null in case of any problem and the local configuration if
      *         everything goes well
@@ -173,27 +179,13 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
             throws ClientException {
         DocumentModel uws = getCurrentUserPersonalWorkspace(session);
 
-        String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
-        PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
-        DocumentModel rootSavedSearches = session.createDocumentModel(
-                uws.getPathAsString(), rootSavedSearchesTitle, Constants.FACETED_SAVED_SEARCH_FOLDER);
-        rootSavedSearches.setPathInfo(uws.getPathAsString(),
-                pathService.generatePathSegment(rootSavedSearches));
-
-        PathRef rootPathRef = new PathRef(rootSavedSearches.getPathAsString());
-        if (!session.exists(rootPathRef)) {
-            rootSavedSearches.setPropertyValue("dc:title",
-                    rootSavedSearchesTitle);
-            rootSavedSearches = session.createDocument(rootSavedSearches);
-            session.save();
-        }
-
         DocumentModel searchDoc = facetedSearchContentView.getSearchDocumentModel();
         searchDoc.setPropertyValue(
                 Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY,
                 facetedSearchContentView.getName());
         searchDoc.setPropertyValue("dc:title", title);
-        searchDoc.setPathInfo(rootPathRef.toString(),
+        PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
+        searchDoc.setPathInfo(uws.getPathAsString(),
                 pathService.generatePathSegment(searchDoc));
         searchDoc = session.createDocument(searchDoc);
         session.save();
@@ -233,6 +225,11 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     }
 
     @Override
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    @Override
     public void registerContribution(Object contribution,
             String extensionPoint, ComponentInstance contributor)
             throws Exception {
@@ -248,7 +245,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     protected Configuration mergeConfigurationDescriptor(Configuration oldDesc,
             Configuration newDesc) {
         if (newDesc.getRootSavedSearchesTitle() != null) {
-            oldDesc.rootSavedSearchesTitle = newDesc.getRootSavedSearchesTitle();
+            oldDesc.setRootSavedSearchesTitle(newDesc.getRootSavedSearchesTitle());
         }
         return oldDesc;
     }

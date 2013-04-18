@@ -1,0 +1,28 @@
+<div xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:c="http://java.sun.com/jstl/core"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:nxh="http://nuxeo.org/nxweb/html"
+  xmlns:nxu="http://nuxeo.org/nxweb/util">
+
+  <c:if test="#{facetedSearchActions.haveOldSavedSearches()}">
+    <div class="tips">
+      <p class="floatL">
+        <h:outputFormat value="#{messages['label.faceted.search.migrate.description']}">
+          <f:param value="#{messages['label.faceted.search.migrate.old.searches']}" />
+          <f:param value="#{facetedSearchActions.rootSavedSearchesTitle}" />
+        </h:outputFormat>
+      </p>
+      <h:form styleClass="floatR">
+        <h:commandButton styleClass="button" value="#{messages['label.faceted.search.migrate.old.searches']}"
+          action="#{facetedSearchActions.migrateOldSavedSearches()}"/>
+      </h:form>
+      <div class="clear"></div>
+    </div>
+  </c:if>
+
+  <nxu:set var="contentViewName" value="faceted_saved_search">
+    <ui:decorate template="/incl/content_view.xhtml" />
+  </nxu:set>
+
+</div>

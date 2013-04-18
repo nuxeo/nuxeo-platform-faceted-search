@@ -12,6 +12,7 @@
 
     <doctype name="FacetedSearchDefault" extends="FacetedSearch">
       <schema name="faceted_search_default" />
+      <facet name="FacetedSearch" />
       <facet name="HiddenInNavigation" />
     </doctype>
 

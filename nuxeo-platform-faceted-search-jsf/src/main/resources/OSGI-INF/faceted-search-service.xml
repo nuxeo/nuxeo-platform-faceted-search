@@ -21,7 +21,7 @@
       Hold configuration for the Faceted Search Service
     </documentation>
     <object
-      class="org.nuxeo.ecm.platform.faceted.search.jsf.service.Configuration" />
+      class="org.nuxeo.ecm.platform.faceted.search.api.service.Configuration" />
   </extension-point>
 
 </component>

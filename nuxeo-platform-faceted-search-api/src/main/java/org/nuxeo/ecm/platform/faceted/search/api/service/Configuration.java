@@ -15,7 +15,7 @@
  *     Nuxeo - initial API and implementation
  */
 
-package org.nuxeo.ecm.platform.faceted.search.jsf.service;
+package org.nuxeo.ecm.platform.faceted.search.api.service;
 
 import org.nuxeo.common.xmap.annotation.XNode;
 import org.nuxeo.common.xmap.annotation.XObject;
@@ -30,10 +30,21 @@ import org.nuxeo.common.xmap.annotation.XObject;
 public class Configuration {
 
     @XNode("rootSavedSearchesTitle")
+    @Deprecated
     protected String rootSavedSearchesTitle;
 
+    /**
+     * @deprecated since 5.7. Saved searches are not stored anymore in a
+     *             dedicated folder but in the user workspace.
+     */
+    @Deprecated
     public String getRootSavedSearchesTitle() {
         return rootSavedSearchesTitle;
+    }
+
+    @Deprecated
+    public void setRootSavedSearchesTitle(String title) {
+        rootSavedSearchesTitle = title;
     }
 
 }

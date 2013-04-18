@@ -103,17 +103,17 @@
 <!-- save the search -->
 <tr>
   <td>type</td>
-  <td>id=saveFacetedSearchForm:savedSearchTitle</td>
+  <td>id=facetedSearchSaveForm:nxw_saveContentView_1</td>
   <td>My search</td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>//input[@value='Save']</td>
+  <td>//input[@id='facetedSearchSaveForm:nxw_saveContentView_action_facetedSaveSearchAction']</td>
   <td></td>
 </tr>
 <tr>
   <td>verifyTextPresent</td>
-  <td>Your search has been saved in your personal workspace</td>
+  <td>Your search has been saved</td>
   <td></td>
 </tr>
 <tr>
@@ -210,12 +210,12 @@
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Back to document base</td>
+  <td>link=Home</td>
   <td></td>
 </tr>
 <tr>
   <td>clickAndWait</td>
-  <td>link=Personal Workspace</td>
+  <td>link=Saved searches</td>
   <td></td>
 </tr>
 <tr>
@@ -225,7 +225,7 @@
 </tr>
 <tr>
   <td>waitForEditable</td>
-  <td>id=document_content_buttons:nxw_cvButton_CURRENT_SELECTION_TRASH_form:nxw_cvButton_CURRENT_SELECTION_TRASH</td>
+  <td>id=faceted_saved_search_buttons:nxw_cvButton_CURRENT_SELECTION_TRASH_form:nxw_cvButton_CURRENT_SELECTION_TRASH</td>
   <td>12000</td>
 </tr>
 <tr>
@@ -236,36 +236,6 @@
 <tr>
   <td>assertConfirmation</td>
   <td>Delete selected document(s)?</td>
-  <td></td>
-</tr>
-<tr>
-  <td>clickAndWait</td>
-  <td>link=Manage</td>
-  <td></td>
-</tr>
-<tr>
-  <td>clickAndWait</td>
-  <td>link=Trash</td>
-  <td></td>
-</tr>
-<tr>
-  <td>click</td>
-  <td>//*[@title=&quot;Select all / deselect all&quot;]</td>
-  <td></td>
-</tr>
-<tr>
-  <td>waitForEditable</td>
-  <td>id=document_trash_content_buttons:nxw_cvButton_CURRENT_SELECTION_DELETE_form:nxw_cvButton_CURRENT_SELECTION_DELETE</td>
-  <td>12000</td>
-</tr>
-<tr>
-  <td>clickAndWait</td>
-  <td>//input[@value=&quot;Permanent delete&quot;]</td>
-  <td></td>
-</tr>
-<tr>
-  <td>assertConfirmation</td>
-  <td>Permanently delete selected document(s)?</td>
   <td></td>
 </tr>
 <tr>

@@ -27,6 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,19 +46,24 @@ import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.international.StatusMessage;
 import org.json.JSONException;
+import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DataModel;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.impl.DocumentLocationImpl;
 import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
+import org.nuxeo.ecm.core.api.pathsegment.PathSegmentService;
 import org.nuxeo.ecm.core.schema.SchemaManager;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewHeader;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentViewService;
 import org.nuxeo.ecm.platform.contentview.seam.ContentViewActions;
 import org.nuxeo.ecm.platform.faceted.search.api.Constants;
+import org.nuxeo.ecm.platform.faceted.search.api.service.Configuration;
 import org.nuxeo.ecm.platform.faceted.search.api.service.FacetedSearchService;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter;
 import org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataHelper;
@@ -67,6 +73,7 @@ import org.nuxeo.ecm.platform.ui.web.util.BaseURL;
 import org.nuxeo.ecm.platform.url.DocumentViewImpl;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
 import org.nuxeo.ecm.platform.url.api.DocumentViewCodecManager;
+import org.nuxeo.ecm.platform.userworkspace.api.UserWorkspaceService;
 import org.nuxeo.ecm.webapp.helpers.EventNames;
 import org.nuxeo.ecm.webapp.helpers.ResourcesAccessor;
 import org.nuxeo.runtime.api.Framework;
@@ -335,9 +342,8 @@ public class FacetedSearchActions implements Serializable {
 
     /**
      * Create a new {@code DocumentModel} with the same type as
-     * {@code sourceDoc}. Copy all the {@code DataModel}s from
-     * {@code sourceDoc} to the newly created document, except the
-     * {@code dublincore} schema.
+     * {@code sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc}
+     * to the newly created document, except the {@code dublincore} schema.
      */
     protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
             throws ClientException {
@@ -435,6 +441,70 @@ public class FacetedSearchActions implements Serializable {
         contentViewNames = null;
         contentViewHeaders = null;
         currentContentViewName = null;
+    }
+
+    /*
+     * ----- Saved searches migration -----
+     */
+
+    public String getRootSavedSearchesTitle() {
+        FacetedSearchService facetedSearchService = Framework.getLocalService(FacetedSearchService.class);
+        Configuration configuration = facetedSearchService.getConfiguration();
+        return configuration != null ? configuration.getRootSavedSearchesTitle()
+                : null;
+    }
+
+    public boolean haveOldSavedSearches() throws ClientException {
+        return !getOldSavedSearches().isEmpty();
+    }
+
+    protected List<DocumentModel> getOldSavedSearches() throws ClientException {
+        UserWorkspaceService userWorkspaceService = Framework.getLocalService(UserWorkspaceService.class);
+        FacetedSearchService facetedSearchService = Framework.getLocalService(FacetedSearchService.class);
+        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(
+                documentManager, null);
+        Configuration configuration = facetedSearchService.getConfiguration();
+        String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
+
+        PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
+        DocumentModel rootSavedSearches = documentManager.createDocumentModel(
+                uws.getPathAsString(), rootSavedSearchesTitle,
+                Constants.FACETED_SAVED_SEARCH_FOLDER);
+        rootSavedSearches.setPathInfo(uws.getPathAsString(),
+                pathService.generatePathSegment(rootSavedSearches));
+        Path path = new Path(uws.getPathAsString()).append(pathService.generatePathSegment(rootSavedSearches));
+        PathRef rootPathRef = new PathRef(path.toString());
+
+        if (documentManager.exists(rootPathRef)) {
+            DocumentModel rootDoc = documentManager.getDocument(rootPathRef);
+            String query = String.format(
+                    "SELECT * FROM Document WHERE ecm:mixinType = 'FacetedSearch' "
+                            + "AND ecm:parentId = '%s'", rootDoc.getId());
+            return documentManager.query(query);
+        }
+        return Collections.emptyList();
+    }
+
+    public void migrateOldSavedSearches() throws ClientException {
+        UserWorkspaceService userWorkspaceService = Framework.getLocalService(UserWorkspaceService.class);
+        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(
+                documentManager, null);
+
+        List<DocumentModel> docs = getOldSavedSearches();
+        if (!docs.isEmpty()) {
+            documentManager.move(convertToDocumentRefs(docs), uws.getRef());
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO,
+                    "label.faceted.saved.searches.migrated", docs.size());
+            contentViewActions.refreshOnSeamEvent("savedSearchesMigrated");
+        }
+    }
+
+    protected List<DocumentRef> convertToDocumentRefs(List<DocumentModel> docs) {
+        List<DocumentRef> refs = new ArrayList<DocumentRef>();
+        for (DocumentModel doc : docs) {
+            refs.add(doc.getRef());
+        }
+        return refs;
     }
 
 }

@@ -180,6 +180,35 @@
       </widgetModes>
     </widget>
 
+    <widget name="facetedSaveSearch" type="container">
+      <handlingLabels>true</handlingLabels>
+      <labels>
+        <label mode="any">label.faceted.search.saveSearch</label>
+      </labels>
+      <translated>true</translated>
+      <properties widgetMode="any">
+        <property name="hideSubLabels">true</property>
+        <property name="foldable">true</property>
+        <property name="foldedByDefault">true</property>
+      </properties>
+      <controls mode="any">
+        <control name="requireSurroundingForm">true</control>
+      </controls>
+      <subWidgets>
+        <widget name="saveContentView" type="saveBox">
+          <fields>
+            <field>#{facetedSearchActions.savedSearchTitle}</field>
+          </fields>
+          <properties widgetMode="any">
+            <property name="required">true</property>
+            <property name="placeholder">#{messages['label.faceted.search.save.placeholder']}</property>
+            <property name="description">label.faceted.search.save.description</property>
+            <property name="actionId">facetedSaveSearchAction</property>
+          </properties>
+        </widget>
+      </subWidgets>
+    </widget>
+
   </extension>
 
   <extension target="org.nuxeo.ecm.platform.forms.layout.WebLayoutManager"

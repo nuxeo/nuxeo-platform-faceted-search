@@ -3,9 +3,15 @@
   xmlns:nxu="http://nuxeo.org/nxweb/util"
   xmlns:c="http://java.sun.com/jstl/core"
   xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:nxl="http://nuxeo.org/nxforms/layout">
+  xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+  xmlns:nxl="http://nuxeo.org/nxforms/layout"
+  class="compactLayout">
 
-<h:form id="facetedSearchForm" class="compactLayout">
+  <h:form id="facetedSearchSaveForm">
+    <nxl:widget name="facetedSaveSearch" mode="view" />
+  </h:form>
+
+<h:form id="facetedSearchForm" >
 
   <nxu:set var="contentViewName"
     value="#{facetedSearchActions.currentContentViewName}">

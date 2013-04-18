@@ -8,7 +8,7 @@
       <icon>/icons/search.png</icon>
       <bigIcon>/icons/search_100.png</bigIcon>
       <description>FacetedSearchDefault.description</description>
-      <default-view>view_documents</default-view>
+      <default-view>home_view_documents</default-view>
       <layouts mode="any">
         <layout>heading</layout>
         <layout>faceted_search_default</layout>

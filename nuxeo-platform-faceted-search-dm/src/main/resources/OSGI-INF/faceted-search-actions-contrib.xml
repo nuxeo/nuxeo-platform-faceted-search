@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<component name="org.nuxeo.ecm.platform.faceted.search.dm.actions">
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="actions">
+
+    <action id="dam" link="assets" label="label.main.tab.dam" order="50">
+      <category>MAIN_TABS</category>
+    </action>
+
+    <!-- Search actions -->
+
+    <action id="facetedSaveSearchAction" link="#{facetedSearchActions.saveSearch()}"
+      label="command.save" order="10">
+    </action>
+
+    <!-- Saved searches -->
+    <action id="FacetedSavedSearches" link="/incl/faceted_saved_searches.xhtml"
+      label="label.home.faceted.saved.searches" order="0">
+      <category>SavedSearches_sub_tab</category>
+      <filter-id>not_readonly</filter-id>
+    </action>
+
+    <action id="CURRENT_SELECTION_TRASH">
+      <category>FACETED_SAVED_SEARCHES_CURRENT_SELECTION_LIST</category>
+    </action>
+
+  </extension>
+
+</component>
