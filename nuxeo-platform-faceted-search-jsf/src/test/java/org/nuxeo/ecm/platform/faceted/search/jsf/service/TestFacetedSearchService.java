@@ -166,7 +166,7 @@ public class TestFacetedSearchService {
 
         // Check that the search is saved in the configured folder
         assertEquals(savedSearchPath,
-                "/default-domain/UserWorkspaces/Administrator/Saved Searches/My saved search");
+                "/default-domain/UserWorkspaces/Administrator/My saved search");
     }
 
     protected DocumentModel createSavedSearch(String title)
