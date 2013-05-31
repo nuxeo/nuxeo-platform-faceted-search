@@ -12,4 +12,5 @@ Nuxeo-Component: OSGI-INF/faceted-search-service.xml,
  OSGI-INF/faceted-search-local-configuration-contrib.xml,
  OSGI-INF/faceted-search-local-configuration-layout-contrib.xml,
  OSGI-INF/theme-contrib.xml,
- OSGI-INF/faceted-search-content-view.xml
+ OSGI-INF/faceted-search-content-view.xml,
+ OSGI-INF/faceted-search-documentslists-contrib.xml

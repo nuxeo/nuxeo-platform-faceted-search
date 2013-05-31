@@ -17,13 +17,13 @@
       <filter-id>not_readonly</filter-id>
     </action>
 
-    <action id="facetedSearchCurrentSelectionDelete" link="#{deleteActions.purgeSelection('CURRENT_SELECTION_TRASH')}"
+    <action id="facetedSearchCurrentSelectionDelete" link="#{deleteActions.purgeSelection('FACETED_SAVED_SEARCHES_CURRENT_SELECTION')}"
       label="command.trashDocs" icon="" help="comand.deleteDocs.help"
       confirm="if( !confirmDeleteDocumentsForever() ) return false;">
       <category>FACETED_SAVED_SEARCHES_CURRENT_SELECTION_LIST</category>
-      <filter id="canDeleteDamSavedSearches">
+      <filter id="canDeleteFacetedSavedSearches">
         <rule grant="true">
-          <condition>#{deleteActions.getCanDelete('CURRENT_SELECTION_TRASH')}</condition>
+          <condition>#{deleteActions.getCanDelete('FACETED_SAVED_SEARCHES_CURRENT_SELECTION')}</condition>
         </rule>
       </filter>
     </action>

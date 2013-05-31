@@ -3,7 +3,7 @@
 
   <extension target="org.nuxeo.ecm.platform.ui.web.ContentViewService"
              point="contentViews">
-    <contentView name="faceted_saved_search">
+    <contentView name="faceted_saved_searches">
 
       <showTitle>false</showTitle>
 
@@ -52,7 +52,7 @@
           showCSVExport="true" showPDFExport="true" />
       </resultLayouts>
 
-      <selectionList>CURRENT_SELECTION_TRASH</selectionList>
+      <selectionList>FACETED_SAVED_SEARCHES_CURRENT_SELECTION</selectionList>
       <actions category="FACETED_SAVED_SEARCHES_CURRENT_SELECTION_LIST" />
     </contentView>
 
