@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <component name="org.nuxeo.ecm.platform.faceted.search.dm.actions">
 
+  <require>org.nuxeo.ecm.platform.actions</require>
+
   <extension target="org.nuxeo.ecm.platform.actions.ActionService"
     point="actions">
 
@@ -27,6 +29,35 @@
         </rule>
       </filter>
     </action>
+
+    <action id="TAB_MY_SUBSCRIPTIONS">
+      <filter-id>denyForFacetedSearch</filter-id>
+    </action>
+
+    <action id="TAB_MANAGE_SUBSCRIPTIONS">
+      <filter-id>denyForFacetedSearch</filter-id>
+    </action>
+
+    <action id="TAB_RELATIONS">
+      <filter-id>denyForFacetedSearch</filter-id>
+    </action>
+
+  </extension>
+
+  <extension target="org.nuxeo.ecm.platform.actions.ActionService"
+    point="filters">
+
+    <filter id="rights" append="true">
+      <rule grant="true">
+        <facet>FacetedSearch</facet>
+      </rule>
+    </filter>
+
+    <filter id="denyForFacetedSearch">
+      <rule grant="false">
+        <facet>FacetedSearch</facet>
+      </rule>
+    </filter>
 
   </extension>
 
