@@ -21,14 +21,18 @@
       value="#{field_0}" id="#{widget.id}_from"
       styleClass="#{widget.properties['styleClass']}"
       required="#{widget.properties['required']}" showsTime="true"
-      format="#{nxu:basicDateAndTimeFormater()}" /> <h:message
+      format="#{nxu:basicDateAndTimeFormater()}">
+        <f:validator validatorId="NxDateValidator" />
+      </nxu:inputDateTime> <h:message
       styleClass="errorMessage" for="#{widget.id}_from"
       id="#{widget.id}_message_from" /> <span class="tinyLabel"> <h:outputText
       value="#{messages['label.search.and']} " /> </span> <nxu:inputDateTime
       value="#{field_1}" id="#{widget.id}_to"
       styleClass="#{widget.properties['styleClass']}"
       required="#{widget.properties['required']}" showsTime="true"
-      format="#{nxu:basicDateAndTimeFormater()}" /> <h:message
+      format="#{nxu:basicDateAndTimeFormater()}"> 
+        <f:validator validatorId="NxDateValidator" />
+      </nxu:inputDateTime> <h:message
       styleClass="errorMessage" for="#{widget.id}_to"
       id="#{widget.id}_message_to" /></div>
   </c:if>
