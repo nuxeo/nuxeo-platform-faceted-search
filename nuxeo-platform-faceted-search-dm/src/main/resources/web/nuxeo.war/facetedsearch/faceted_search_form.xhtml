@@ -11,41 +11,41 @@
     <nxl:widget name="facetedSaveSearch" mode="view" />
   </h:form>
 
-<h:form id="facetedSearchForm" >
+  <h:form id="facetedSearchForm">
 
-  <nxu:set var="contentViewName"
-    value="#{facetedSearchActions.currentContentViewName}">
+    <nxu:set var="contentViewName"
+      value="#{facetedSearchActions.currentContentViewName}">
 
-    <div style="display:none;">
-      <h:commandButton action="faceted_search_results">
-        <nxu:actionListenerMethod
-          value="#{contentViewActions.refreshAndRewind(contentViewName)}" />
-      </h:commandButton>
-    </div>
+      <div style="display:none;">
+        <h:commandButton action="faceted_search_results">
+          <nxu:actionListenerMethod
+            value="#{contentViewActions.refreshAndRewind(contentViewName)}"/>
+        </h:commandButton>
+      </div>
 
-   <nxu:set var="contentView"
-    value="#{contentViewActions.getContentViewWithProvider(contentViewName)}"
-      cache="true">
-      <c:if test="#{contentView != null}">
+      <nxu:set var="contentView"
+        value="#{contentViewActions.getContentViewWithProvider(contentViewName)}"
+        cache="true">
+        <c:if test="#{contentView != null}">
 
-       <div class="facetedSearchBlock">
+          <div class="facetedSearchBlock">
 
-         <nxl:layout name="faceted_search_default_selectors"
-           mode="search" value="#{contentView.searchDocumentModel}" />
-         <nxl:layout name="faceted_search_default_actions"
-          mode="search" value="#{contentView.searchDocumentModel}" />
+            <nxl:layout name="faceted_search_default_selectors"
+              mode="search" value="#{contentView.searchDocumentModel}"/>
+            <nxl:layout name="faceted_search_default_actions"
+              mode="search" value="#{contentView.searchDocumentModel}"/>
 
-        <nxl:layout name="#{contentView.searchLayout.name}" mode="search"
-          value="#{contentView.searchDocumentModel}" />
+            <nxl:layout name="#{contentView.searchLayout.name}" mode="search"
+              value="#{contentView.searchDocumentModel}"/>
 
-        <nxl:layout name="faceted_search_default_actions"
-          mode="search" value="#{contentView.searchDocumentModel}" />
-       </div>
+            <nxl:layout name="faceted_search_default_actions"
+              mode="search" value="#{contentView.searchDocumentModel}"/>
+          </div>
 
-     </c:if>
+        </c:if>
+      </nxu:set>
+
     </nxu:set>
-
-  </nxu:set>
-</h:form>
+  </h:form>
 
 </div>
