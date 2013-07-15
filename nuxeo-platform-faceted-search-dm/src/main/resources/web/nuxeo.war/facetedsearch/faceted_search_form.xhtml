@@ -11,6 +11,11 @@
     <nxl:widget name="facetedSaveSearch" mode="view" />
   </h:form>
 
+  <h:form id="facetedSearchSelectorForm">
+    <nxl:layout name="faceted_search_default_selectors"
+      mode="search" value="#{contentView.searchDocumentModel}"/>
+  </h:form>
+
   <h:form id="facetedSearchForm">
 
     <nxu:set var="contentViewName"
@@ -29,15 +34,10 @@
         <c:if test="#{contentView != null}">
 
           <div class="facetedSearchBlock">
-
-            <nxl:layout name="faceted_search_default_selectors"
-              mode="search" value="#{contentView.searchDocumentModel}"/>
             <nxl:layout name="faceted_search_default_actions"
               mode="search" value="#{contentView.searchDocumentModel}"/>
-
             <nxl:layout name="#{contentView.searchLayout.name}" mode="search"
               value="#{contentView.searchDocumentModel}"/>
-
             <nxl:layout name="faceted_search_default_actions"
               mode="search" value="#{contentView.searchDocumentModel}"/>
           </div>
