@@ -30,7 +30,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.el.ELException;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.logging.Log;
@@ -111,19 +110,8 @@ public class TestFacetedSearchService {
     @Before
     public void initializeFacesContext() {
         // set mock faces context for needed properties resolution
-        facesContext = new MockFacesContext() {
-            @SuppressWarnings("rawtypes")
-            @Override
-            public Object evaluateExpressionGet(FacesContext context,
-                    String expression, Class expectedType) throws ELException {
-                if ("#{documentManager}".equals(expression)) {
-                    return session;
-                } else {
-                    log.error("Cannot evaluate expression: " + expression);
-                }
-                return null;
-            }
-        };
+        facesContext = new MockFacesContext();
+        facesContext.mapVariable("documentManager", session);
         facesContext.setCurrent();
         assertNotNull(FacesContext.getCurrentInstance());
     }
