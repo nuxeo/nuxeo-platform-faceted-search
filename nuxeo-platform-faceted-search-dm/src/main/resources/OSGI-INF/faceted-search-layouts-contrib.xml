@@ -69,7 +69,7 @@
       </labels>
       <translated>true</translated>
       <subWidgets>
-        <widget name="dc_creator" type="multipleUsersSuggestion">
+        <widget name="dc_creator" type="select2UserMultiple">
           <labels>
             <label mode="any">label.dublincore.creator</label>
           </labels>
@@ -77,10 +77,19 @@
             <field>fsd:dc_creator</field>
           </fields>
           <properties widgetMode="any">
-            <property name="userSuggestionSearchType">USER_TYPE</property>
-            <property name="displaySuggestionOnTop">true</property>
-            <property name="hideHelpLabel">true</property>
-            <property name="hideSearchTypeText">true</property>
+            <property name="searchType">user</property>
+            <property name="width">200</property>
+            <property name="minimumInputLength">3</property>
+            <property name="hideInstructionLabel">true</property>
+            <property name="customFormater">userformater</property>
+            <property name="inlinejs"> <![CDATA[
+  function userformater(entry) {
+   var markup = "<table><tr>";
+   markup += "<td><img src='/nuxeo/icons/" + entry.type + ".png'/></td>";
+   markup += "<td style='padding:2px'>" + entry.label + "</td>";
+   markup += "</tr></table>";
+   return markup;
+  }]]></property>
           </properties>
         </widget>
       </subWidgets>
@@ -136,7 +145,7 @@
           </fields>
           <properties widgetMode="any">
             <property name="directoryName">l10nsubjects</property>
-            <property name="width">300</property>
+            <property name="width">200</property>
             <property name="dbl10n">true</property>
             <property name="minimumInputLength">0</property>
             <property name="hideInstructionLabel">true</property>
