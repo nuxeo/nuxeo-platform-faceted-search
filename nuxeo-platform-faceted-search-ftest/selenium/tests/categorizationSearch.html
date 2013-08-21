@@ -71,26 +71,23 @@
 	<td>link=Edit</td>
 	<td></td>
 </tr>
+<!-- Since 5.7.3 coverage is a select2 widget-->
 <tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=div[id$='nxw_coverage_select2'] a</td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//*[@id='document_edit:nxl_dublincore:nxw_coverage:nxw_coverage_continent']</td>
-	<td>Europe</td>
+    <td>waitForElementPresent</td>
+    <td>css=.select2-result-label:contains('Aland Islands')</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=.select2-result-label:contains('Aland Islands')</td>
+    <td></td>
 </tr>
-<tr>
-	<td>select</td>
-	<td>//*[@id='document_edit:nxl_dublincore:nxw_coverage:nxw_coverage_country']</td>
-	<td>Aland Islands</td>
-</tr>
+<!--  -->
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value=&quot;Save&quot;]</td>
@@ -112,49 +109,26 @@
 	<td>link=Edit</td>
 	<td></td>
 </tr>
+<!-- Since 5.7.3 subjects is a select2 widget-->
 <tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=div[id$='nxw_subjects_select2'] input</td>
+    <td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//*[@id='document_edit:nxl_dublincore:nxw_subjects:nxw_subjects_topic']</td>
-	<td>Art</td>
+    <td>waitForElementPresent</td>
+    <td>css=.select2-result-label:contains('Architecture')</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=.select2-result-label:contains('Architecture')</td>
+    <td></td>
 </tr>
+<!--  -->
 <tr>
-	<td>select</td>
-	<td>//*[@id='document_edit:nxl_dublincore:nxw_subjects:nxw_subjects_subtopic']</td>
+	<td>verifyTextPresent</td>
 	<td>Architecture</td>
-</tr>
-<tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//input[@value=&quot;Add&quot;]</td>
-	<td>Art</td>
-</tr>
-<tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Selection</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Art/Architecture</td>
 	<td></td>
 </tr>
 <tr>
@@ -197,61 +171,23 @@
 	<td>Subjects</td>
 	<td></td>
 </tr>
+<!-- Since 5.7.3 coverage search is a select2 widget-->
 <tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=div[id$='nxw_dc_coverage_select2'] input</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//a[@id='nxw_dc_coverage_openPopup']</td>
-	<td></td>
+    <td>waitForElementPresent</td>
+    <td>css=.select2-result-label:contains('Aland Islands')</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Europe</td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=.select2-result-label:contains('Aland Islands')</td>
+    <td></td>
 </tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Click on an item to select it</td>
-	<td></td>
-</tr>
-<tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>facetedSearchForm:nxl_faceted_search_default:nxw_dc_coverage_treeId:nxw__dc__coverage__recursiveTreeNodesAdaptorId:3::nxw_dc_coverage_treeNodeId:handle:img:collapsed</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Aland Islands</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Europe/Aland Islands</td>
-	<td></td>
-</tr>
+<!--  -->
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value=&quot;Filter&quot;]</td>
@@ -282,61 +218,24 @@
 	<td>link=Clear</td>
 	<td></td>
 </tr>
+
+<!-- Since 5.7.3 subjects search is a select2 widget-->
 <tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=div[id$='nxw_dc_subjects_select2'] input</td>
+    <td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=nxw_dc_subjects_openPopup</td>
-	<td></td>
+    <td>waitForElementPresent</td>
+    <td>css=.select2-result-label:contains('Architecture')</td>
+    <td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
-	<td>Art</td>
-	<td></td>
+    <td>clickAt</td>
+    <td>css=.select2-result-label:contains('Architecture')</td>
+    <td></td>
 </tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Click on an item to select it</td>
-	<td></td>
-</tr>
-<tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>id=facetedSearchForm:nxl_faceted_search_default:nxw_dc_subjects_treeId:nxw__dc__subjects__recursiveTreeNodesAdaptorId:0::nxw_dc_subjects_treeNodeId:handle:img:collapsed</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>watchA4jRequests</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Architecture</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForA4jRequest</td>
-	<td>10000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyTextPresent</td>
-	<td>Art/Architecture</td>
-	<td></td>
-</tr>
+<!--  -->
 <tr>
 	<td>clickAndWait</td>
 	<td>//input[@value=&quot;Filter&quot;]</td>
