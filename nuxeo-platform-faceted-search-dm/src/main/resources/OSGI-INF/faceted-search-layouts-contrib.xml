@@ -69,7 +69,7 @@
       </labels>
       <translated>true</translated>
       <subWidgets>
-        <widget name="dc_creator" type="select2UserMultiple">
+        <widget name="dc_creator" type="multipleUsersSuggestion">
           <labels>
             <label mode="any">label.dublincore.creator</label>
           </labels>
@@ -77,10 +77,10 @@
             <field>fsd:dc_creator</field>
           </fields>
           <properties widgetMode="any">
-            <property name="searchType">user</property>
+            <property name="searchType">USER_TYPE</property>
             <property name="width">200</property>
             <property name="minChars">3</property>
-            <property name="hideInstructionLabel">true</property>
+            <property name="hideHelpLabel">true</property>
           </properties>
         </widget>
       </subWidgets>
