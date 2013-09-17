@@ -95,7 +95,7 @@
       <properties widgetMode="any">
       </properties>
       <subWidgets>
-        <widget name="dc_nature" type="select2DirectoryMultiple">
+        <widget name="dc_nature" type="suggestManyDirectory">
           <labels>
             <label mode="any">label.dublincore.nature</label>
           </labels>
@@ -110,7 +110,7 @@
             <property name="hideInstructionLabel">true</property>
           </properties>
         </widget>
-        <widget name="dc_coverage" type="select2DirectoryMultiple">
+        <widget name="dc_coverage" type="suggestManyDirectory">
           <labels>
             <label mode="any">label.faceted.search.coverage</label>
           </labels>
@@ -126,7 +126,7 @@
             <property name="hideInstructionLabel">true</property>
           </properties>
         </widget>
-        <widget name="dc_subjects" type="select2DirectoryMultiple">
+        <widget name="dc_subjects" type="suggestManyDirectory">
           <labels>
             <label mode="any">label.faceted.search.subjects</label>
           </labels>
