@@ -279,7 +279,8 @@
       </rows>
     </layout>
 
-    <!-- FIXME: what differs from the default summary here? -->
+    <!-- NXP-9686: deprecated layout configuration, left for compatibility
+      (use the grid summary layout from now on) -->
     <layout name="faceted_search_summary_layout">
       <templates>
         <template mode="any">/layouts/layout_summary_template.xhtml
