@@ -24,7 +24,7 @@
           <nxu:set var="title"
             value="#{nxu:test(empty contentView.title, 'label.faceted.search.default', contentView.title)}">
           <nxu:set var="translateTitle"
-            value="#{nxu:test(empty contentView.translateTitle, nxu:test(empty contentView.title, true, false), contentView.translateTitle)}">
+            value="#{nxu:test(empty contentView.title, true, contentView.translateTitle)}">
           <nxu:set var="finalTitle"
             value="#{nxu:test(translateTitle, messages[title], title)}">
             <h1>
