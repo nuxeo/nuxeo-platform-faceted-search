@@ -21,7 +21,7 @@ import static org.jboss.seam.ScopeType.CONVERSATION;
 import static org.jboss.seam.ScopeType.EVENT;
 import static org.jboss.seam.annotations.Install.FRAMEWORK;
 import static org.nuxeo.ecm.webapp.helpers.EventNames.LOCAL_CONFIGURATION_CHANGED;
-import static org.nuxeo.ecm.webapp.helpers.EventNames.NAVIGATE_TO_DOCUMENT;
+import static org.nuxeo.ecm.webapp.helpers.EventNames.USER_ALL_DOCUMENT_TYPES_SELECTION_CHANGED;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -445,7 +445,7 @@ public class FacetedSearchActions implements Serializable {
         currentContentViewName = null;
     }
 
-    @Observer(value = NAVIGATE_TO_DOCUMENT)
+    @Observer(value = USER_ALL_DOCUMENT_TYPES_SELECTION_CHANGED)
     public void invalidateContentViewsNameIfChanged() throws ClientException {
         List<String> temp = new ArrayList<String>(Framework.getLocalService(
                 FacetedSearchService.class).getContentViewNames(
