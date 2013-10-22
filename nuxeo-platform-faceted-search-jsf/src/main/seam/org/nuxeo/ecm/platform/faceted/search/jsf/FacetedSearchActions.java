@@ -437,12 +437,25 @@ public class FacetedSearchActions implements Serializable {
         return encodeValues(values);
     }
 
-    @Observer(value = {LOCAL_CONFIGURATION_CHANGED, NAVIGATE_TO_DOCUMENT})
+    @Observer(value = LOCAL_CONFIGURATION_CHANGED)
     public void invalidateContentViewsName() {
         clearSearch();
         contentViewNames = null;
         contentViewHeaders = null;
         currentContentViewName = null;
+    }
+
+    @Observer(value = NAVIGATE_TO_DOCUMENT)
+    public void invalidateContentViewsNameIfChanged() throws ClientException {
+        List<String> temp = new ArrayList<String>(Framework.getLocalService(
+                FacetedSearchService.class).getContentViewNames(
+                navigationContext.getCurrentDocument()));
+        if (temp != null && !temp.isEmpty()) {
+            String s = temp.get(0);
+            if (s != null && !s.equals(currentContentViewName)) {
+                invalidateContentViewsName();
+            }
+        }
     }
 
     /*
