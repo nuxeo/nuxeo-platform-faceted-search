@@ -218,7 +218,7 @@ public class TestFacetedSearchService {
     }
 
     @Test
-    public void getOtherUsersSavedSearches() throws ClientException {
+    public void getOtherUsersSavedSearches() throws Exception {
         DocumentModel firstSavedSearch = createSavedSearch("First saved search");
         DocumentModel secondSavedSearch = createSavedSearch("Second saved search");
         changeUser("user1");
@@ -237,10 +237,10 @@ public class TestFacetedSearchService {
         assertTrue(otherUsersSavedSearches.contains(thirdSavedSearch));
     }
 
-    protected void changeUser(String username) {
+    protected void changeUser(String username) throws Exception {
         CoreFeature coreFeature = featuresRunner.getFeature(CoreFeature.class);
         RepositorySettings repository = coreFeature.getRepository();
-        repository.shutdown();
+        repository.releaseSession();
         repository.setUsername(username);
         session = repository.createSession();
     }
