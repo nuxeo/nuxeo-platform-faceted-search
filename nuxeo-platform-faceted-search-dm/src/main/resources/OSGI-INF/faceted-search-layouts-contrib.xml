@@ -41,7 +41,7 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
-            <property name="format">#{nxu:basicDateAndTimeFormater()}</property>
+            <property name="format">#{nxu:basicDateAndTimeFormatter()}</property>
           </properties>
         </widget>
 
@@ -56,7 +56,7 @@
           </fields>
           <properties widgetMode="edit">
             <property name="styleClass">dataInputTextDate</property>
-            <property name="format">#{nxu:basicDateAndTimeFormater()}</property>
+            <property name="format">#{nxu:basicDateAndTimeFormatter()}</property>
           </properties>
         </widget>
       </subWidgets>
