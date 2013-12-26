@@ -445,6 +445,11 @@ public class FacetedSearchActions implements Serializable {
         currentContentViewName = null;
     }
 
+    /**
+     * @throws ClientException
+     *
+     * @since 5.8
+     */
     @Observer(value = USER_ALL_DOCUMENT_TYPES_SELECTION_CHANGED)
     public void invalidateContentViewsNameIfChanged() throws ClientException {
         List<String> temp = new ArrayList<String>(Framework.getLocalService(
