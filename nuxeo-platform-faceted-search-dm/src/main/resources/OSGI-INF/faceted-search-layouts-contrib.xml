@@ -108,6 +108,7 @@
             <property name="minChars">0</property>
             <property name="hideHelpLabel">true</property>
             <property name="width">95%</property>
+            <property name="localize">true</property>
           </properties>
         </widget>
         <widget name="dc_coverage" type="suggestManyDirectory">
