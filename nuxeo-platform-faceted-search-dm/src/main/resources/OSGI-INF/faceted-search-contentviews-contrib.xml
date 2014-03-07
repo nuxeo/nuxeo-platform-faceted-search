@@ -44,6 +44,9 @@
           <predicate parameter="ecm:path" operator="STARTSWITH">
             <field schema="faceted_search_default" name="ecm_path" />
           </predicate>
+          <predicate parameter="collectionMember:collectionIds" operator="IN">
+            <field schema="faceted_search_default" name="ecm_collections" />
+          </predicate>
         </whereClause>
         <sort column="dc:title" ascending="true" />
         <pageSize>20</pageSize>
