@@ -240,7 +240,7 @@ public class TestFacetedSearchService {
     protected void changeUser(String username) {
         CoreFeature coreFeature = featuresRunner.getFeature(CoreFeature.class);
         RepositorySettings repository = coreFeature.getRepository();
-        repository.shutdown();
+        repository.releaseSession();
         repository.setUsername(username);
         session = repository.createSession();
     }
