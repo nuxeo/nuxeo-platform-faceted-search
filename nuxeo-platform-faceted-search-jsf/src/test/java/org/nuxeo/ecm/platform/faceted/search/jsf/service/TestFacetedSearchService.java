@@ -237,12 +237,9 @@ public class TestFacetedSearchService {
         assertTrue(otherUsersSavedSearches.contains(thirdSavedSearch));
     }
 
-    protected void changeUser(String username) {
+    protected void changeUser(String username) throws ClientException {
         CoreFeature coreFeature = featuresRunner.getFeature(CoreFeature.class);
         RepositorySettings repository = coreFeature.getRepository();
-        repository.releaseSession();
-        repository.setUsername(username);
-        session = repository.createSession();
+        session= repository.openSessionAs(username);
     }
-
 }
