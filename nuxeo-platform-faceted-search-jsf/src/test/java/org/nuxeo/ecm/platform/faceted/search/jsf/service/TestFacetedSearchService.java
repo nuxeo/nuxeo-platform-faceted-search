@@ -41,10 +41,8 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.localconfiguration.LocalConfigurationService;
-import org.nuxeo.ecm.core.test.CoreFeature;
 import org.nuxeo.ecm.core.test.DefaultRepositoryInit;
 import org.nuxeo.ecm.core.test.RepositorySettings;
-import org.nuxeo.ecm.core.test.annotations.BackendType;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.ecm.platform.contentview.jsf.ContentView;
@@ -67,8 +65,8 @@ import com.google.inject.Inject;
  */
 @RunWith(FeaturesRunner.class)
 @Features(PlatformFeature.class)
-@RepositoryConfig(type = BackendType.H2, init = DefaultRepositoryInit.class, user = "Administrator", cleanup = Granularity.METHOD)
-@Deploy( { "org.nuxeo.ecm.platform.content.template",
+@RepositoryConfig(init = DefaultRepositoryInit.class, cleanup = Granularity.METHOD)
+@Deploy({ "org.nuxeo.ecm.platform.content.template",
         "org.nuxeo.ecm.platform.userworkspace.api",
         "org.nuxeo.ecm.platform.userworkspace.types",
         "org.nuxeo.ecm.platform.userworkspace.core",
@@ -76,7 +74,7 @@ import com.google.inject.Inject;
         "org.nuxeo.ecm.platform.faceted.search.jsf",
         "org.nuxeo.ecm.platform.query.api",
         "org.nuxeo.ecm.platform.contentview.jsf:OSGI-INF/contentview-framework.xml" })
-@LocalDeploy( {
+@LocalDeploy({
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-contentviews-contrib.xml",
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-core-types-contrib.xml" })
 public class TestFacetedSearchService {
@@ -136,7 +134,7 @@ public class TestFacetedSearchService {
 
     @Test
     public void saveFacetedSearch() throws ClientException {
-        DocumentModel savedSearch = createSavedSearch("My saved search");
+        DocumentModel savedSearch = createSavedSearch(session, "My saved search");
         assertNotNull(savedSearch);
         assertEquals("fulltext",
                 savedSearch.getPropertyValue("fsd:ecm_fulltext"));
@@ -157,7 +155,7 @@ public class TestFacetedSearchService {
                 "/default-domain/UserWorkspaces/Administrator/My saved search");
     }
 
-    protected DocumentModel createSavedSearch(String title)
+    protected DocumentModel createSavedSearch(CoreSession session, String title)
             throws ClientException {
         ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
@@ -169,8 +167,8 @@ public class TestFacetedSearchService {
 
     @Test
     public void getCurrentUserSavedSearches() throws ClientException {
-        DocumentModel firstSavedSearch = createSavedSearch("First saved search");
-        DocumentModel secondSavedSearch = createSavedSearch("Second saved search");
+        DocumentModel firstSavedSearch = createSavedSearch(session, "First saved search");
+        DocumentModel secondSavedSearch = createSavedSearch(session, "Second saved search");
 
         List<DocumentModel> userSavedSearches = facetedSearchService.getCurrentUserSavedSearches(session);
         assertEquals(2, userSavedSearches.size());
@@ -219,27 +217,31 @@ public class TestFacetedSearchService {
 
     @Test
     public void getOtherUsersSavedSearches() throws ClientException {
-        DocumentModel firstSavedSearch = createSavedSearch("First saved search");
-        DocumentModel secondSavedSearch = createSavedSearch("Second saved search");
-        changeUser("user1");
-        DocumentModel thirdSavedSearch = createSavedSearch("Third saved search");
+        DocumentModel firstSavedSearch = createSavedSearch(session, "First saved search");
+        DocumentModel secondSavedSearch = createSavedSearch(session, "Second saved search");
+        DocumentModel thirdSavedSearch;
+        try (CoreSession session = changeUser("user1")) {
+            thirdSavedSearch = createSavedSearch(session, "Third saved search");
 
-        // user1 should see no other saved searches
-        List<DocumentModel> otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
-        assertTrue(otherUsersSavedSearches.isEmpty());
+            // user1 should see no other saved searches
+            List<DocumentModel> otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
+            assertTrue(otherUsersSavedSearches.isEmpty());
+        }
 
         // Administrator should see the user1 saved search
-        changeUser("Administrator");
-        otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
-        assertEquals(1, otherUsersSavedSearches.size());
-        assertFalse(otherUsersSavedSearches.contains(firstSavedSearch));
-        assertFalse(otherUsersSavedSearches.contains(secondSavedSearch));
-        assertTrue(otherUsersSavedSearches.contains(thirdSavedSearch));
+        try (CoreSession session = changeUser("Administrator")) {
+            List<DocumentModel> otherUsersSavedSearches = facetedSearchService.getOtherUsersSavedSearches(session);
+            assertEquals(1, otherUsersSavedSearches.size());
+            assertFalse(otherUsersSavedSearches.contains(firstSavedSearch));
+            assertFalse(otherUsersSavedSearches.contains(secondSavedSearch));
+            assertTrue(otherUsersSavedSearches.contains(thirdSavedSearch));
+        }
     }
 
-    protected void changeUser(String username) throws ClientException {
-        CoreFeature coreFeature = featuresRunner.getFeature(CoreFeature.class);
-        RepositorySettings repository = coreFeature.getRepository();
-        session= repository.openSessionAs(username);
+    @Inject
+    RepositorySettings repository;
+
+    protected CoreSession changeUser(String username) throws ClientException {
+        return repository.openSessionAs(username);
     }
 }
