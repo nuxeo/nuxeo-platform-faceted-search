@@ -10,6 +10,7 @@ author: lkemen@nuxeo.com
   border-color: "color.major.medium (__FLAVOR__ border)";
   border-style: solid none;
   color: "default (__FLAVOR__ color)";
+  margin: .5em 0 1.5em;
   padding: .2em .4em;
   text-align: right }
 
@@ -28,9 +29,6 @@ author: lkemen@nuxeo.com
 #facetedSearchSelectorDiv,
 #savedFacetedSearchSelectorDiv,
 #allSavedFacetedSearchSelectorDiv {
-  border-width: 1px;
-  border-style: none none solid;
-  border-color: "neutral.lighter (__FLAVOR__ border)";
   margin: 0;
   padding: 0 0 .4em }
 #facetedSearchSelectorDiv p,
