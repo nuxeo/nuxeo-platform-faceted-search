@@ -15,12 +15,14 @@
 
     <!-- Saved searches -->
     <action id="FacetedSavedSearches" link="/incl/faceted_saved_searches.xhtml"
-      label="label.home.faceted.saved.searches" order="0">
+      type="home_rest_document_link" label="label.home.faceted.saved.searches"
+      order="0">
       <category>SavedSearches_sub_tab</category>
       <filter-id>not_readonly</filter-id>
     </action>
 
-    <action id="facetedSearchCurrentSelectionDelete" link="#{deleteActions.purgeSelection('FACETED_SAVED_SEARCHES_CURRENT_SELECTION')}"
+    <action id="facetedSearchCurrentSelectionDelete"
+      link="#{deleteActions.purgeSelection('FACETED_SAVED_SEARCHES_CURRENT_SELECTION')}"
       label="command.trashDocs" icon="" help="comand.deleteDocs.help"
       confirm="if( !confirmDeleteDocumentsForever() ) return false;">
       <category>FACETED_SAVED_SEARCHES_CURRENT_SELECTION_LIST</category>
