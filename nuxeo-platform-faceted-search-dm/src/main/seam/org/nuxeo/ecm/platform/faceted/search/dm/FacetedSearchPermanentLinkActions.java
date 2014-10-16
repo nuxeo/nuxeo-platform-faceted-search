@@ -16,6 +16,9 @@
 
 package org.nuxeo.ecm.platform.faceted.search.dm;
 
+import static org.jboss.seam.ScopeType.CONVERSATION;
+import static org.jboss.seam.annotations.Install.FRAMEWORK;
+
 import java.io.Serializable;
 
 import org.jboss.seam.annotations.Begin;
@@ -27,10 +30,7 @@ import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.faceted.search.jsf.FacetedSearchActions;
 import org.nuxeo.ecm.platform.ui.web.rest.RestHelper;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
-import org.nuxeo.ecm.virtualnavigation.action.MultiNavTreeManager;
-
-import static org.jboss.seam.ScopeType.CONVERSATION;
-import static org.jboss.seam.annotations.Install.FRAMEWORK;
+import org.nuxeo.ecm.webapp.tree.nav.MultiNavTreeManager;
 
 /**
  * Handles faceted search permanent link loading.
