@@ -28,8 +28,11 @@ import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.nuxeo.ecm.core.api.ClientException;
 import org.nuxeo.ecm.platform.faceted.search.jsf.FacetedSearchActions;
+import org.nuxeo.ecm.platform.ui.web.api.WebActions;
 import org.nuxeo.ecm.platform.ui.web.rest.RestHelper;
 import org.nuxeo.ecm.platform.url.api.DocumentView;
+import org.nuxeo.ecm.webapp.action.WebActionsBean;
+import org.nuxeo.ecm.webapp.directory.DirectoryTreeDescriptor;
 import org.nuxeo.ecm.webapp.tree.nav.MultiNavTreeManager;
 
 /**
@@ -52,13 +55,13 @@ public class FacetedSearchPermanentLinkActions implements Serializable {
     protected FacetedSearchActions facetedSearchActions;
 
     @In(create = true)
-    protected MultiNavTreeManager multiNavTreeManager;
+    protected WebActions webActions;
 
     @Begin(id = "#{conversationIdGenerator.currentOrNewMainConversationId}", join = true)
     public String loadPermanentLink(DocumentView docView)
             throws ClientException {
         restHelper.initContextFromRestRequest(docView);
-        multiNavTreeManager.setSelectedNavigationTree(Constants.FACETED_SEARCH_NAV_TREE_ID);
+        webActions.setCurrentTabId(DirectoryTreeDescriptor.NAV_ACTION_CATEGORY, "navtree_facetedSearch");
         return Constants.FACETED_SEARCH_RESULTS_VIEW;
     }
 
