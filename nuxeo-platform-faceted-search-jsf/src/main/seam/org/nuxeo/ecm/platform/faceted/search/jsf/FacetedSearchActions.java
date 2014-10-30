@@ -450,10 +450,16 @@ public class FacetedSearchActions implements Serializable {
         List<String> temp = new ArrayList<String>(Framework.getLocalService(
                 FacetedSearchService.class).getContentViewNames(
                 navigationContext.getCurrentDocument()));
-        if (temp != null && !temp.isEmpty()) {
-            String s = temp.get(0);
-            if (s != null && !s.equals(currentContentViewName)) {
+
+        if (temp != null) {
+            if (!temp.equals(contentViewNames)) {
                 invalidateContentViewsName();
+            }
+            if (!temp.isEmpty()) {
+                String s = temp.get(0);
+                if (s != null && !s.equals(currentContentViewName)) {
+                    invalidateContentViewsName();
+                }
             }
         }
     }
