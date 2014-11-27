@@ -231,8 +231,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
 
     @Override
     public void registerContribution(Object contribution,
-            String extensionPoint, ComponentInstance contributor)
-            throws Exception {
+            String extensionPoint, ComponentInstance contributor) {
         if (CONFIGURATION_EP.equals(extensionPoint)) {
             Configuration desc = (Configuration) contribution;
             if (configuration != null) {
