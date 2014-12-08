@@ -34,8 +34,7 @@ public class Configuration {
     protected String rootSavedSearchesTitle;
 
     /**
-     * @deprecated since 5.7. Saved searches are not stored anymore in a
-     *             dedicated folder but in the user workspace.
+     * @deprecated since 5.7. Saved searches are not stored anymore in a dedicated folder but in the user workspace.
      */
     @Deprecated
     public String getRootSavedSearchesTitle() {

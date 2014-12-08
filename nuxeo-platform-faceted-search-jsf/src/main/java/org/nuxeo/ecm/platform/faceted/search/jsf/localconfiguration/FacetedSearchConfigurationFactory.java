@@ -28,8 +28,7 @@ import org.nuxeo.ecm.core.api.adapter.DocumentAdapterFactory;
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
-public class FacetedSearchConfigurationFactory implements
-        DocumentAdapterFactory {
+public class FacetedSearchConfigurationFactory implements DocumentAdapterFactory {
     @Override
     public Object getAdapter(DocumentModel doc, Class<?> itf) {
         if (doc.hasFacet(F_SEARCH_CONFIGURATION_FACET)) {

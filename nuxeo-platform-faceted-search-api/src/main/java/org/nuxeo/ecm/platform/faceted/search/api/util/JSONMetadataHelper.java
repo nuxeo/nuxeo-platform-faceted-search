@@ -39,16 +39,14 @@ import org.nuxeo.ecm.core.api.model.PropertyException;
  * Utility class to set a {@code DocumentModel}'s metadata from a JSON string
  *
  * @see org.nuxeo.ecm.platform.faceted.search.api.util.JSONMetadataExporter
- *
  * @author <a href="mailto:qlamerand@nuxeo.com">Quentin Lamerand</a>
  * @since 5.4
  */
 public class JSONMetadataHelper {
 
     @SuppressWarnings("unchecked")
-    public static DocumentModel setPropertiesFromJson(DocumentModel doc,
-            String json) throws JSONException, PropertyException,
-            ClientException {
+    public static DocumentModel setPropertiesFromJson(DocumentModel doc, String json) throws JSONException,
+            PropertyException, ClientException {
         JSONObject jsonObject = new JSONObject(new JSONTokener(json));
         Iterator<String> keys = jsonObject.keys();
         while (keys.hasNext()) {

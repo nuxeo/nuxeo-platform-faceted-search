@@ -60,15 +60,15 @@ public final class Constants {
     /* Content view names */
 
     /**
-     * @deprecated There is no more content view registered with that name.
-     * Use OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME instead
+     * @deprecated There is no more content view registered with that name. Use
+     *             OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME instead
      */
     @Deprecated
     public static final String ALL_SAVED_SEARCHES_CONTENT_VIEW_NAME = "ALL_SAVED_SEARCHES";
 
     /**
-     * @deprecated There is no more content view registered with that name.
-     * Use CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME instead
+     * @deprecated There is no more content view registered with that name. Use
+     *             CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME instead
      */
     @Deprecated
     public static final String CURRENT_USER_SAVED_SEARCHES_CONTENT_VIEW_NAME = "USER_SAVED_SEARCHES";

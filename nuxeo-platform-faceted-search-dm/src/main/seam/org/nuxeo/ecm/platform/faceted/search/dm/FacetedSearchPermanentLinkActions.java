@@ -58,8 +58,7 @@ public class FacetedSearchPermanentLinkActions implements Serializable {
     protected WebActions webActions;
 
     @Begin(id = "#{conversationIdGenerator.currentOrNewMainConversationId}", join = true)
-    public String loadPermanentLink(DocumentView docView)
-            throws ClientException {
+    public String loadPermanentLink(DocumentView docView) throws ClientException {
         restHelper.initContextFromRestRequest(docView);
         webActions.setCurrentTabId(DirectoryTreeDescriptor.NAV_ACTION_CATEGORY, "navtree_facetedSearch");
         return Constants.FACETED_SEARCH_RESULTS_VIEW;

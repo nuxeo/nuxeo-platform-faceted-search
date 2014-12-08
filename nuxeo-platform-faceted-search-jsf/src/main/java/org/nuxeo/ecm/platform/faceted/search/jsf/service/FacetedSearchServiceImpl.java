@@ -50,8 +50,7 @@ import org.nuxeo.runtime.model.DefaultComponent;
  * @author <a href="mailto:troger@nuxeo.com">Thomas Roger</a>
  * @since 5.4
  */
-public class FacetedSearchServiceImpl extends DefaultComponent implements
-        FacetedSearchService {
+public class FacetedSearchServiceImpl extends DefaultComponent implements FacetedSearchService {
 
     private static Log log = LogFactory.getLog(FacetedSearchServiceImpl.class);
 
@@ -71,43 +70,34 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         return getContentViewNames(null);
     }
 
-    public Set<String> getContentViewNames(DocumentModel currentDoc)
-            throws ClientException {
+    public Set<String> getContentViewNames(DocumentModel currentDoc) throws ClientException {
         ContentViewService contentViewService = getContentViewService();
-        return doFilterNames(
-                contentViewService.getContentViewNames(FACETED_SEARCH_FLAG),
-                currentDoc);
+        return doFilterNames(contentViewService.getContentViewNames(FACETED_SEARCH_FLAG), currentDoc);
     }
 
     /**
-     * Filter names depending of the local configuration, if none everything is
-     * returned
+     * Filter names depending of the local configuration, if none everything is returned
      *
      * @param contentViewNames
      * @return allowed contentviewNames or all if no local configuration
      */
-    protected Set<String> doFilterNames(Set<String> contentViewNames,
-            DocumentModel currentDoc) {
+    protected Set<String> doFilterNames(Set<String> contentViewNames, DocumentModel currentDoc) {
         FacetedSearchConfiguration fsConf = getFacetedConfiguration(currentDoc);
-        return fsConf == null ? contentViewNames
-                : fsConf.filterAllowedContentViewNames(contentViewNames);
+        return fsConf == null ? contentViewNames : fsConf.filterAllowedContentViewNames(contentViewNames);
     }
 
     /**
-     * Try to get {@code localConfigurationService} and the associated
-     * {@code FacetedSearchConfiguration} to return the instance
+     * Try to get {@code localConfigurationService} and the associated {@code FacetedSearchConfiguration} to return the
+     * instance
      *
-     * @return null in case of any problem and the local configuration if
-     *         everything goes well
+     * @return null in case of any problem and the local configuration if everything goes well
      */
-    protected FacetedSearchConfiguration getFacetedConfiguration(
-            DocumentModel currentDoc) {
+    protected FacetedSearchConfiguration getFacetedConfiguration(DocumentModel currentDoc) {
         LocalConfigurationService localConfigurationService = null;
         try {
             localConfigurationService = Framework.getService(LocalConfigurationService.class);
         } catch (Exception e) {
-            final String errMsg = "Error connecting to LocalConfigurationService. "
-                    + e.getMessage();
+            final String errMsg = "Error connecting to LocalConfigurationService. " + e.getMessage();
             log.error(errMsg, e);
         }
 
@@ -115,8 +105,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
             log.warn("LocalConfigurationService service not bound");
             return null;
         } else {
-            return localConfigurationService.getConfiguration(
-                    FacetedSearchConfiguration.class,
+            return localConfigurationService.getConfiguration(FacetedSearchConfiguration.class,
                     F_SEARCH_CONFIGURATION_FACET, currentDoc);
         }
     }
@@ -126,102 +115,85 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
             try {
                 contentViewService = Framework.getService(ContentViewService.class);
             } catch (Exception e) {
-                final String errMsg = "Error connecting to ContentViewService. "
-                        + e.getMessage();
+                final String errMsg = "Error connecting to ContentViewService. " + e.getMessage();
                 throw new ClientException(errMsg, e);
             }
             if (contentViewService == null) {
-                throw new ClientException(
-                        "ContentViewService service not bound");
+                throw new ClientException("ContentViewService service not bound");
             }
         }
         return contentViewService;
     }
 
-    protected PageProviderService getPageProviderService()
-            throws ClientException {
+    protected PageProviderService getPageProviderService() throws ClientException {
         if (pageProviderService == null) {
             try {
                 pageProviderService = Framework.getService(PageProviderService.class);
             } catch (Exception e) {
-                final String errMsg = "Error connecting to PageProviderService. "
-                        + e.getMessage();
+                final String errMsg = "Error connecting to PageProviderService. " + e.getMessage();
                 throw new ClientException(errMsg, e);
             }
             if (pageProviderService == null) {
-                throw new ClientException(
-                        "PageProviderService service not bound");
+                throw new ClientException("PageProviderService service not bound");
             }
         }
         return pageProviderService;
     }
 
-    protected UserWorkspaceService getUserWorkspaceService()
-            throws ClientException {
+    protected UserWorkspaceService getUserWorkspaceService() throws ClientException {
         if (userWorkspaceService == null) {
             try {
                 userWorkspaceService = Framework.getService(UserWorkspaceService.class);
             } catch (Exception e) {
-                final String errMsg = "Error connecting to UserWorkspaceService. "
-                        + e.getMessage();
+                final String errMsg = "Error connecting to UserWorkspaceService. " + e.getMessage();
                 throw new ClientException(errMsg, e);
             }
             if (userWorkspaceService == null) {
-                throw new ClientException(
-                        "UserWorkspaceService service not bound");
+                throw new ClientException("UserWorkspaceService service not bound");
             }
         }
         return userWorkspaceService;
     }
 
-    public DocumentModel saveSearch(CoreSession session,
-            ContentView facetedSearchContentView, String title)
+    public DocumentModel saveSearch(CoreSession session, ContentView facetedSearchContentView, String title)
             throws ClientException {
         DocumentModel uws = getCurrentUserPersonalWorkspace(session);
 
         DocumentModel searchDoc = facetedSearchContentView.getSearchDocumentModel();
-        searchDoc.setPropertyValue(
-                Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY,
+        searchDoc.setPropertyValue(Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY,
                 facetedSearchContentView.getName());
         searchDoc.setPropertyValue("dc:title", title);
         PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
-        searchDoc.setPathInfo(uws.getPathAsString(),
-                pathService.generatePathSegment(searchDoc));
+        searchDoc.setPathInfo(uws.getPathAsString(), pathService.generatePathSegment(searchDoc));
         searchDoc = session.createDocument(searchDoc);
         session.save();
         return searchDoc;
     }
 
-    public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session)
-            throws ClientException {
-        return getDocuments(
-                Constants.CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME,
-                session, session.getPrincipal().getName());
+    public List<DocumentModel> getCurrentUserSavedSearches(CoreSession session) throws ClientException {
+        return getDocuments(Constants.CURRENT_USER_SAVED_SEARCHES_PAGE_PROVIDER_NAME, session,
+                session.getPrincipal().getName());
     }
 
-    protected DocumentModel getCurrentUserPersonalWorkspace(CoreSession session)
-            throws ClientException {
+    protected DocumentModel getCurrentUserPersonalWorkspace(CoreSession session) throws ClientException {
         UserWorkspaceService userWorkspaceService = getUserWorkspaceService();
-        return userWorkspaceService.getCurrentUserPersonalWorkspace(session,
-                null);
+        return userWorkspaceService.getCurrentUserPersonalWorkspace(session, null);
     }
 
     @SuppressWarnings("unchecked")
-    protected List<DocumentModel> getDocuments(String pageProviderName,
-            CoreSession session, Object... parameters) throws ClientException {
+    protected List<DocumentModel> getDocuments(String pageProviderName, CoreSession session, Object... parameters)
+            throws ClientException {
         PageProviderService pageProviderService = getPageProviderService();
         Map<String, Serializable> properties = new HashMap<String, Serializable>();
         properties.put("coreSession", (Serializable) session);
-        return ((PageProvider<DocumentModel>) pageProviderService.getPageProvider(
-                pageProviderName, null, null, null, properties, parameters)).getCurrentPage();
+        return ((PageProvider<DocumentModel>) pageProviderService.getPageProvider(pageProviderName, null, null, null,
+                properties, parameters)).getCurrentPage();
 
     }
 
-    public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
-            throws ClientException {
-        return getDocuments(
-                Constants.OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME,
-                session, session.getPrincipal().getName());
+    public List<DocumentModel> getOtherUsersSavedSearches(CoreSession session) throws ClientException {
+        return getDocuments(Constants.OTHER_USERS_SAVED_SEARCHES_PAGE_PROVIDER_NAME, session,
+                session.getPrincipal().getName());
     }
 
     @Override
@@ -230,8 +202,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
     }
 
     @Override
-    public void registerContribution(Object contribution,
-            String extensionPoint, ComponentInstance contributor) {
+    public void registerContribution(Object contribution, String extensionPoint, ComponentInstance contributor) {
         if (CONFIGURATION_EP.equals(extensionPoint)) {
             Configuration desc = (Configuration) contribution;
             if (configuration != null) {
@@ -241,8 +212,7 @@ public class FacetedSearchServiceImpl extends DefaultComponent implements
         }
     }
 
-    protected Configuration mergeConfigurationDescriptor(Configuration oldDesc,
-            Configuration newDesc) {
+    protected Configuration mergeConfigurationDescriptor(Configuration oldDesc, Configuration newDesc) {
         if (newDesc.getRootSavedSearchesTitle() != null) {
             oldDesc.setRootSavedSearchesTitle(newDesc.getRootSavedSearchesTitle());
         }

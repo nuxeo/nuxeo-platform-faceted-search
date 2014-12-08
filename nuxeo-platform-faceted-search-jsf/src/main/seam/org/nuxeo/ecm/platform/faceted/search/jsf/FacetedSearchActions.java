@@ -154,22 +154,20 @@ public class FacetedSearchActions implements Serializable {
         return currentContentViewName;
     }
 
-    public void setCurrentContentViewName(
-            String facetedSearchCurrentContentViewName) {
+    public void setCurrentContentViewName(String facetedSearchCurrentContentViewName) {
         this.currentContentViewName = facetedSearchCurrentContentViewName;
     }
 
     public List<String> getContentViewNames() throws ClientException {
         if (contentViewNames == null) {
-            contentViewNames = new ArrayList<String>(Framework.getLocalService(
-                    FacetedSearchService.class).getContentViewNames(
-                    navigationContext.getCurrentDocument()));
+            contentViewNames = new ArrayList<String>(
+                    Framework.getLocalService(FacetedSearchService.class).getContentViewNames(
+                            navigationContext.getCurrentDocument()));
         }
         return contentViewNames;
     }
 
-    public Set<ContentViewHeader> getContentViewHeaders()
-            throws ClientException {
+    public Set<ContentViewHeader> getContentViewHeaders() throws ClientException {
         if (contentViewHeaders == null) {
             contentViewHeaders = new HashSet<ContentViewHeader>();
             for (String name : getContentViewNames()) {
@@ -191,28 +189,21 @@ public class FacetedSearchActions implements Serializable {
      * ----- Retrieving user and all saved searches -----
      */
 
-    public List<DocumentModel> getCurrentUserSavedSearches()
-            throws ClientException {
-        return Framework.getLocalService(FacetedSearchService.class).getCurrentUserSavedSearches(
-                documentManager);
+    public List<DocumentModel> getCurrentUserSavedSearches() throws ClientException {
+        return Framework.getLocalService(FacetedSearchService.class).getCurrentUserSavedSearches(documentManager);
     }
 
-    public List<DocumentModel> getOtherUsersSavedSearches()
-            throws ClientException {
-        return Framework.getLocalService(FacetedSearchService.class).getOtherUsersSavedSearches(
-                documentManager);
+    public List<DocumentModel> getOtherUsersSavedSearches() throws ClientException {
+        return Framework.getLocalService(FacetedSearchService.class).getOtherUsersSavedSearches(documentManager);
     }
 
     @Factory(value = "allSavedSearchesSelectItems", scope = ScopeType.EVENT)
-    public List<SelectItem> getAllSavedSearchesSelectItems()
-            throws ClientException {
+    public List<SelectItem> getAllSavedSearchesSelectItems() throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
         // Add none label
-        items.add(new SelectItem(NONE_VALUE,
-                resourcesAccessor.getMessages().get(NONE_LABEL)));
+        items.add(new SelectItem(NONE_VALUE, resourcesAccessor.getMessages().get(NONE_LABEL)));
         // Add current user searches
-        SelectItemGroup userGroup = new SelectItemGroup(
-                resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
+        SelectItemGroup userGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(USER_SAVED_SEARCHES_LABEL));
         List<DocumentModel> userSavedSearches = getCurrentUserSavedSearches();
         List<SelectItem> userSavedSearchesItems = convertToSelectItems(userSavedSearches);
         userGroup.setSelectItems(userSavedSearchesItems.toArray(new SelectItem[userSavedSearchesItems.size()]));
@@ -220,13 +211,11 @@ public class FacetedSearchActions implements Serializable {
         // Add shared searches
         List<DocumentModel> otherUsersSavedFacetedSearches = getOtherUsersSavedSearches();
         List<SelectItem> otherUsersSavedSearchesItems = convertToSelectItems(otherUsersSavedFacetedSearches);
-        SelectItemGroup allGroup = new SelectItemGroup(
-                resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
+        SelectItemGroup allGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(ALL_SAVED_SEARCHES_LABEL));
         allGroup.setSelectItems(otherUsersSavedSearchesItems.toArray(new SelectItem[otherUsersSavedSearchesItems.size()]));
         items.add(allGroup);
-        SelectItemGroup flaggedGroup = new SelectItemGroup(
-                resourcesAccessor.getMessages().get(
-                        FLAGGED_SAVED_SEARCHES_LABEL));
+        SelectItemGroup flaggedGroup = new SelectItemGroup(resourcesAccessor.getMessages().get(
+                FLAGGED_SAVED_SEARCHES_LABEL));
         // Add faceted flagged content views
         Set<ContentViewHeader> flaggedSavedSearches = getContentViewHeaders();
         List<SelectItem> flaggedSavedSearchesItems = convertCVToSelectItems(flaggedSavedSearches);
@@ -235,8 +224,7 @@ public class FacetedSearchActions implements Serializable {
         return items;
     }
 
-    protected List<SelectItem> convertToSelectItems(List<DocumentModel> docs)
-            throws ClientException {
+    protected List<SelectItem> convertToSelectItems(List<DocumentModel> docs) throws ClientException {
         List<SelectItem> items = new ArrayList<SelectItem>();
         for (DocumentModel doc : docs) {
             items.add(new SelectItem(doc.getId(), doc.getTitle(), ""));
@@ -244,13 +232,11 @@ public class FacetedSearchActions implements Serializable {
         return items;
     }
 
-    protected List<SelectItem> convertCVToSelectItems(
-            Set<ContentViewHeader> contentViewHeaders) {
+    protected List<SelectItem> convertCVToSelectItems(Set<ContentViewHeader> contentViewHeaders) {
         List<SelectItem> items = new ArrayList<SelectItem>();
         for (ContentViewHeader contentViewHeader : contentViewHeaders) {
-            items.add(new SelectItem(contentViewHeader.getName(),
-                    resourcesAccessor.getMessages().get(
-                            contentViewHeader.getTitle()), ""));
+            items.add(new SelectItem(contentViewHeader.getName(), resourcesAccessor.getMessages().get(
+                    contentViewHeader.getTitle()), ""));
         }
         return items;
     }
@@ -259,8 +245,7 @@ public class FacetedSearchActions implements Serializable {
      * ----- Saving and loading a search -----
      */
 
-    public void setCurrentSelectedSavedSearchId(String savedSearchId)
-            throws ClientException {
+    public void setCurrentSelectedSavedSearchId(String savedSearchId) throws ClientException {
         this.currentSelectedSavedSearchId = savedSearchId;
 
     }
@@ -269,15 +254,13 @@ public class FacetedSearchActions implements Serializable {
         return currentSelectedSavedSearchId;
     }
 
-    public String loadSelectedSavedSearch(String jsfView)
-            throws ClientException {
+    public String loadSelectedSavedSearch(String jsfView) throws ClientException {
         loadSelectedSavedSearch();
         return jsfView;
     }
 
     public void loadSelectedSavedSearch() throws ClientException {
-        if (currentSelectedSavedSearchId == null
-                || currentSelectedSavedSearchId.isEmpty()
+        if (currentSelectedSavedSearchId == null || currentSelectedSavedSearchId.isEmpty()
                 || NONE_VALUE.equals(currentSelectedSavedSearchId)) {
             contentViewActions.reset(currentContentViewName);
         } else {
@@ -301,13 +284,11 @@ public class FacetedSearchActions implements Serializable {
         }
     }
 
-    public void loadSavedSearch(String contentViewName,
-            DocumentModel searchDocument) throws ClientException {
+    public void loadSavedSearch(String contentViewName, DocumentModel searchDocument) throws ClientException {
         // Do not reuse the existing document as it can be modified and saved
         // again
         DocumentModel newSearchDocument = createDocumentModelFrom(searchDocument);
-        ContentView contentView = contentViewActions.getContentView(
-                contentViewName, newSearchDocument);
+        ContentView contentView = contentViewActions.getContentView(contentViewName, newSearchDocument);
         if (contentView != null) {
             this.currentContentViewName = contentViewName;
         }
@@ -324,9 +305,8 @@ public class FacetedSearchActions implements Serializable {
     public void saveSearch() throws ClientException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         if (contentView != null) {
-            DocumentModel savedSearch = Framework.getLocalService(
-                    FacetedSearchService.class).saveSearch(documentManager,
-                    contentView, savedSearchTitle);
+            DocumentModel savedSearch = Framework.getLocalService(FacetedSearchService.class).saveSearch(
+                    documentManager, contentView, savedSearchTitle);
             currentSelectedSavedSearchId = savedSearch.getId();
             savedSearchTitle = null;
 
@@ -335,20 +315,16 @@ public class FacetedSearchActions implements Serializable {
             DocumentModel searchDocument = createDocumentModelFrom(savedSearch);
             contentView.setSearchDocumentModel(searchDocument);
 
-            Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED,
-                    savedSearch);
-            facesMessages.add(StatusMessage.Severity.INFO,
-                    resourcesAccessor.getMessages().get(SEARCH_SAVED_LABEL));
+            Events.instance().raiseEvent(EventNames.DOCUMENT_CHILDREN_CHANGED, savedSearch);
+            facesMessages.add(StatusMessage.Severity.INFO, resourcesAccessor.getMessages().get(SEARCH_SAVED_LABEL));
         }
     }
 
     /**
-     * Create a new {@code DocumentModel} with the same type as
-     * {@code sourceDoc}. Copy all the {@code DataModel}s from {@code sourceDoc}
-     * to the newly created document, except the {@code dublincore} schema.
+     * Create a new {@code DocumentModel} with the same type as {@code sourceDoc}. Copy all the {@code DataModel}s from
+     * {@code sourceDoc} to the newly created document, except the {@code dublincore} schema.
      */
-    protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc)
-            throws ClientException {
+    protected DocumentModel createDocumentModelFrom(DocumentModel sourceDoc) throws ClientException {
         DocumentModel doc = documentManager.createDocumentModel(sourceDoc.getType());
         for (String schema : sourceDoc.getDocumentType().getSchemaNames()) {
             // Copy everything except dublincore schema, required values will
@@ -356,8 +332,7 @@ public class FacetedSearchActions implements Serializable {
             if (!DUBLINCORE_SCHEMA.equals(schema)) {
                 DataModel dm = sourceDoc.getDataModel(schema);
                 SchemaManager mgr = Framework.getLocalService(SchemaManager.class);
-                DataModel newDM = DocumentModelImpl.cloneDataModel(
-                        mgr.getSchema(dm.getSchema()), dm);
+                DataModel newDM = DocumentModelImpl.cloneDataModel(mgr.getSchema(dm.getSchema()), dm);
                 doc.getDataModel(schema).setMap(newDM.getMap());
             }
         }
@@ -368,19 +343,14 @@ public class FacetedSearchActions implements Serializable {
      * ----- Permanent link generation and loading -----
      */
 
-    protected String encodeValues(String values)
-            throws UnsupportedEncodingException {
-        String encodedValues = Base64.encodeBytes(values.getBytes(),
-                Base64.GZIP | Base64.DONT_BREAK_LINES);
-        encodedValues = URLEncoder.encode(encodedValues,
-                ENCODED_VALUES_ENCODING);
+    protected String encodeValues(String values) throws UnsupportedEncodingException {
+        String encodedValues = Base64.encodeBytes(values.getBytes(), Base64.GZIP | Base64.DONT_BREAK_LINES);
+        encodedValues = URLEncoder.encode(encodedValues, ENCODED_VALUES_ENCODING);
         return encodedValues;
     }
 
-    protected String decodeValues(String values)
-            throws UnsupportedEncodingException {
-        String decodedValues = URLDecoder.decode(values,
-                ENCODED_VALUES_ENCODING);
+    protected String decodeValues(String values) throws UnsupportedEncodingException {
+        String decodedValues = URLDecoder.decode(values, ENCODED_VALUES_ENCODING);
         decodedValues = new String(Base64.decode(decodedValues));
         return decodedValues;
     }
@@ -388,41 +358,35 @@ public class FacetedSearchActions implements Serializable {
     /**
      * Set the metadata of the SearchDocumentModel from an encoded JSON string.
      */
-    public void setFilterValues(String filterValues) throws ClientException,
-            JSONException, UnsupportedEncodingException {
+    public void setFilterValues(String filterValues) throws ClientException, JSONException,
+            UnsupportedEncodingException {
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel searchDocumentModel = contentView.getSearchDocumentModel();
         String decodedValues = decodeValues(filterValues);
-        searchDocumentModel = JSONMetadataHelper.setPropertiesFromJson(
-                searchDocumentModel, decodedValues);
+        searchDocumentModel = JSONMetadataHelper.setPropertiesFromJson(searchDocumentModel, decodedValues);
         contentView.setSearchDocumentModel(searchDocumentModel);
     }
 
     /**
      * Compute a permanent link for the current search.
      */
-    public String getPermanentLinkUrl() throws ClientException,
-            UnsupportedEncodingException {
-        DocumentView docView = new DocumentViewImpl(new DocumentLocationImpl(
-                documentManager.getRepositoryName(), null));
-        docView.addParameter(CONTENT_VIEW_NAME_PARAMETER,
-                currentContentViewName);
+    public String getPermanentLinkUrl() throws ClientException, UnsupportedEncodingException {
+        DocumentView docView = new DocumentViewImpl(new DocumentLocationImpl(documentManager.getRepositoryName(), null));
+        docView.addParameter(CONTENT_VIEW_NAME_PARAMETER, currentContentViewName);
         ContentView contentView = contentViewActions.getContentView(currentContentViewName);
         DocumentModel doc = contentView.getSearchDocumentModel();
         String values = getEncodedValuesFrom(doc);
         docView.addParameter(FILTER_VALUES_PARAMETER, values);
         DocumentViewCodecManager documentViewCodecManager = getDocumentViewCodecService();
-        return documentViewCodecManager.getUrlFromDocumentView(
-                FACETED_SEARCH_CODEC, docView, true, BaseURL.getBaseURL());
+        return documentViewCodecManager.getUrlFromDocumentView(FACETED_SEARCH_CODEC, docView, true,
+                BaseURL.getBaseURL());
     }
 
-    protected DocumentViewCodecManager getDocumentViewCodecService()
-            throws ClientException {
+    protected DocumentViewCodecManager getDocumentViewCodecService() throws ClientException {
         try {
             return Framework.getService(DocumentViewCodecManager.class);
         } catch (Exception e) {
-            final String errMsg = "Could not retrieve the document view service. "
-                    + e.getMessage();
+            final String errMsg = "Could not retrieve the document view service. " + e.getMessage();
             throw new ClientException(errMsg, e);
         }
     }
@@ -430,8 +394,7 @@ public class FacetedSearchActions implements Serializable {
     /**
      * Returns an encoded JSON string computed from the {@code doc} metadata.
      */
-    protected String getEncodedValuesFrom(DocumentModel doc)
-            throws ClientException, UnsupportedEncodingException {
+    protected String getEncodedValuesFrom(DocumentModel doc) throws ClientException, UnsupportedEncodingException {
         JSONMetadataExporter exporter = new JSONMetadataExporter();
         String values = exporter.run(doc).toString();
         return encodeValues(values);
@@ -447,14 +410,13 @@ public class FacetedSearchActions implements Serializable {
 
     /**
      * @throws ClientException
-     *
      * @since 5.8
      */
     @Observer(value = USER_ALL_DOCUMENT_TYPES_SELECTION_CHANGED)
     public void invalidateContentViewsNameIfChanged() throws ClientException {
-        List<String> temp = new ArrayList<String>(Framework.getLocalService(
-                FacetedSearchService.class).getContentViewNames(
-                navigationContext.getCurrentDocument()));
+        List<String> temp = new ArrayList<String>(
+                Framework.getLocalService(FacetedSearchService.class).getContentViewNames(
+                        navigationContext.getCurrentDocument()));
 
         if (temp != null) {
             if (!temp.equals(contentViewNames)) {
@@ -476,8 +438,7 @@ public class FacetedSearchActions implements Serializable {
     public String getRootSavedSearchesTitle() {
         FacetedSearchService facetedSearchService = Framework.getLocalService(FacetedSearchService.class);
         Configuration configuration = facetedSearchService.getConfiguration();
-        return configuration != null ? configuration.getRootSavedSearchesTitle()
-                : null;
+        return configuration != null ? configuration.getRootSavedSearchesTitle() : null;
     }
 
     public boolean haveOldSavedSearches() throws ClientException {
@@ -487,25 +448,21 @@ public class FacetedSearchActions implements Serializable {
     protected List<DocumentModel> getOldSavedSearches() throws ClientException {
         UserWorkspaceService userWorkspaceService = Framework.getLocalService(UserWorkspaceService.class);
         FacetedSearchService facetedSearchService = Framework.getLocalService(FacetedSearchService.class);
-        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(
-                documentManager, null);
+        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(documentManager, null);
         Configuration configuration = facetedSearchService.getConfiguration();
         String rootSavedSearchesTitle = configuration.getRootSavedSearchesTitle();
 
         PathSegmentService pathService = Framework.getLocalService(PathSegmentService.class);
-        DocumentModel rootSavedSearches = documentManager.createDocumentModel(
-                uws.getPathAsString(), rootSavedSearchesTitle,
-                Constants.FACETED_SAVED_SEARCH_FOLDER);
-        rootSavedSearches.setPathInfo(uws.getPathAsString(),
-                pathService.generatePathSegment(rootSavedSearches));
+        DocumentModel rootSavedSearches = documentManager.createDocumentModel(uws.getPathAsString(),
+                rootSavedSearchesTitle, Constants.FACETED_SAVED_SEARCH_FOLDER);
+        rootSavedSearches.setPathInfo(uws.getPathAsString(), pathService.generatePathSegment(rootSavedSearches));
         Path path = new Path(uws.getPathAsString()).append(pathService.generatePathSegment(rootSavedSearches));
         PathRef rootPathRef = new PathRef(path.toString());
 
         if (documentManager.exists(rootPathRef)) {
             DocumentModel rootDoc = documentManager.getDocument(rootPathRef);
-            String query = String.format(
-                    "SELECT * FROM Document WHERE ecm:mixinType = 'FacetedSearch' "
-                            + "AND ecm:parentId = '%s'", rootDoc.getId());
+            String query = String.format("SELECT * FROM Document WHERE ecm:mixinType = 'FacetedSearch' "
+                    + "AND ecm:parentId = '%s'", rootDoc.getId());
             return documentManager.query(query);
         }
         return Collections.emptyList();
@@ -513,14 +470,13 @@ public class FacetedSearchActions implements Serializable {
 
     public void migrateOldSavedSearches() throws ClientException {
         UserWorkspaceService userWorkspaceService = Framework.getLocalService(UserWorkspaceService.class);
-        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(
-                documentManager, null);
+        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(documentManager, null);
 
         List<DocumentModel> docs = getOldSavedSearches();
         if (!docs.isEmpty()) {
             documentManager.move(convertToDocumentRefs(docs), uws.getRef());
-            facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO,
-                    "label.faceted.saved.searches.migrated", docs.size());
+            facesMessages.addFromResourceBundle(StatusMessage.Severity.INFO, "label.faceted.saved.searches.migrated",
+                    docs.size());
             contentViewActions.refreshOnSeamEvent("savedSearchesMigrated");
         }
     }

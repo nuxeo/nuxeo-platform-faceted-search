@@ -68,10 +68,8 @@ public class FacetedSearchViewCodec extends AbstractDocumentViewCodec {
                 params = URIUtils.getRequestParameters(query);
             }
 
-            final DocumentLocation docLoc = new DocumentLocationImpl(server,
-                    null);
-            return new DocumentViewImpl(docLoc,
-                    Constants.FACETED_SEARCH_RESULTS_VIEW, params);
+            final DocumentLocation docLoc = new DocumentLocationImpl(server, null);
+            return new DocumentViewImpl(docLoc, Constants.FACETED_SEARCH_RESULTS_VIEW, params);
         }
 
         return null;
@@ -87,8 +85,7 @@ public class FacetedSearchViewCodec extends AbstractDocumentViewCodec {
                 items.add(getPrefix());
                 items.add(serverName);
                 String uri = StringUtils.join(items, "/") + "/";
-                uri = URIUtils.addParametersToURIQuery(uri,
-                        docView.getParameters());
+                uri = URIUtils.addParametersToURIQuery(uri, docView.getParameters());
                 return uri;
             }
         }

@@ -41,18 +41,15 @@ public interface FacetedSearchService {
     Set<String> getContentViewNames() throws ClientException;
 
     /**
-     * Returns the list of Content view names associated to a Faceted Search and
-     * depending of a local configuration.
+     * Returns the list of Content view names associated to a Faceted Search and depending of a local configuration.
      *
-     * @param doc corresponds to current navigation context, to try to get some
-     *            local configuration of a parent.
+     * @param doc corresponds to current navigation context, to try to get some local configuration of a parent.
      * @throws ClientException in case of any error
      */
     Set<String> getContentViewNames(DocumentModel doc) throws ClientException;
 
     /**
-     * Save the current Faceted search in the user workspace with the given
-     * title.
+     * Save the current Faceted search in the user workspace with the given title.
      *
      * @param session the {@code CoreSession} to use
      * @param facetedSearchContentView the Faceted Search to save
@@ -60,35 +57,28 @@ public interface FacetedSearchService {
      * @return the saved Faceted Search DocumentModel
      * @throws ClientException in case of any error during the save
      */
-    DocumentModel saveSearch(CoreSession session,
-            ContentView facetedSearchContentView, String title)
+    DocumentModel saveSearch(CoreSession session, ContentView facetedSearchContentView, String title)
             throws ClientException;
 
     /**
-     * Returns the current user saved Faceted Searches, located into its own
-     * user workspace.
+     * Returns the current user saved Faceted Searches, located into its own user workspace.
      *
      * @param session the {@code CoreSession} to use
      * @throws ClientException in case of any error
      */
-    List<DocumentModel> getCurrentUserSavedSearches(CoreSession session)
-            throws ClientException;
+    List<DocumentModel> getCurrentUserSavedSearches(CoreSession session) throws ClientException;
 
     /**
-     * Returns all the accessible saved Faceted Searches except the ones for the
-     * current user.
+     * Returns all the accessible saved Faceted Searches except the ones for the current user.
      *
      * @param session the {@code CoreSession} to use
      * @throws ClientException in case of any error
      */
-    List<DocumentModel> getOtherUsersSavedSearches(CoreSession session)
-            throws ClientException;
+    List<DocumentModel> getOtherUsersSavedSearches(CoreSession session) throws ClientException;
 
     /**
-     *
-     *
      * @since 5.7
      */
-     Configuration getConfiguration();
+    Configuration getConfiguration();
 
 }
