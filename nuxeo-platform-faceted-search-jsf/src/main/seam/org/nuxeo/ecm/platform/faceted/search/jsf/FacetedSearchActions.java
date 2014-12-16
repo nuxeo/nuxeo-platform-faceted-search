@@ -30,6 +30,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -169,7 +170,7 @@ public class FacetedSearchActions implements Serializable {
 
     public Set<ContentViewHeader> getContentViewHeaders() throws ClientException {
         if (contentViewHeaders == null) {
-            contentViewHeaders = new HashSet<ContentViewHeader>();
+            contentViewHeaders = new LinkedHashSet<ContentViewHeader>();
             for (String name : getContentViewNames()) {
                 ContentViewHeader header = contentViewService.getContentViewHeader(name);
                 if (header != null) {
@@ -421,12 +422,6 @@ public class FacetedSearchActions implements Serializable {
         if (temp != null) {
             if (!temp.equals(contentViewNames)) {
                 invalidateContentViewsName();
-            }
-            if (!temp.isEmpty()) {
-                String s = temp.get(0);
-                if (s != null && !s.equals(currentContentViewName)) {
-                    invalidateContentViewsName();
-                }
             }
         }
     }
