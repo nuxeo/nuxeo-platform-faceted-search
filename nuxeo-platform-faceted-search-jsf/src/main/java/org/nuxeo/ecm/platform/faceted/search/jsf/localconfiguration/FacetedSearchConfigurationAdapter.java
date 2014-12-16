@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -109,7 +110,7 @@ public class FacetedSearchConfigurationAdapter extends AbstractLocalConfiguratio
 
     @Override
     public Set<String> filterAllowedContentViewNames(Set<String> names) {
-        Set<String> filtered = new HashSet<String>();
+        Set<String> filtered = new LinkedHashSet<String>();
 
         for (String name : names) {
             if (isAllowedName(name)) {
