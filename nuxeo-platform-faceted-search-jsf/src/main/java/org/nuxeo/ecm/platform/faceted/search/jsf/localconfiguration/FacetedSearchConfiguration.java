@@ -25,20 +25,17 @@ import org.nuxeo.ecm.core.api.localconfiguration.LocalConfiguration;
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
-public interface FacetedSearchConfiguration extends
-        LocalConfiguration<FacetedSearchConfiguration> {
+public interface FacetedSearchConfiguration extends LocalConfiguration<FacetedSearchConfiguration> {
 
     /**
-     * Return a list of content views name that are associated with the local
-     * configuration
+     * Return a list of content views name that are associated with the local configuration
      *
      * @return an unmodifiable list of String or null.
      */
     List<String> getAllowedContentViewNames();
 
     /**
-     * Return a list of content views name that are denied with the local
-     * configuration
+     * Return a list of content views name that are denied with the local configuration
      *
      * @return an unmodifiable list of String or null.
      */

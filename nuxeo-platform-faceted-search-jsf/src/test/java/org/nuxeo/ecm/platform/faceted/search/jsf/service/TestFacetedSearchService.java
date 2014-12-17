@@ -66,16 +66,11 @@ import com.google.inject.Inject;
 @RunWith(FeaturesRunner.class)
 @Features(PlatformFeature.class)
 @RepositoryConfig(init = DefaultRepositoryInit.class, cleanup = Granularity.METHOD)
-@Deploy({ "org.nuxeo.ecm.platform.content.template",
-        "org.nuxeo.ecm.platform.userworkspace.api",
-        "org.nuxeo.ecm.platform.userworkspace.types",
-        "org.nuxeo.ecm.platform.userworkspace.core",
-        "org.nuxeo.ecm.platform.dublincore",
-        "org.nuxeo.ecm.platform.faceted.search.jsf",
-        "org.nuxeo.ecm.platform.query.api",
-        "org.nuxeo.ecm.platform.contentview.jsf:OSGI-INF/contentview-framework.xml" })
-@LocalDeploy({
-        "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-contentviews-contrib.xml",
+@Deploy({ "org.nuxeo.ecm.platform.content.template", "org.nuxeo.ecm.platform.userworkspace.api",
+        "org.nuxeo.ecm.platform.userworkspace.types", "org.nuxeo.ecm.platform.userworkspace.core",
+        "org.nuxeo.ecm.platform.dublincore", "org.nuxeo.ecm.platform.faceted.search.jsf",
+        "org.nuxeo.ecm.platform.query.api", "org.nuxeo.ecm.platform.contentview.jsf:OSGI-INF/contentview-framework.xml" })
+@LocalDeploy({ "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-contentviews-contrib.xml",
         "org.nuxeo.ecm.platform.faceted.search.jsf:test-faceted-search-core-types-contrib.xml" })
 public class TestFacetedSearchService {
 
@@ -121,8 +116,7 @@ public class TestFacetedSearchService {
     }
 
     @Test
-    public void retrieveFacetedSearchRelatedContentViews()
-            throws ClientException {
+    public void retrieveFacetedSearchRelatedContentViews() throws ClientException {
         Set<String> contentViewNames = facetedSearchService.getContentViewNames();
         assertNotNull(contentViewNames);
         assertEquals(2, contentViewNames.size());
@@ -136,27 +130,21 @@ public class TestFacetedSearchService {
     public void saveFacetedSearch() throws ClientException {
         DocumentModel savedSearch = createSavedSearch(session, "My saved search");
         assertNotNull(savedSearch);
-        assertEquals("fulltext",
-                savedSearch.getPropertyValue("fsd:ecm_fulltext"));
-        assertEquals(
-                FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME,
+        assertEquals("fulltext", savedSearch.getPropertyValue("fsd:ecm_fulltext"));
+        assertEquals(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME,
                 savedSearch.getPropertyValue(Constants.FACETED_SEARCH_CONTENT_VIEW_NAME_PROPERTY));
-        assertEquals("My saved search",
-                savedSearch.getPropertyValue("dc:title"));
+        assertEquals("My saved search", savedSearch.getPropertyValue("dc:title"));
 
         // Check that the search is saved in the user workspace
         String savedSearchPath = savedSearch.getPathAsString();
-        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(
-                session, null);
+        DocumentModel uws = userWorkspaceService.getCurrentUserPersonalWorkspace(session, null);
         assertTrue(savedSearchPath.startsWith(uws.getPathAsString()));
 
         // Check that the search is saved in the configured folder
-        assertEquals(savedSearchPath,
-                "/default-domain/UserWorkspaces/Administrator/My saved search");
+        assertEquals(savedSearchPath, "/default-domain/UserWorkspaces/Administrator/My saved search");
     }
 
-    protected DocumentModel createSavedSearch(CoreSession session, String title)
-            throws ClientException {
+    protected DocumentModel createSavedSearch(CoreSession session, String title) throws ClientException {
         ContentView contentView = contentViewService.getContentView(FACETED_SEARCH_DEFAULT_CONTENT_VIEW_NAME);
         DocumentModel searchDocumentModel = session.createDocumentModel(FACETED_SEARCH_DEFAULT_DOCUMENT_TYPE);
         searchDocumentModel.setPropertyValue("fsd:ecm_fulltext", "fulltext");
@@ -180,22 +168,18 @@ public class TestFacetedSearchService {
     public void defineLocalConfiguration() throws ClientException {
         DocumentModel confWorkspace = session.createDocumentModel("Workspace");
         confWorkspace.addFacet(F_SEARCH_CONFIGURATION_FACET);
-        confWorkspace.setPropertyValue(
-                F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS, new String[] {
-                        "FOO_CV", "BAR_CV" });
-        confWorkspace.setPropertyValue(
-                F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS, new String[] {
-                        "JOHN_CV", "DOE_CV" });
+        confWorkspace.setPropertyValue(F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS,
+                new String[] { "FOO_CV", "BAR_CV" });
+        confWorkspace.setPropertyValue(F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS,
+                new String[] { "JOHN_CV", "DOE_CV" });
         confWorkspace.setPathInfo("/", "confWorkspace");
         confWorkspace = session.createDocument(confWorkspace);
 
-        DocumentModel fooFile = session.createDocumentModel(
-                confWorkspace.getPathAsString(), "fooooo", "File");
+        DocumentModel fooFile = session.createDocumentModel(confWorkspace.getPathAsString(), "fooooo", "File");
         fooFile = session.createDocument(fooFile);
 
-        FacetedSearchConfiguration conf = localConfigurationService.getConfiguration(
-                FacetedSearchConfiguration.class, F_SEARCH_CONFIGURATION_FACET,
-                fooFile);
+        FacetedSearchConfiguration conf = localConfigurationService.getConfiguration(FacetedSearchConfiguration.class,
+                F_SEARCH_CONFIGURATION_FACET, fooFile);
 
         assertNotNull(conf);
         List<String> allowed = conf.getAllowedContentViewNames();
@@ -206,8 +190,7 @@ public class TestFacetedSearchService {
         assertTrue(denied.contains("JOHN_CV"));
         assertTrue(denied.contains("DOE_CV"));
 
-        Set<String> test1 = new HashSet<String>(Arrays.asList(new String[] {
-                "JOHN_CV", "DOE_CV", "GOOD", "BAR_CV" }));
+        Set<String> test1 = new HashSet<String>(Arrays.asList(new String[] { "JOHN_CV", "DOE_CV", "GOOD", "BAR_CV" }));
         Set<String> filtered = conf.filterAllowedContentViewNames(test1);
         assertTrue(filtered.contains("BAR_CV"));
         assertFalse(filtered.contains("JOHN_CV"));

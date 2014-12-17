@@ -38,8 +38,7 @@ import org.nuxeo.ecm.core.api.localconfiguration.AbstractLocalConfiguration;
  * @author <a href="mailto:akervern@nuxeo.com">Arnaud Kervern</a>
  * @since 5.4.2
  */
-public class FacetedSearchConfigurationAdapter extends
-        AbstractLocalConfiguration<FacetedSearchConfiguration> implements
+public class FacetedSearchConfigurationAdapter extends AbstractLocalConfiguration<FacetedSearchConfiguration> implements
         FacetedSearchConfiguration {
 
     protected List<String> allowedContentViews;
@@ -51,10 +50,8 @@ public class FacetedSearchConfigurationAdapter extends
     public FacetedSearchConfigurationAdapter(DocumentModel doc) {
         docRef = doc.getRef();
 
-        allowedContentViews = getList(doc,
-                F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS);
-        deniedContentViews = getList(doc,
-                F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS);
+        allowedContentViews = getList(doc, F_SEARCH_CONFIGURATION_ALLOWED_CONTENT_VIEWS);
+        deniedContentViews = getList(doc, F_SEARCH_CONFIGURATION_DENIED_CONTENT_VIEWS);
     }
 
     protected List<String> getList(DocumentModel doc, String property) {
@@ -88,9 +85,9 @@ public class FacetedSearchConfigurationAdapter extends
 
         docRef = other.getDocumentRef();
 
-        List<String> deniedCV = new ArrayList<String>(this.deniedContentViews);
+        List<String> deniedCV = new ArrayList<String>(deniedContentViews);
         deniedCV.addAll(other.getDeniedContentViewNames());
-        this.deniedContentViews = Collections.unmodifiableList(deniedCV);
+        deniedContentViews = Collections.unmodifiableList(deniedCV);
 
         return this;
     }
